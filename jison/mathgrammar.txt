@@ -81,7 +81,7 @@ parens : '(' expression ')'
        ;
 
 function : WORD '(' params ')'
-                {$$ = {op: ('function: '+yytext), child1: $3};}
+                {$$ = {op: $WORD, child1: $3};}
          ;
 
 params : params ',' expression
