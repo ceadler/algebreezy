@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!--
+	This is the Barebones GUI for Algebreezy.
+
+	How to use it:
+		1. Enter text into the second textbox.
+		2. Click enter.
+		3. Clone the text into the first textbox.
+	
+	Notes:
+		- The first text box scrolls infinitely as more text is entered.
+		  This is a barebones emulation of the infinite piece of paper end-goal.
+-->
+<html>
+<head>
+	<title>Barebones GUI</title>
+  	<style>body,div { background-color: #eee; padding: 1em; }</style>
+</head>
+<body>
+	<textarea name="equationBox" id="myTextArea" cols="125" rows="20"></textarea><br>
+	<br><label>Please enter an equation:</label><br>
+	<input type="text" id="myEquation"><br>
+	<button onclick="display()">Enter</button>
+
+	<script>
+	function display() {
+   		document.getElementById("myTextArea").value = 
+		document.getElementById("myEquation").value;
+	}
+	</script>
+</body>
+</html>
