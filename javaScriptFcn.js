@@ -38,3 +38,11 @@ var VarNode = function (name){
 var NumberNode = function (value) {
 	this.value = value;
 }
+
+ExprNode.prototype.toLatex = function() {
+	console.log(".");
+};
+
+ExprNode.prototype.toEval = function() {
+	console.log("I am evaluating.");
+};
