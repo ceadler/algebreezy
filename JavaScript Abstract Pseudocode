@@ -1,0 +1,40 @@
+JavaScript Abstract -> ExprNode (type, class)
+
+
+EquationNode {
+	ExprNode left;
+	ExprNode right;
+}
+
+OpNode {
+	String op;
+	ExprNode left;
+	ExprNode right;
+}
+
+ParensNode {
+	ExprNode child;
+}
+
+FcnNode {
+	String name;
+	ExprNode[] params;
+}
+
+VarNode {
+	String name;
+}
+
+NumberNode {
+	Number value;
+}
+
+
+Variable Table
+
+dictionary {string:number}
+
+
+Function Table
+
+eval MathNode child
