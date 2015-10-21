@@ -129,20 +129,20 @@ function NumberNode(value) {
 }
 
 //Prototype functions that should be usable by every function
-ExprNode.prototype.toLatex = function() {
+/*ExprNode.prototype.toLatex = function() {
 	console.log(".");
 };
 
 ExprNode.prototype.toEval = function() {
 	console.log("I am evaluating.");
-};
+}; */
 
 //Use object.getName() to receive the name of the constructor as a string
-Object.prototype.getName = function() {  									//Taken from http://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript
+/* Object.prototype.getName = function() {  									//Taken from http://stackoverflow.com/questions/332422/how-do-i-get-the-name-of-an-objects-type-in-javascript
    var funcNameRegex = /function (.{1,})\(/;
    var results = (funcNameRegex).exec((this).constructor.toString());
    return (results && results.length > 1) ? results[1] : "";
-};
+}; */
 
 
 //Uneeded due to js being a weakly typed language
