@@ -7,6 +7,7 @@ function ExprNode(type, class) {
 function EquationNode(left, right) {
 	this.left =  left;
 	this.right = right;
+	this.type = "Equation";
 	toLatex: function() {
 		console.log(".");
 	}
@@ -28,6 +29,7 @@ function OpNode(op, left, right) {
 	this.op =  op;
 	this.left =  left;
 	this.right =  right;
+	this.type = "Op";
 	toLatex: function() {
 		console.log(".");
 	}
@@ -47,6 +49,7 @@ function OpNode(op, left, right) {
 
 function ParensNode(child) {
 	this.child = child;
+	this.type = "Parens";
 	toLatex: function() {
 		console.log(".");
 	}
@@ -67,6 +70,7 @@ function ParensNode(child) {
 function FunctionNode(name, params) {
 	this.name = name;
 	this.params = []params;
+	this.type = "Function";
 	toLatex: function() {
 		console.log(".");
 	}
@@ -84,12 +88,44 @@ function FunctionNode(name, params) {
 	}
 }
 
-var VarNode = function (name){
+function VarNode(name){
 	this.name = name;
+	this.type = "VarNode";
+	toLatex: function() {
+		console.log(".");
+	}
+	toEval: function() {
+		console.log("I am evaluating.");
+	}
+	toPlainText: function() {
+		console.log("toPlainText");
+	}
+	isEqual: function() {
+		console.log("is equal");
+	}
+	isIsomorphic: function() {
+		console.log("isIsomorphic");
+	}
 }
 
-var NumberNode = function (value) {
+function NumberNode(value) {
 	this.value = value;
+	this.type = "Number";
+	toLatex: function() {
+		console.log(".");
+	}
+	toEval: function() {
+		console.log("I am evaluating.");
+	}
+	toPlainText: function() {
+		console.log("toPlainText");
+	}
+	isEqual: function() {
+		console.log("is equal");
+	}
+	isIsomorphic: function() {
+		console.log("isIsomorphic");
+	}
 }
 
 //Prototype functions that should be usable by every function
