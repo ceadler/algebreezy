@@ -19,9 +19,9 @@ function ParensNode(child) {
 	this.child = child;
 }
 
-function FunctionNode(name, []params) {
+function FunctionNode(name, params) {
 	this.name = name;
-	this[].params = params;
+	this.params = []params;
 }
 
 var VarNode = function (name){
@@ -42,8 +42,9 @@ ExprNode.prototype.toEval = function() {
 };
 
 
+//Uneeded due to js being a weakly typed language
 // Prototypes to inherit ExprNode 
-EquationNode.prototype = new ExprNode();
+/*EquationNode.prototype = new ExprNode();
 OpNode.prototype = new ExprNode();
 ParensNode.prototype = new ExprNode();
-FunctionNode.prototype = new ExprNode();
+FunctionNode.prototype = new ExprNode(); */
