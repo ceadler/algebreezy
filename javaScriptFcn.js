@@ -1,15 +1,10 @@
-//Parent class ExprNode
-function ExprNode(type, class) {
-	this.type = type;
-	this.class = class;
-};
-
 function EquationNode(left, right) {
 	this.left =  left;
 	this.right = right;
 	this.type = "Equation";
 	toLatex: function() {
-		console.log(".");
+		return left.toLatex() + " &= " + right.toLatex();
+		//console.log(".");
 	}
 	toEval: function() {
 		console.log("I am evaluating.");
@@ -31,7 +26,27 @@ function OpNode(op, left, right) {
 	this.right =  right;
 	this.type = "Op";
 	toLatex: function() {
-		console.log(".");
+		switch (this.op) {
+			case '+':
+				return left.toLatex() + " + " + right.toLatex();
+				break;
+			case '-':
+				return left.toLatex() + " - " + right.toLatex();
+				break;
+			case '*':
+				return left.toLatex() + " \\cdot " + right.toLatex();
+				break;
+			case '/':
+				return "\\frac{" + left.toLatex() + "}{" + right.toLatex() + "}";
+				break;
+			case '^':
+				return left.toLatex() + "^{" + right.toLatex() + "}";
+				break;
+			default:
+				return undefined;
+				break;
+		}
+		//console.log(".");
 	}
 	toEval: function() {
 		console.log("I am evaluating.");
@@ -51,7 +66,8 @@ function ParensNode(child) {
 	this.child = child;
 	this.type = "Parens";
 	toLatex: function() {
-		console.log(".");
+		return "(" + child.toLatex() + ")";
+		//console.log(".");
 	}
 	toEval: function() {
 		console.log("I am evaluating.");
@@ -69,10 +85,11 @@ function ParensNode(child) {
 
 function FunctionNode(name, params) {
 	this.name = name;
-	this.params = []params;
+	this.params = params;
 	this.type = "Function";
 	toLatex: function() {
-		console.log(".");
+		return " " + name + "(" + params.map(function(node){return node.toLatex()}).join(', ') + ") ";
+		//console.log(".");
 	}
 	toEval: function() {
 		console.log("I am evaluating.");
@@ -92,7 +109,8 @@ function VarNode(name){
 	this.name = name;
 	this.type = "VarNode";
 	toLatex: function() {
-		console.log(".");
+		return " " + name + " ";
+		//console.log(".");
 	}
 	toEval: function() {
 		console.log("I am evaluating.");
@@ -112,7 +130,8 @@ function NumberNode(value) {
 	this.value = value;
 	this.type = "Number";
 	toLatex: function() {
-		console.log(".");
+		return " " + value.toString() + " ";
+		//console.log(".");
 	}
 	toEval: function() {
 		console.log("I am evaluating.");
@@ -129,7 +148,7 @@ function NumberNode(value) {
 }
 
 //Prototype functions that should be usable by every function
-ExprNode.prototype.toLatex = function() {
+/*ExprNode.prototype.toLatex = function() {
 	console.log(".");
 };
 
@@ -143,7 +162,7 @@ Object.prototype.getName = function() {  									//Taken from http://stackoverf
    var results = (funcNameRegex).exec((this).constructor.toString());
    return (results && results.length > 1) ? results[1] : "";
 };
-
+*/
 
 //Uneeded due to js being a weakly typed language
 // Prototypes to inherit ExprNode 

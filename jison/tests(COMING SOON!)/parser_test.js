@@ -16,3 +16,8 @@ function parser_test_start(){
     //    console.log('Failed test 2!');
     //}
 }
+
+function toLatex_test() {
+    var x = parser.parse("3*14+x/y^z-z^2=48-49+x-(y*3)^4");
+    $("#testbox").html(" \\("+x.toLatex()+" \\)");
+}
