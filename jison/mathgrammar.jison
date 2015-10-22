@@ -34,24 +34,23 @@
 
 equation
     : expression '=' expression EOF
-        { typeof console !== 'undefined' ? console.log('Equation:', $1, $3) : print('Equation:', $1, $3);
-          return ; }
+        { return new EquationNode($1, $3); }
     ;
 
 expression: expression '+' factor
-                {$$ = {child1: $1, child2: $3, op:$2};}
+                {$$ = new OpNode($2, $1, $3);}
           | expression '-' factor
-                {$$ = {child1: $1, child2: $3, op:$2};}
+                {$$ = new OpNode($2, $1, $3);}
           | factor
-            {$$ = $1;}
+                {$$ = $1;}
           ;
 
 factor : factor '*' term
-            {$$ = {child1: $1, child2: $3, op:$2};}
+            {$$ = new OpNode($2, $1, $3);}
        | factor '/' term
-            {$$ = {child1: $1, child2: $3, op:$2};}
+            {$$ = new OpNode($2, $1, $3);}
        |'-' factor
-            {$$ = {op: '-', child1: $2};}
+            {$$ = new OpNode($2, NumberNode(1), $3);}
        | term
             {$$ = $1;}
        ;
@@ -63,13 +62,13 @@ term : exponent
      ;
      
 exponent: value '^' value
-                {$$ = {child1: $1, child2: $3, op:$2};}
+                {$$ = new OpNode($2, $1, $3);}
         ;
 
 value : parens
             {$$ = $1;}
       | NUMBER
-            {$$ = {child1: Number(yytext)};}
+            {$$ = new NumberNode(Number(yytext));}
       | function
             {$$ = $1;}
       | variable
@@ -77,11 +76,11 @@ value : parens
       ;
       
 parens : '(' expression ')'
-            {$$ = {op: 'parens', child1: $2};}
+            {$$ = new ParensNode($2);}
        ;
 
 function : WORD '(' params ')'
-                {$$ = {op: $WORD, child1: $3};}
+                {$$ = new FunctionNode($WORD, $3);}
          ;
 
 params : params ',' expression
@@ -91,5 +90,5 @@ params : params ',' expression
        ;
        
 variable : WORD
-        {$$ = {child1: yytext};};
+        {$$ = new VarNode(yytext);};
 
