@@ -2,19 +2,20 @@ function EquationNode(left, right) {
 	this.left =  left;
 	this.right = right;
 	this.type = "Equation";
-	toLatex: function() {
+	this.toLatex = function() {
 		return left.toLatex() + " &= " + right.toLatex();
+		//console.log(".");
 	}
-	toEval: function() {
+	this.toEval = function() {
 		console.log("I am evaluating.");
 	}
-	toPlainText: function() {
+	this.toPlainText = function() {
 		console.log("toPlainText");
 	}
-	isEqual: function() {
+	this.isEqual = function() {
 		console.log("is equal");
 	}
-	isIsomorphic: function() {
+	this.isIsomorphic = function() {
 		console.log("isIsomorphic");
 	}
 };
@@ -24,7 +25,7 @@ function OpNode(op, left, right) {
 	this.left =  left;
 	this.right =  right;
 	this.type = "Op";
-	toLatex: function() {
+	this.toLatex = function() {
 		switch (this.op) {
 			case '+':
 				return left.toLatex() + " + " + right.toLatex();
@@ -47,16 +48,16 @@ function OpNode(op, left, right) {
 		}
 		//console.log(".");
 	}
-	toEval: function() {
+	this.toEval = function() {
 		console.log("I am evaluating.");
 	}
-	toPlainText: function() {
+	this.toPlainText = function() {
 		console.log("toPlainText");
 	}
-	isEqual: function() {
+	this.isEqual = function() {
 		console.log("is equal");
 	}
-	isIsomorphic: function() {
+	this.isIsomorphic = function() {
 		console.log("isIsomorphic");
 	}
 };
@@ -64,20 +65,20 @@ function OpNode(op, left, right) {
 function ParensNode(child) {
 	this.child = child;
 	this.type = "Parens";
-	toLatex: function() {
+	this.toLatex = function() {
 		return "(" + child.toLatex() + ")";
 		//console.log(".");
 	}
-	toEval: function() {
+	this.toEval = function() {
 		console.log("I am evaluating.");
 	}
-	toPlainText: function() {
+	this.toPlainText = function() {
 		console.log("toPlainText");
 	}
-	isEqual: function() {
+	this.isEqual = function() {
 		console.log("is equal");
 	}
-	isIsomorphic: function() {
+	this.isIsomorphic = function() {
 		console.log("isIsomorphic");
 	}
 }
@@ -86,20 +87,20 @@ function FunctionNode(name, params) {
 	this.name = name;
 	this.params = params;
 	this.type = "Function";
-	toLatex: function() {
+	this.toLatex = function() {
 		return " " + name + "(" + params.map(function(node){return node.toLatex()}).join(', ') + ") ";
 		//console.log(".");
 	}
-	toEval: function() {
+	this.toEval = function() {
 		console.log("I am evaluating.");
 	}
-	toPlainText: function() {
+	this.toPlainText = function() {
 		console.log("toPlainText");
 	}
-	isEqual: function() {
+	this.isEqual = function() {
 		console.log("is equal");
 	}
-	isIsomorphic: function() {
+	this.isIsomorphic = function() {
 		console.log("isIsomorphic");
 	}
 }
@@ -107,20 +108,20 @@ function FunctionNode(name, params) {
 function VarNode(name){
 	this.name = name;
 	this.type = "VarNode";
-	toLatex: function() {
+	this.toLatex = function() {
 		return " " + name + " ";
 		//console.log(".");
 	}
-	toEval: function() {
+	this.toEval = function() {
 		console.log("I am evaluating.");
 	}
-	toPlainText: function() {
+	this.toPlainText = function() {
 		console.log("toPlainText");
 	}
-	isEqual: function() {
+	this.isEqual = function() {
 		console.log("is equal");
 	}
-	isIsomorphic: function() {
+	this.isIsomorphic = function() {
 		console.log("isIsomorphic");
 	}
 }
@@ -128,20 +129,20 @@ function VarNode(name){
 function NumberNode(value) {
 	this.value = value;
 	this.type = "Number";
-	toLatex: function() {
+	this.toLatex = function() {
 		return " " + value.toString() + " ";
 		//console.log(".");
 	}
-	toEval: function() {
+	this.toEval = function() {
 		console.log("I am evaluating.");
 	}
-	toPlainText: function() {
+	this.toPlainText = function() {
 		console.log("toPlainText");
 	}
-	isEqual: function() {
+	this.isEqual = function() {
 		console.log("is equal");
 	}
-	isIsomorphic: function() {
+	this.isIsomorphic = function() {
 		console.log("isIsomorphic");
 	}
 }
