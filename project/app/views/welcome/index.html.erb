@@ -13,19 +13,14 @@
 <html>
 <head>
 	<title>Barebones GUI</title>
-  	<style>body,div { background-color: #eee; padding: 1em; }</style>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 </head>
 <body>
-	<textarea name="equationBox" id="myTextArea" cols="125" rows="20"></textarea><br>
+    <div id="scratchpad"></div>
 	<br><label>Please enter an equation:</label><br>
 	<input type="text" id="myEquation"><br>
-	<button onclick="display()">Enter</button>
-
-	<script>
-	function display() {
-   		document.getElementById("myTextArea").value = 
-		document.getElementById("myEquation").value;
-	}
-	</script>
-</body>
+	<button onclick="display_equation()">Enter</button>
 </html>
