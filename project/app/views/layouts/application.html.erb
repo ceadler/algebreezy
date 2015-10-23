@@ -1,59 +1,39 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Project</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<header class="navbar navbar-fixed-top navbar-inverse">
+    <head>
+        <title>Project</title>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= csrf_meta_tags %>
+    </head>
+    <header class="navbar navbar-fixed-top navbar-inverse">
 
-  <div class="navbar-inner">
+      <div class="navbar-inner">
 
+        <div class="container">
+            <nav class="navbar">
+                <%= link_to "Home", root_path %>
+                <%= link_to "Help", help_path %>
+            </nav>
+        </div>
+      </div>
+    </header>
+    
     <div class="container">
-      <nav>
 
-        <ul class="nav pull-right">
+      <% flash.each do |key, value| %>
 
-          <li><%= link_to "Home", root_path %></li>
+          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
 
-          <li><%= link_to "Help", help_path %></li>
+      <% end %>
 
-        </ul>
+      <%= yield %>
 
-      </nav>
+        <footer>
+            <nav>
+                <%= link_to "About",   about_path %>
+                <%= link_to "Contact", contact_path %>
+            </nav>  
+        </footer>
 
     </div>
-
-  </div>
-
-</header>
-
-<div class="container">
-
-  <% flash.each do |key, value| %>
-
-      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
-
-  <% end %>
-
-  <%= yield %>
-
-  <footer class="footer">
-
-  <nav>
-
-    <ul>
-      <li><%= link_to "About",   about_path %></li>
-
-      <li><%= link_to "Contact", contact_path %></li>
-      
-    </ul>
-
-  </nav>
-  
-</footer>
-
-</div>
-
-</body>
 </html>
