@@ -160,9 +160,13 @@ Object.prototype.getName = function() {  									//Taken from http://stackoverf
    var funcNameRegex = /function (.{1,})\(/;
    var results = (funcNameRegex).exec((this).constructor.toString());
    return (results && results.length > 1) ? results[1] : "";
+<<<<<<< HEAD
 };
 */
 
+=======
+}; */
+>>>>>>> 83aa7e2a32ae473aaa467c7e2db0022c6311d33c
 //Uneeded due to js being a weakly typed language
 // Prototypes to inherit ExprNode 
 /*EquationNode.prototype = new ExprNode();
