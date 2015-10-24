@@ -45,5 +45,6 @@ group :development do
   gem 'spring'
 
   gem 'tzinfo-data'
+  gem 'coffee-script-source', '1.8.0'
 end
 
