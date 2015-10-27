@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  devise_for :devise_users
+  devise_for :models
+  devise_for :users
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -12,6 +16,8 @@ Rails.application.routes.draw do
   get '/about', to: 'welcome#about'
 
   get '/contact', to: 'welcome#contact'
+  
+  get '/usertest', to: 'useronly#usertest'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
