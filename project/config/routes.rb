@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-
-  devise_for :devise_users
-  devise_for :models
-  devise_for :users
+  devise_for :users, 
+              controllers:{sessions: 'users/sessions', 
+                           registrations: 'users/registrations', 
+                           confirmations: 'users/confirmations', 
+                           passwords: 'users/passwords', 
+                           unlocks: 'users/unlocks'}
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.

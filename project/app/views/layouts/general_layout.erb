@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Project</title>
-        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+        <title>Barebones GUI</title>
+        <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
         <%= csrf_meta_tags %>
     </head>
-      <% flash.each do |key, value| %>
+    <body>
+        <div class="navbar">
+            <%= link_to "Home", root_path %>
+            <%= link_to "Help", help_path %>
+        </div>
+        <% flash.each do |key, value| %>
 
-          <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+            <%= content_tag(:div, value, class: "alert alert-#{key}") %>
 
-      <% end %>
+        <% end %>
         <% if notice %>
             <p class="alert alert-success"><%= notice %></p>
         <% end %>
         <% if alert %>
             <p class="alert alert-danger"><%= alert %></p>
         <% end %>
-      <%= yield %>
+        
+        <%= yield %>
+    </body>
 
     </div>
 </html>
