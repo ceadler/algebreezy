@@ -9,22 +9,20 @@
 		- The first text box scrolls infinitely as more text is entered.
 		  This is a barebones emulation of the infinite piece of paper end-goal.
 -->
-    
-    <div class="main_content_wrapper">
-        <div>
-        <% if user_signed_in? %>
-            Logged in as <strong><%= current_user.email %></strong>.
-            <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-        <% else %>
-            <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-        <% end %>
-        </div>
-        
-        <div id="scratchpad"></div><br>
-        <label>Please enter an equation:</label>
-        <input type="text" id="myEquation">
-        <button onclick="display_equation()">Enter</button>
-    </div>
+<div>
+<% if user_signed_in? %>
+    Logged in as <strong><%= current_user.email %></strong>.
+    <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+    <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+    <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>
+</div>
+<p>You shouldn't have to be signed in to view this <a href="/usertest1">Link to usertest1</a> page, but if you are, it will note it!</p>
+<br>
+<div id="scratchpad"></div><br>
+<label>Please enter an equation:</label>
+<input type="text" id="myEquation">
+<button onclick="display_equation()">Enter</button>
 
