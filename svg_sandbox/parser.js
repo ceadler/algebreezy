@@ -105,7 +105,7 @@ case 17:
 this.$ = new FunctionNode($$[$0-3], $$[$0-1]);
 break;
 case 18:
-$$[$0-2].push($$[$0]); this.$=$$[$0-2];console.log('test', $$[$0-2], $$[$0], this.$);
+$$[$0-2].push($$[$0]); this.$=$$[$0-2];
 break;
 case 19:
 this.$ = [$$[$0]];
