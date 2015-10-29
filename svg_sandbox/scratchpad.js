@@ -4,4 +4,5 @@ function display_equation() {
     $("#scratchpad").text("\\( "+equations[0].toLatex()+" \\)");
     MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('scratchpad')]);
     console.log("testing2", $("#scratchpad").text());
+    drawTree();
 }
