@@ -11,6 +11,7 @@
 "/"                   return '/'
 "-"                   return '-'
 "+"                   return '+'
+","                   return ','
 "^"                   return '^'
 "("                   return '('
 ")"                   return ')'
@@ -84,7 +85,7 @@ function : WORD '(' params ')'
          ;
 
 params : params ',' expression
-                {$$ = $1.push($3);}
+                {$1.push($3); $$=$1;}
        | expression
                 {$$ = [$1];}
        ;

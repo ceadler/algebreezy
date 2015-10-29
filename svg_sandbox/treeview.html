@@ -1,10 +1,17 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src='./treeview.js'></script>
+        <script src='./node_data_structure.js'></script>
+        <script src='./parser.js'></script>
+        <script src='./scratchpad.js'></script>
+        <script src='./treeview.js'></script>       
+        <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
     </head>
     <body>
-        <svg id="svgelem" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <input id='myEquation'>
+    	<p id='scratchpad'></p>
+        <svg id="svgelem" style='height:400px; width:1000px; border:1px solid black;'
+             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g id="US">
                 <rect x='10' y='10' fill='#000000' height='100' width='100'></rect>
             </g>
