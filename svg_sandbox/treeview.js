@@ -68,7 +68,7 @@ $(document).ready(function(){
         draggingSVG = true;
         $("svg").css('cursor', '-webkit-grabbing');
     });
-    $(svg).on('mouseup', function(evt){
+    $(window).on('mouseup', function(evt){
         draggingSVG = false;
         $("svg").css('cursor', '-webkit-grab');
     });
