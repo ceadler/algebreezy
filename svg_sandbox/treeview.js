@@ -59,23 +59,19 @@ $(document).ready(function(){
     svg.appendChild(svggroup);
     svggroup.appendChild(newElement);
     $(svg).on('mousewheel DOMMouseScroll', function(evt){
-        var amount = evt.originalEvent.wheelDelta/120;
-        console.log('scroll detected', amount);
+        var amount = evt.originalEvent.wheelDelta;
         transformSVG(element=svggroup, scale=(amount >0 ? 6/5 : 5/6));
         evt.preventDefault();
     });
     $(svg).on('mousedown', function(evt){
-        console.log("MOUSE DOWN ON SVG!");
         lastMouseEvtPoint = getOffsetPoint(evt);
         draggingSVG = true;
     });
     $(svg).on('mouseup', function(evt){
-        console.log("MOUSE UP ON SVG!");
         draggingSVG = false;
     });
     $(svg).on('mousemove', function(evt){
         if(draggingSVG){
-            //console.log(evt);
             transformSVG(svggroup, 1, positionDelta(getOffsetPoint(evt), lastMouseEvtPoint));
             lastMouseEvtPoint = getOffsetPoint(evt);
         }
