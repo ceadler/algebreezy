@@ -66,9 +66,11 @@ $(document).ready(function(){
     $(svg).on('mousedown', function(evt){
         lastMouseEvtPoint = getOffsetPoint(evt);
         draggingSVG = true;
+        $("svg").css('cursor', '-webkit-grabbing');
     });
     $(svg).on('mouseup', function(evt){
         draggingSVG = false;
+        $("svg").css('cursor', '-webkit-grab');
     });
     $(svg).on('mousemove', function(evt){
         if(draggingSVG){
@@ -76,6 +78,7 @@ $(document).ready(function(){
             lastMouseEvtPoint = getOffsetPoint(evt);
         }
     });
+    $("svg").css('cursor', '-webkit-grab');
 });
     
 
@@ -128,6 +131,7 @@ function drawNode(node, svggroup, linegroup){
     circ.setAttribute("r", 25); //Set radius
     circ.style.stroke="#101020" //outline color
     circ.style.fill="#5050a0"   //fill color
+    $(circ).css('cursor', 'pointer');
     
     text.style['font-family']="Arial";
     text.style['font-size']="24";
@@ -136,6 +140,8 @@ function drawNode(node, svggroup, linegroup){
     text.setAttribute("x", node.position.x);
     text.setAttribute("y", node.position.y+50);
     text.style.fill="#f0f0f0"
+    $(text).css('cursor', 'pointer');
+    
     
     svggroup.appendChild(group);
     group.appendChild(circ);
