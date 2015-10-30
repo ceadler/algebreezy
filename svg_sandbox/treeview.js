@@ -23,6 +23,10 @@ function getOffsetPoint(mouseevent){
     return {x:mouseevent.offsetX, y:mouseevent.offsetY}
 }
 
+function getNegativeOffset(mouseevent){
+    return {x:-mouseevent.offsetX, y:-mouseevent.offsetY}
+}
+
 
 $(document).ready(function(){
     $("#US").click(function() {
@@ -60,8 +64,10 @@ $(document).ready(function(){
     svggroup.appendChild(newElement);
     $(svg).on('mousewheel DOMMouseScroll', function(evt){
         var amount = evt.originalEvent.wheelDelta;
-        transformSVG(element=svggroup, scale=(amount >0 ? 6/5 : 5/6));
         evt.preventDefault();
+        transformSVG(svggroup, 1, getOffsetPoint(evt));
+        transformSVG(element=svggroup, scale=(amount >0 ? 6/5 : 5/6));
+        transformSVG(svggroup, 1, getNegativeOffset(evt));
     });
     $(svg).on('mousedown', function(evt){
         lastMouseEvtPoint = getOffsetPoint(evt);
