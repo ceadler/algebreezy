@@ -1,4 +1,29 @@
 var equations = [];
+var svgscale = 1;
+var draggingSVG = false;
+var svgtranslate = {x:0, y:0}
+var lastMouseEvtPoint = {x:0, y:0}
+
+
+function transformSVG(element, scale, translate){
+    //console.log('transformsvg', scale, translate)
+    scale = (typeof scale !== 'undefined' ? scale : 1);
+    translate = (typeof translate !== 'undefined' ? translate : {x:0, y:0});
+    svgscale = svgscale*scale;
+    svgtranslate = {x:svgtranslate.x - (translate.x/svgscale), y:svgtranslate.y - (translate.y/svgscale)};
+    svggroup.setAttribute('transform', 
+        'scale('+String(svgscale)+') translate('+svgtranslate.x+','+svgtranslate.y+')')
+}
+
+function positionDelta(a, b){
+    return {x: b.x-a.x, y:b.y-a.y};
+}
+
+function getOffsetPoint(mouseevent){
+    return {x:mouseevent.offsetX, y:mouseevent.offsetY}
+}
+
+
 $(document).ready(function(){
     $("#US").click(function() {
         alert($(this).attr("id"));        
@@ -24,29 +49,55 @@ $(document).ready(function(){
             display_equation();
         }
     });
-    svg.appendChild(newElement);
+    svggroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+    svggroup.setAttribute('id', 'svggroup');
     svg.oncontextmenu = function (e) { //Prevents right-click context menu from popping up
         e.preventDefault();
         //console.log(e);
     };
+    transformSVG(svggroup, svgscale, svgtranslate);
+    svg.appendChild(svggroup);
+    svggroup.appendChild(newElement);
+    $(svg).on('mousewheel DOMMouseScroll', function(evt){
+        var amount = evt.originalEvent.wheelDelta/120;
+        console.log('scroll detected', amount);
+        transformSVG(element=svggroup, scale=(amount >0 ? 6/5 : 5/6));
+        evt.preventDefault();
+    });
+    $(svg).on('mousedown', function(evt){
+        console.log("MOUSE DOWN ON SVG!");
+        lastMouseEvtPoint = getOffsetPoint(evt);
+        draggingSVG = true;
+    });
+    $(svg).on('mouseup', function(evt){
+        console.log("MOUSE UP ON SVG!");
+        draggingSVG = false;
+    });
+    $(svg).on('mousemove', function(evt){
+        if(draggingSVG){
+            //console.log(evt);
+            transformSVG(svggroup, 1, positionDelta(getOffsetPoint(evt), lastMouseEvtPoint));
+            lastMouseEvtPoint = getOffsetPoint(evt);
+        }
+    });
 });
-
+    
 
 function drawTree(){
-    var svg = document.getElementsByTagName('svg')[0]; //Get svg element
-    while (svg.lastChild) {
-        svg.removeChild(svg.lastChild);//Remove all of the elements in the svg element, if there are any
+    var svggroup = document.getElementById('svggroup'); //Get svg element
+    while (svggroup.lastChild) {
+        svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
     }
     equations[0].initTree();//Initialize all of the data we need to draw the tree
     var linegroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
     //line group is a group containing all of the lines between nodes, specifically
     //put into the svg element first so that all of the lines are behind all
     //of the circles and text. Otherwise, you see the lines on top.
-    svg.appendChild(linegroup);
-    drawNode(equations[0], svg, linegroup);
+    svggroup.appendChild(linegroup);
+    drawNode(equations[0], svggroup, linegroup);
 }
 
-function drawNode(node, svg, linegroup){
+function drawNode(node, svggroup, linegroup){
     var group = document.createElementNS("http://www.w3.org/2000/svg", 'g');
     //g is a group containing circle and text. 
     //Putting them in a group helps deal with which one should overlap the other.
@@ -57,7 +108,7 @@ function drawNode(node, svg, linegroup){
         //Recursively draws every child, then puts a line 
         //from this node to the child node in a background "line group"
         var child = node.children()[child_index]
-        drawNode(child, svg, linegroup);
+        drawNode(child, svggroup, linegroup);
         
         var line = document.createElementNS("http://www.w3.org/2000/svg", 'path');
         line.setAttribute('d', ['M',node.position.x,node.position.y+50, 'L', child.position.x, child.position.y+50].join(' '));
@@ -90,7 +141,7 @@ function drawNode(node, svg, linegroup){
     text.setAttribute("y", node.position.y+50);
     text.style.fill="#f0f0f0"
     
-    svg.appendChild(group);
+    svggroup.appendChild(group);
     group.appendChild(circ);
     group.appendChild(text);
     
