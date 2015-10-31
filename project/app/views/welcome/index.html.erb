@@ -48,6 +48,7 @@
    border: 1px solid #8888bb;
    border-radius: 7pt;
    background: #ccccff;
+   word-wrap: break-word;
    -webkit-flex: 1 6 20%;
            flex: 1 6 20%;
    -webkit-order: 1;
@@ -60,6 +61,7 @@
    border: 1px solid #8888bb;
    border-radius: 7pt;
    background: #ccccff;
+   word-wrap: break-word;
    -webkit-flex: 1 6 20%;
            flex: 1 6 20%;
    -webkit-order: 3;
@@ -101,11 +103,14 @@
   <body>
  <header>header</header>
  <div id='main'>
-    <article>article</article>
+    <article id='article'>article</article>
     <nav>nav</nav>
     <aside>aside</aside>
  </div>
- <footer>footer</footer>
+ <footer><label>Please enter an equation:</label>
+    <input type="text" id="myEquation">
+    <button onclick="display_equation()">Enter</button>
+ </footer>
   </body>
 </html>
 	<title>Barebones GUI</title>
@@ -116,10 +121,10 @@
 </style>
 </head>
 <body background = "images/Dark-Blue-Abstract-Painting-14-Wallpaper-Background-Hd.jpg">
-    <div id="scratchpad"></div><br>
+    <!--<div id="scratchpad"></div><br>
     <label>Please enter an equation:</label>
 	<input type="text" id="myEquation">
-	<button onclick="display_equation()">Enter</button>
+	<button onclick="display_equation()">Enter</button>-->
 </body>
 </html>
 
