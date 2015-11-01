@@ -13,6 +13,8 @@
 ​<!DOCTYPE html>
 <html lang="en">
   <head>
+  <script src="angular.js"></script>
+  <script src="angular_js_script.js"></script>
     <style>
 
   body {
@@ -118,7 +120,7 @@
 <body background = "images/Dark-Blue-Abstract-Painting-14-Wallpaper-Background-Hd.jpg">
     <div id="scratchpad"></div><br>
     <label>Please enter an equation:</label>
-	<input type="text" id="myEquation">
+	<input type="text" id="myEquation" ng-keypress="onKeyPress($event)">
 	<button onclick="display_equation()">Enter</button>
 </body>
 </html>
