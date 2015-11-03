@@ -1,0 +1,25 @@
+<div>You accessed sampleGet!</div>
+<form action="/samplemodel" method="post">
+  <input name="say" value="Hi">
+  <input name="to" value="Mom">
+  <button>Send my greetings</button>
+</form>
+
+<a href='/samplemodel'>Back</a>
+<%= params[:say] %>
+<%= @potatotwo %>
+<br>
+<br>
+<% @allsamples.each do |sample| %>
+    <p> This is <%= sample.username %></p>
+<% end %>
+
+<% if user_signed_in? %>
+    Logged in as <strong><%= current_user.email %></strong>.
+    <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+<% else %>
+    <div>You are not signed in!</div>
+    <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+    <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>

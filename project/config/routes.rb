@@ -22,6 +22,10 @@ Rails.application.routes.draw do
   get '/usertest1', to: 'welcome#usertest1'
   
   get '/usertest2', to: 'useronly#usertest2'
+  
+  get '/samplemodel', to: 'welcome#sampleget'
+  
+  post '/samplemodel', to: 'welcome#samplepost'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
