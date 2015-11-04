@@ -11,7 +11,17 @@
 
         <div class="container">
             <nav class="navbar">
-               <ul>
+            		
+				<%-# first way of creating a clickable image (commented out) -%>
+				<% if false %>
+				<a href="http://localhost:3000" class="svg">
+  				<object data="/assets/Algebreezy_draft.svg" type="image/svg+xml" class="mailicon">
+  				</object>
+				</a>
+				<% end %>
+
+		<div>
+		<ul>
   			<li>
    			 More
     		<ul>
@@ -20,33 +30,26 @@
       		<li><%= link_to "Contact", contact_path %></li>
       		<li><%= link_to "Help", help_path %></li>
       
-   		 </ul>
-  		</li>
-		</ul>
-		
-<%-# first way of creating a clickable image -%>
-<a href="http://localhost:3000" class="svg">
-  <object data="/assets/Algebreezy_draft.svg" type="image/svg+xml" class="mailicon">
-  </object>
-</a>
-<div>
-  <img src="/assets/Algebreezy_draft.svg" style="width:30px;height:60px;vertical-align:middle">
-  <span style="">Works.</span>
-</div>
+   		    </ul>
+  			</li>
+  		</ul>
+  		<%-# second way of creating a clickable image -%>
+		<a href="http://localhost:3000" class="svg">
+  		<img src="/assets/Algebreezy_draft.svg" style="width:650px;height:40px;vertical-align:middle">
+  		</a>
+  		<%-#place holders for login and logout button -%>
+  		&nbsp;&nbsp;&nbsp;&nbsp;
+    	<a href ="" align="right">Login</a>
+        <a href ="" align="right">Logout</a>
 
-<% if false %>
-second way of creating a clickable image, link_to_image is initialized in application_helper.rb
-<%= link_to_image("Algebreezy_draft.svg", "http://localhost:3000") %> 
+	  </div>
 
-third way of creating a clickable image
-<a href="http://localhost:3000"> 
-<img src="/assets/Algebreezy_draft.svg"/></a>
-<% end %>
+		<% if false %>
+		third way of creating a clickable image, link_to_image is initialized in application_helper.rb
+		(commented out)
+		<%= link_to_image("Algebreezy_draft.svg", "http://localhost:3000") %> 
+		<% end %>
 
-		<div class="right">
-        <a href ="">Login</a>
-        <a href ="">Logout</a>
-    	</div>
     	
             </nav>
         </div>

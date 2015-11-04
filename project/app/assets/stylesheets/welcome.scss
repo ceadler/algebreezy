@@ -59,14 +59,12 @@ body{
   		color: #fff;
 	}
 
-.right {
-    text-align: right;
-    float: right;
-}
 
 a.svg {
+	margin-left:2em;
  	position: relative;
  	display: inline-block; 
+
 }
 
 a.svg:after {
