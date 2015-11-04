@@ -13,8 +13,8 @@
 ​<!DOCTYPE html>
 <html lang="en">
   <head>
-  <script src="angular.js"></script>
-  <script src="angular_js_script.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="app.js"></script>
     <style>
 
   body {
@@ -100,10 +100,10 @@
 
  </style>
   </head>
-  <body>
+  <body ng-app="Algebreezy" ng-controller="MainCtrl">
  <header>header</header>
  <div id='main'>
-    <article>article</article>
+    <article>article{{test}}</article>
     <nav>nav</nav>
     <aside>aside</aside>
  </div>
@@ -121,7 +121,7 @@
     <div id="scratchpad"></div><br>
     <label>Please enter an equation:</label>
 	<input type="text" id="myEquation" ng-keypress="onKeyPress($event)">
-	<button onclick="display_equation()">Enter</button>
+	<button ng-click="display_equation()">Enter</button>
 </body>
 </html>
 
