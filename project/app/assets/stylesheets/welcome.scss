@@ -7,6 +7,8 @@ body {
     background-color: #eee; 
     padding: 25px; 
     //font: 24px Helvetica;
+    height: 100%;
+    width: 100%;
 }
 
 .navbar {
@@ -24,8 +26,28 @@ body {
     }
 }
 
+#equation_view {
+  background-color: yellow;
+  width: 50%;
+  height: 490px;
+  background: rgba(220,220,220,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 4px;
+}
+
+#tree_view {
+  background-color: skyblue;
+  width: 50%;
+  height: 490px;
+  background: rgba(220,220,220,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 4px;
+}
+
 #scratchpad_flex {
-   min-height: 600px;
+   min-height: 500px;
    margin: 0px;
    padding: 0px;
    display: -webkit-flex;
@@ -100,14 +122,14 @@ body {
     }
 }
 
-
-
-#scratchpad_flex > article {
+#scratchpad_view {
    margin: 4px;
-   padding: 5px;
-   border: 1px solid #cccc33;
+   padding: 8px;
+   height: 500px;
    border-radius: 7pt;
-   background: #dddd88;
+   background: rgba(100,100,100,0.9); 
+   display: flex;
+   justify-content: space-between;
    -webkit-flex: 3 1 60%;
            flex: 3 1 60%;
    -webkit-order: 2;
@@ -146,7 +168,7 @@ header, footer {
             flex-direction: column;
    }
 
-   #scratchpad_flex > article, #scratchpad_flex > nav, #scratchpad_flex > aside {
+   #scratchpad_flex > #scratchpad_view, #scratchpad_flex > nav, #scratchpad_flex > aside {
     /* Return them to document order */
     -webkit-order: 0;
             order: 0;
