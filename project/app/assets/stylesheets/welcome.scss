@@ -24,7 +24,7 @@ body {
     }
 }
 
-#main {
+#scratchpad_flex {
    min-height: 600px;
    margin: 0px;
    padding: 0px;
@@ -34,7 +34,7 @@ body {
            flex-flow: row;
 }   
 
-#main > nav {
+#scratchpad_flex > nav {
     margin: 4px;
     padding: 5px;
     border: 1px solid #8888bb;
@@ -102,7 +102,7 @@ body {
 
 
 
-#main > article {
+#scratchpad_flex > article {
    margin: 4px;
    padding: 5px;
    border: 1px solid #cccc33;
@@ -114,7 +114,7 @@ body {
            order: 2;
 }
 
-#main > aside {
+#scratchpad_flex > aside {
    margin: 4px;
    padding: 5px;
    border: 1px solid #8888bb;
@@ -141,18 +141,18 @@ header, footer {
 /* Too narrow to support three columns */
 @media all and (max-width: 1300px) {
   
-   #main, #page {
+   #scratchpad_flex, #page {
     -webkit-flex-flow: column;
             flex-direction: column;
    }
 
-   #main > article, #main > nav, #main > aside {
+   #scratchpad_flex > article, #scratchpad_flex > nav, #scratchpad_flex > aside {
     /* Return them to document order */
     -webkit-order: 0;
             order: 0;
    }
   
-   #main > nav, #main > aside, header, footer {
+   #scratchpad_flex > nav, #scratchpad_flex > aside, header, footer {
     min-height: 50px;
     flex: 0 0 auto;
    }

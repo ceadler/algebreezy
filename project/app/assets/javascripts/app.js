@@ -1,4 +1,4 @@
-angular.module('Algebreezy', [])
+/*angular.module('Algebreezy', [])
 .controller('MainCtrl', [
 '$scope',
 function($scope){
@@ -19,4 +19,4 @@ function($scope){
   		angular.noop;
   	}
   }
-}]);
+}]);*/

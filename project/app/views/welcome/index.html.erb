@@ -9,38 +9,39 @@
 	Notes:
 		- The first text box scrolls infinitely as more text is entered.
 		  This is a barebones emulation of the infinite piece of paper end-goal.
--->
-​<!DOCTYPE html>
-<html lang="en">
-  <head>
-  </head>
-  <body>
- <header>header</header>
- <div id='main'>
-    <article id='article'></article>
-    <nav><button type="button" class="button1">Click Me!</button>
+    -->
+    ​<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+      <script src="scratchpad.js"></script>
+    </head>
+    <body ng-app="Algebreezy" ng-controller="MainCtrl">
+     <header>header</header>
+     <div id='scratchpad_flex'>
+      <article id='article'></article>
+      <nav><button type="button" class="button1">Click Me!</button>
         <button type="button" class="button1">Click Me!</button>
         <button type="button" class="button1">Click Me!</button>
         <button type="button" class="button1">Click Me!</button>
         <button type="button" class="button1">Click Me!</button>
         <button type="button" class="button1">Click Me!</button>
-    </nav>
-    <aside>aside</aside>
- </div>
- <footer><label>Please enter an equation:</label>
-    <input type="text" id="myEquation">
-    <button onclick="display_equation()">Enter</button>
- </footer>
+      </nav>
+      <aside>aside</aside>
+    </div>
+    <footer>
+      <label>Please enter an equation:</label>
+      <input type="text" id="myEquation" ng-keypress="displayEqnKey($event)">
+      <button ng-click="display_equation()">Enter</button>
+    </footer>
   </body>
-</html>
-	<title>Barebones GUI</title>
-    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
+  </html>
+  <title>Barebones GUI</title>
+  <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
 </style>
 </head>
-<body background = "images/Dark-Blue-Abstract-Painting-14-Wallpaper-Background-Hd.jpg">
-</body>
 </html>
 
