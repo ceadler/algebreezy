@@ -57,12 +57,14 @@ text-align:center;
 	ul li ul li { 
   		background: #555; 
   		display: block; 
-  		color: #fff;
+  		//color: #fff;
+  		text-align: left;
+  		
 	}
 
 
 a.svg {
-	margin-left:2em;
+	margin-left:1em;
  	position: relative;
  	display: inline-block; 
 
@@ -77,6 +79,22 @@ a.svg:after {
   	left:0;
 }
 
+.button{
+	//button style
+	//display: block;
+    height: 25px;
+    width: 75px;
+    background: #34696f;
+     
+    /*Step 3: Text Styles*/
+    color: rgba(0, 0, 0, 0.55);
+    text-align: center;
+
+}
+
+a.button {
+    text-decoration: none;
+}
 }
 
 #scratchpad {
