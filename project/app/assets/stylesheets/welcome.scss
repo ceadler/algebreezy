@@ -15,6 +15,7 @@ body {
     padding: 4px;
     margin: 4px;
     border-radius: 4px;
+    text-align:center;
     a{
         box-sizing: content-box;
         border: 1px solid #404040;
@@ -24,10 +25,83 @@ body {
         transition: box-shadow 0.3s, background-color;
         box-shadow: -1px 1px 1px 0px rgba(80, 80, 80, 0.5), inset  -1px 1px 3px 3px rgba(255, 255, 255, 0.8), inset  1px -1px 3px 3px rgba(128, 128, 128, 0.5)
     }
+    
     a:hover {
         box-shadow:inset  -1px 1px 4px 2px rgba(255, 255, 255, 1), inset 1px -1px 2px 2px rgba(128, 128, 128, 0.3);
         background-color: #f0f0d0;
     }
+    
+	ul {
+  		display: inline;
+  		padding: 15px 4px 7px 0;
+	}
+	
+	ul li {
+  		display: inline-block;
+  		position: relative;
+  		padding: 15px 20px;
+	}
+	
+	ul li:hover {
+  		background: #555;
+  		color: #fff;
+	}
+	
+	ul li ul {
+ 		padding: 0;
+  		position: absolute;
+  		top: 48px;
+  		left: 0;
+  		width: 150px;
+  		visibility: hidden;
+  		
+	}
+	 
+	ul li:hover ul {
+  		visibility: visible;
+	}
+	
+	ul li ul li { 
+  		background: #555; 
+  		display: block; 
+  		//color: #fff;
+  		text-align: left;
+  		
+	}
+
+
+a.svg {
+	margin-left:1em;
+ 	position: relative;
+ 	display: inline-block; 
+
+}
+
+a.svg:after {
+  	content: ""; 
+  	position: absolute;
+  	top: 0;
+  	right: 0;
+  	bottom: 0;
+  	left:0;
+}
+
+.button{
+	//button style
+	//display: block;
+    height: 25px;
+    width: 75px;
+    //background: #34696f;
+     
+    /*Step 3: Text Styles*/
+    color: rgba(0, 0, 0, 0.55);
+    text-align: center;
+
+}
+
+a.button {
+    text-decoration: none;
+}
 }
 
 #equation_view {
