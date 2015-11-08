@@ -3,9 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-body{ 
-    background-color: #eee; 
+body {
     padding: 25px; 
+    //font: 24px Helvetica;
+    height: 100%;
+    //width: 100%;
 }
 
 .navbar {
@@ -28,25 +30,83 @@ body{
     }
 }
 
-#scratchpad {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid black;
+#equation_view {
+  /*background-color: yellow;
+  width: 50%;
+  height: 490px;
+  background: rgba(220,220,220,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 4px;*/
+
+  background: white;
+  border: 1px solid #EEEEEE;
+  box-shadow: 1px 1px 0 #DDDDDD;
+  display: block;
+  //font-family: 'Marck Script',cursive;
+  font-size: 22px;
+  line-height: 50px;
+  border-radius: 5px;
+  padding: 5px;
+  resize: none;
+  height: 490px;
+  width: 50%;
+
+  // The horizontal lines
+  background-image: -moz-linear-gradient(top , transparent, transparent 49px,#91D1D3 0px), -moz-radial-gradient(4% 50%, circle closest-corner, #f5f5f5, #f5f5f5 39%, transparent 0%), -moz-radial-gradient(3.9% 46% , circle closest-corner, #CCCCCC, #CCCCCC 43.5%, transparent 0%); 
+
+  // The holes
+  background-image: -webkit-linear-gradient(top , transparent, transparent 49px,#91D1D3 0), -webkit-radial-gradient(4% 50%, circle closest-corner, rgba(100,100,100,0.9), rgba(100,100,100,0.9) 39%, transparent 0%), -webkit-radial-gradient(3.9% 46%, circle closest-corner, #cccccc, #cccccc 43.5%, transparent 0%);
+
+  -webkit-background-size:  100% 50px;
+  background-size: 100% 50px;
+
+}
+
+#tree_view {
+  background-color: skyblue;
+  width: 50%;
+  height: 490px;
+  background: rgba(220,220,220,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 4px;
+}
+
+#scratchpad_flex {
+   min-height: 500px;
+   margin: 0px;
+   padding: 0px;
+   display: -webkit-flex;
+   display:         flex;
+   -webkit-flex-flow: row;
+           flex-flow: row;
+}   
+
+#scratchpad_flex > nav {
+    margin: 4px;
+    padding: 5px;
+    border: 1px solid #8888bb;
+    border-radius: 7pt;
+    background: #ccccff;
+    word-wrap: break-word;
+    -webkit-flex: 1 6 20%;
+           flex: 1 6 20%;
+    -webkit-order: 1;
+           order: 1;
+    flex: 0 0 150px;
+
+    .button1 {
     display: inline-block;
     min-width: 100px;
     text-align: center;
     background-color: #f0f0d0;
+    }
 }
 
 body {
    background: image-url("Dark-Blue-Abstract-Painting-14-Wallpaper-Background-Hd.jpg");
-}
-
-.main_content_wrapper {
-    background-color: rgba(200, 200, 200, 0.9);
-    padding: 5px;
-    dislay: inline-block;
-    border-radius: 5px;
+   background-color: #ff0000;
 }
 
 .body_content {
@@ -56,5 +116,111 @@ body {
     border-radius: 5px;
 }
 
-nav {
+.button1 {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    margin-bottom: 20px;
+    color: #ccc;
+    background-color: #555;
+    background: -webkit-linear-gradient(#888, #555);
+    background: linear-gradient(#888, #555);
+    border: 0 none;
+    border-radius: 3px;
+    text-shadow: 0 -1px 0 #000;
+    box-shadow: 0 1px 0 #666, 0 5px 0 #444, 0 6px 6px rgba(0,0,0,0.6);
+    cursor: pointer;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+    overflow: hidden;
+
+    .button1:hover, button:focus
+    {
+        -webkit-animation: pulsate 1.2s linear infinite;
+        animation: pulsate 1.2s linear infinite;
+    }
+
+    @-webkit-keyframes pulsate
+    {
+        0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+        50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+        100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+    }
+            
+    @keyframes pulsate
+    {
+        0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+        50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+        100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+    }
+
+    .button1:active
+    {
+        color: #fff;
+        text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff;
+        box-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 2px 2px rgba(0,0,0,0.9);
+        -webkit-transform: translateY(3px);
+        transform: translateY(3px);
+        -webkit-animation: none;
+        animation: none;
+    }
+}
+
+#scratchpad_view {
+   margin: 4px;
+   padding: 8px;
+   height: 500px;
+   border-radius: 7pt;
+   background: rgba(100,100,100,0.9); 
+   display: flex;
+   justify-content: space-between;
+   -webkit-flex: 3 1 60%;
+           flex: 3 1 60%;
+   -webkit-order: 2;
+           order: 2;
+}
+
+#scratchpad_flex > aside {
+   margin: 4px;
+   padding: 5px;
+   border: 1px solid #8888bb;
+   border-radius: 7pt;
+   background: #ccccff;
+   word-wrap: break-word;
+   -webkit-flex: 1 6 20%;
+           flex: 1 6 20%;
+   -webkit-order: 3;
+           order: 3;
+    flex: 0 0 150px;
+}
+
+header, footer {
+   display: block;
+   margin: 4px;
+   padding: 5px;
+   //min-height: 100px;
+   border: 1px solid #eebb55;
+   border-radius: 7pt;
+   background: #ffeebb;
+}
+
+/* Too narrow to support three columns */
+@media all and (max-width: 1300px) {
+  
+   #scratchpad_flex, #page {
+    -webkit-flex-flow: column;
+            flex-direction: column;
+   }
+
+   #scratchpad_flex > #scratchpad_view, #scratchpad_flex > nav, #scratchpad_flex > aside {
+    /* Return them to document order */
+    -webkit-order: 0;
+            order: 0;
+   }
+  
+   #scratchpad_flex > nav, #scratchpad_flex > aside, header, footer {
+    min-height: 50px;
+    flex: 0 0 auto;
+   }
 }

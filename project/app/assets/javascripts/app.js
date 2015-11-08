@@ -1,13 +1,13 @@
-angular.module('Algebreezy', [])
+/*angular.module('Algebreezy', [])
 .controller('MainCtrl', [
 '$scope',
 function($scope){
 
   $scope.display_equation = function() {
   	console.log("testing1");
-    $("#equation_view").append("\\( "+parser.parse($("#myEquation").val()).toLatex()+" \\)<br>");
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
-    console.log("testing2", $("#equation_view").text());
+    $("#article").append("\\( "+parser.parse($("#myEquation").val()).toLatex()+" \\)<br>");
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('article')]);
+    console.log("testing2", $("#article").text());
   }
 
   $scope.displayEqnKey = function($event) {
@@ -19,4 +19,4 @@ function($scope){
   		angular.noop;
   	}
   }
-}]);
+}]);*/
