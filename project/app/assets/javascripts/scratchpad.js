@@ -165,11 +165,26 @@ function($scope){
 
     $scope.display_equation = function() {
         console.log("testing1");
-        equations[0] = parser.parse($("#myEquation").val());
-        $("#equation_view").append("\\( "+equations[0].toLatex()+" \\)<br>");
+        thisEqn = parser.parse($("#myEquation").val())
+        equations.push(thisEqn);
+        $("#equation_view").append("\\( "+thisEqn.toLatex()+" \\)<br>");
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
         console.log("testing2", $("#equation_view").text());
         drawTree();
+    }
+
+    $scope.request_save = function() {
+        //turn equations into JSON
+        //display "data is being saved"
+        //send JSON to server
+        $.ajax({
+            url: "/save_scratchpad_data",
+            type: 'post',
+            data: {test: "hello!", equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';')},
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            success: function(data){console.log(data);}
+        })
+        //display "save successful" or "save unsuccessful!"
     }
 
     $scope.displayEqnKey = function($event) {

@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-    skip_before_filter :verify_authenticity_token
+    #skip_before_filter :verify_authenticity_token
     def index
         render layout: 'general_layout'
     end
@@ -18,6 +18,12 @@ class WelcomeController < ApplicationController
     end
 
     def contact
+    end
+
+    def save_scratchpad_data
+        instring = params[:test] + "instring_teststring"
+        eqns = params[:equations]
+        render :text => instring + eqns, :layout => false
     end
 
     def sampleget

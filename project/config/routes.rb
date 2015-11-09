@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   get '/samplemodel', to: 'welcome#sampleget'
   
   post '/samplemodel', to: 'welcome#samplepost'
+  
+  post '/save_scratchpad_data', to: 'welcome#save_scratchpad_data'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

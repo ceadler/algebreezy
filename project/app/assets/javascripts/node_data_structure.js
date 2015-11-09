@@ -58,6 +58,7 @@ function EquationNodeProto(left, right) {
 	this.toEval = function() {
 	}
 	this.toPlainText = function() {
+        return this.left.toPlainText() + "=" + this.right.toPlainText();
 	}
 	this.isEqual = function() {
 	}
@@ -71,7 +72,7 @@ function EquationNodeProto(left, right) {
     }
     this.initTree = function(){
         this.setDepth();
-        this.setParent(null);
+        //this.setParent(null);
         this.calculateLeafIndex();
         this.setPosition();
     }
@@ -105,6 +106,7 @@ function OpNodeProto(op, left, right) {
 	this.toEval = function() {
 	}
 	this.toPlainText = function() {
+        return this.left.toPlainText() + this.op + this.right.toPlainText();
 	}
 	this.isEqual = function() {
 	}
@@ -127,6 +129,7 @@ function ParensNodeProto(child) {
 	this.toEval = function() {
 	}
 	this.toPlainText = function() {
+        return '(' + this.child.toPlainText() + ')';
 	}
 	this.isEqual = function() {
 	}
@@ -149,6 +152,7 @@ function FunctionNodeProto(name, params) {
 	this.toEval = function() {
 	}
 	this.toPlainText = function() {
+		return this.name + "(" + this.params.map(function(node){return node.toPlainText()}).join(',') + ")";
 	}
 	this.isEqual = function() {
 	}
@@ -171,6 +175,7 @@ function VarNodeProto(name){
 	this.toEval = function() {
 	}
 	this.toPlainText = function() {
+		return this.name;
 	}
 	this.isEqual = function() {
 	}
@@ -197,6 +202,7 @@ function NumberNodeProto(value) {
 	this.toEval = function() {
 	}
 	this.toPlainText = function() {
+		return this.value.toString();
 	}
 	this.isEqual = function() {
 	}
