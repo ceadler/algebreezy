@@ -79,17 +79,18 @@ $(document).ready(function(){
 });
 
 function drawTree(){
+    var equation = equations[equations.length -1]
     var svggroup = document.getElementById('svggroup'); //Get svg element
     while (svggroup.lastChild) {
         svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
     }
-    equations[0].initTree();//Initialize all of the data we need to draw the tree
+    equation.initTree();//Initialize all of the data we need to draw the tree
     var linegroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
     //line group is a group containing all of the lines between nodes, specifically
     //put into the svg element first so that all of the lines are behind all
     //of the circles and text. Otherwise, you see the lines on top.
     svggroup.appendChild(linegroup);
-    drawNode(equations[0], svggroup, linegroup);
+    drawNode(equation, svggroup, linegroup);
 }
 
 function drawNode(node, svggroup, linegroup){
@@ -167,7 +168,7 @@ function($scope){
         console.log("testing1");
         thisEqn = parser.parse($("#myEquation").val())
         equations.push(thisEqn);
-        $("#equation_view").append("\\( "+thisEqn.toLatex()+" \\)<br>");
+        $("#equation_view").append('<div class="equation_line"> \\( '+thisEqn.toLatex()+" \\) </div>");
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
         console.log("testing2", $("#equation_view").text());
         drawTree();

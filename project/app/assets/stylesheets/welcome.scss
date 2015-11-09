@@ -10,6 +10,10 @@ body {
     //width: 100%;
 }
 
+.equation_line {
+    margin-left: 25px;
+}
+
 .navbar {
     background-color: rgba(128, 128, 128, 0.9);
     padding: 4px;
@@ -24,51 +28,41 @@ body {
         background-color: #e0e0e0;
         transition: box-shadow 0.3s, background-color;
         box-shadow: -1px 1px 1px 0px rgba(80, 80, 80, 0.5), inset  -1px 1px 3px 3px rgba(255, 255, 255, 0.8), inset  1px -1px 3px 3px rgba(128, 128, 128, 0.5)
-    }
-    
+        }    
     a:hover {
         box-shadow:inset  -1px 1px 4px 2px rgba(255, 255, 255, 1), inset 1px -1px 2px 2px rgba(128, 128, 128, 0.3);
         background-color: #f0f0d0;
-    }
-    
+    }    
 	ul {
   		display: inline;
   		padding: 15px 4px 7px 0;
-	}
-	
+	}	
 	ul li {
   		display: inline-block;
   		position: relative;
   		padding: 15px 20px;
-	}
-	
+	}	
 	ul li:hover {
   		background: #555;
   		color: #fff;
-	}
-	
+	}	
 	ul li ul {
  		padding: 0;
   		position: absolute;
   		top: 48px;
   		left: 0;
   		width: 150px;
-  		visibility: hidden;
-  		
-	}
-	 
+  		visibility: hidden;  		
+	}	 
 	ul li:hover ul {
   		visibility: visible;
-	}
-	
+	}	
 	ul li ul li { 
   		background: #555; 
   		display: block; 
   		//color: #fff;
-  		text-align: left;
-  		
+  		text-align: left;  		
 	}
-
 
 a.svg {
 	margin-left:1em;
@@ -104,49 +98,6 @@ a.button {
 }
 }
 
-#equation_view {
-  /*background-color: yellow;
-  width: 50%;
-  height: 490px;
-  background: rgba(220,220,220,0.9); 
-  border-radius: 5px;
-  padding: 5px;
-  margin-right: 4px;*/
-
-  background: white;
-  border: 1px solid #EEEEEE;
-  box-shadow: 1px 1px 0 #DDDDDD;
-  display: block;
-  //font-family: 'Marck Script',cursive;
-  font-size: 22px;
-  line-height: 50px;
-  border-radius: 5px;
-  padding: 5px;
-  resize: none;
-  height: 490px;
-  width: 50%;
-
-  // The horizontal lines
-  background-image: -moz-linear-gradient(top , transparent, transparent 49px,#91D1D3 0px), -moz-radial-gradient(4% 50%, circle closest-corner, #f5f5f5, #f5f5f5 39%, transparent 0%), -moz-radial-gradient(3.9% 46% , circle closest-corner, #CCCCCC, #CCCCCC 43.5%, transparent 0%); 
-
-  // The holes
-  background-image: -webkit-linear-gradient(top , transparent, transparent 49px,#91D1D3 0), -webkit-radial-gradient(4% 50%, circle closest-corner, rgba(100,100,100,0.9), rgba(100,100,100,0.9) 39%, transparent 0%), -webkit-radial-gradient(3.9% 46%, circle closest-corner, #cccccc, #cccccc 43.5%, transparent 0%);
-
-  -webkit-background-size:  100% 50px;
-  background-size: 100% 50px;
-
-}
-
-#tree_view {
-  background-color: skyblue;
-  width: 50%;
-  height: 490px;
-  background: rgba(220,220,220,0.9); 
-  border-radius: 5px;
-  padding: 5px;
-  margin-left: 4px;
-}
-
 #scratchpad_flex {
    min-height: 500px;
    margin: 0px;
@@ -155,14 +106,28 @@ a.button {
    display:         flex;
    -webkit-flex-flow: row;
            flex-flow: row;
-}   
+} 
 
-#scratchpad_flex > nav {
+#scratchpad_view {
+   margin: 4px;
+   padding: 8px;
+   height: 500px;
+   border-radius: 7pt;
+   background: rgba(100,100,100,0.9); 
+   display: flex;
+   justify-content: space-between;
+   -webkit-flex: 3 1 60%;
+           flex: 3 1 60%;
+   -webkit-order: 2;
+           order: 2;
+}  
+
+#sidebar-left {
     margin: 4px;
     padding: 5px;
-    border: 1px solid #8888bb;
     border-radius: 7pt;
-    background: #ccccff;
+   background: rgba(250, 250, 250, 0.9);
+   box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.8);
     word-wrap: break-word;
     -webkit-flex: 1 6 20%;
            flex: 1 6 20%;
@@ -178,9 +143,77 @@ a.button {
     }
 }
 
+#sidebar-right {
+   margin: 4px;
+   padding: 5px;
+   border-radius: 7pt;
+   background: rgba(250, 250, 250, 0.9);
+   box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.8);
+   word-wrap: break-word;
+   -webkit-flex: 1 6 20%;
+           flex: 1 6 20%;
+   -webkit-order: 3;
+           order: 3;
+    flex: 0 0 150px;
+}
+
+#equation_view {
+  /*background-color: yellow;
+  width: 50%;
+  height: 490px;
+  background: rgba(220,220,220,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 4px;*/
+
+  background: rgba(250,250,250,0.9); 
+  border: 1px solid #EEEEEE;
+  box-shadow: 0px 0px 1px 0px rgba(250,250,250,0.9);
+  display: block;
+  font-size: 22px;
+  line-height: 50px;
+  border-radius: 5px;
+  padding: 5px;
+  resize: none;
+  height: 490px;
+  width: 50%;
+  overflow: auto;
+
+  // The horizontal lines
+  //background-image: -moz-linear-gradient(top , transparent, transparent 49px,#91D1D3 0px), -moz-radial-gradient(4% 50%, circle closest-corner, #f5f5f5, #f5f5f5 39%, transparent 0%), -moz-radial-gradient(3.9% 46% , circle closest-corner, #CCCCCC, #CCCCCC 43.5%, transparent 0%); 
+
+  // The holes
+  //background-image: -webkit-linear-gradient(top , transparent, transparent 49px,#91D1D3 0), -webkit-radial-gradient(4% 50%, circle closest-corner, rgba(100,100,100,0.9), rgba(100,100,100,0.9) 39%, transparent 0%), -webkit-radial-gradient(3.9% 46%, circle closest-corner, #cccccc, #cccccc 43.5%, transparent 0%);
+
+  //-webkit-background-size:  100% 50px;
+  //background-size: 100% 50px;
+
+}
+
+#tree_view {
+  box-shadow: 0px 0px 1px 0px rgba(250,250,250,0.9);
+  width: 50%;
+  height: 490px;
+  background: rgba(250,250,250,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 4px;
+}
+
+header, footer {
+   text-align: center;
+   display: block;
+   margin: 4px;
+   padding: 5px;
+   //min-height: 100px;
+   border-radius: 7pt;
+   background: rgba(250, 250, 250, 0.9);
+   box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.8);
+}
+
+
 body {
    background: image-url("Dark-Blue-Abstract-Painting-14-Wallpaper-Background-Hd.jpg");
-   background-color: #ff0000;
 }
 
 .body_content {
@@ -241,44 +274,6 @@ body {
     }
 }
 
-#scratchpad_view {
-   margin: 4px;
-   padding: 8px;
-   height: 500px;
-   border-radius: 7pt;
-   background: rgba(100,100,100,0.9); 
-   display: flex;
-   justify-content: space-between;
-   -webkit-flex: 3 1 60%;
-           flex: 3 1 60%;
-   -webkit-order: 2;
-           order: 2;
-}
-
-#scratchpad_flex > aside {
-   margin: 4px;
-   padding: 5px;
-   border: 1px solid #8888bb;
-   border-radius: 7pt;
-   background: #ccccff;
-   word-wrap: break-word;
-   -webkit-flex: 1 6 20%;
-           flex: 1 6 20%;
-   -webkit-order: 3;
-           order: 3;
-    flex: 0 0 150px;
-}
-
-header, footer {
-   display: block;
-   margin: 4px;
-   padding: 5px;
-   //min-height: 100px;
-   border: 1px solid #eebb55;
-   border-radius: 7pt;
-   background: #ffeebb;
-}
-
 /* Too narrow to support three columns */
 @media all and (max-width: 1300px) {
   
@@ -287,13 +282,13 @@ header, footer {
             flex-direction: column;
    }
 
-   #scratchpad_flex > #scratchpad_view, #scratchpad_flex > nav, #scratchpad_flex > aside {
+   #scratchpad_flex > #scratchpad_view, #sidebar-left, #sidebar-right {
     /* Return them to document order */
     -webkit-order: 0;
             order: 0;
    }
   
-   #scratchpad_flex > nav, #scratchpad_flex > aside, header, footer {
+   #sidebar-left, #sidebar-right, header, footer {
     min-height: 50px;
     flex: 0 0 auto;
    }

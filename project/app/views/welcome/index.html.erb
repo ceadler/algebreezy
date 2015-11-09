@@ -1,22 +1,25 @@
-    <div ng-app="Algebreezy" ng-controller="MainCtrl">
-     <header>header</header>
-     <div id='scratchpad_flex'>
-      <div id='scratchpad_view'>
-        <div id='equation_view' style="overflow:scroll">
+<div ng-app="Algebreezy" ng-controller="MainCtrl">
+    <header>header</header>
+    <div id='scratchpad_flex'>
+        <div id='scratchpad_view'>
+            <div id='equation_view'>
+            </div>
+            <div id='tree_view'>
+                <svg id="svgelem" style='height:100%; width:100%;'
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                </svg>
+            </div>
         </div>
-        <div id='tree_view'>
-            <svg id="svgelem" style='height:490; width:100%; border:1px solid black;'
-                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            </svg>
+        <div id="sidebar-left">
+            <button type="button" class="button1" ng-click="request_save()">Save</button>
         </div>
-      </div>
-      <nav><button type="button" class="button1" ng-click="request_save()">Save</button>
-      </nav>
-      <aside>aside</aside>
+        <div id="sidebar-right">
+            aside
+        </div>
     </div>
-    <footer>
-      <label>Please enter an equation:</label>
-      <input type="text" id="myEquation" ng-keypress="displayEqnKey($event)">
-      <button ng-click="display_equation()">Enter</button>
-    </footer>
-  </div>
+<footer>
+    <label>Please enter an equation:</label>
+    <input type="text" id="myEquation" ng-keypress="displayEqnKey($event)">
+    <button ng-click="display_equation()">Enter</button>
+</footer>
+</div>
