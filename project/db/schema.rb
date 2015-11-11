@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103205300) do
+ActiveRecord::Schema.define(version: 20151110191618) do
 
   create_table "devise_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -55,6 +55,19 @@ ActiveRecord::Schema.define(version: 20151103205300) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "scratchpads", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "owner_id"
+    t.boolean  "public"
+    t.string   "data"
+    t.integer  "sharedto_id"
+    t.datetime "creationtime"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "scratchpads", ["sharedto_id"], name: "index_scratchpads_on_sharedto_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

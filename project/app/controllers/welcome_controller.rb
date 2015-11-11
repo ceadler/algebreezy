@@ -21,9 +21,13 @@ class WelcomeController < ApplicationController
     end
 
     def save_scratchpad_data
-        instring = params[:test] + "instring_teststring"
-        eqns = params[:equations]
-        render :text => instring + eqns, :layout => false
+        title = params[:title]
+        owner = current_user
+        isPublic = params[:isPublic]
+        scratch_data = params[:equations]
+        shared_users = params[:shared_users]
+        date = DateTime.current
+        render :text => "Got data!" + title + isPublic + scratch_data + shared_users, :layout => false
     end
 
     def sampleget

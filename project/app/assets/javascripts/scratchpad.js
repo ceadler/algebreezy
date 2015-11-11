@@ -3,6 +3,8 @@ var svgscale = 1;
 var draggingSVG = false;
 var svgtranslate = {x:0, y:0}
 var lastMouseEvtPoint = {x:0, y:0}
+var scratchpad_title = "";
+var isPublic = false;
 
 function transformSVG(element, scale, translate){
     //console.log('transformsvg', scale, translate)
@@ -181,7 +183,11 @@ function($scope){
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
-            data: {test: "hello!", equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';')},
+            data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
+                   title: scratchpad_title,
+                   isPublic: false,
+                   shared_users: ""}
+                   ,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
             success: function(data){console.log(data);}
         })
