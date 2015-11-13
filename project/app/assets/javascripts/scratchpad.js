@@ -176,6 +176,11 @@ function($scope){
         drawTree();
     }
 
+    $scope.display_comment = function() {
+        console.log("fart");
+        $("#equation_view").append("<div class='comment_line'>" + document.getElementById("myComment").value + "</div>");
+    }
+
     $scope.request_save = function() {
         //turn equations into JSON
         //display "data is being saved"
@@ -198,6 +203,16 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("poop");
             $scope.display_equation();
+        }
+        else {
+            angular.noop;
+        }
+    }
+
+    $scope.displayCommentKey = function($event) {
+        if ($event.keyCode === 13) {
+          console.log("pee");
+            $scope.display_comment();
         }
         else {
             angular.noop;
