@@ -1,28 +1,14 @@
-<div ng-app="Algebreezy" ng-controller="MainCtrl">
-    <header>header</header>
-    <div id='scratchpad_flex'>
-        <div id='scratchpad_view'>
-            <div id='equation_view'>
-            </div>
-            <div id='tree_view'>
-                <svg id="svgelem" style='height:100%; width:100%;'
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                </svg>
-            </div>
-        </div>
-        <div id="sidebar-left">
-            <label><input type="checkbox" id="cbox1">Make public?This is a test</label>
-            <input type="text" id="scratchpad-title" placeholder="title">
-            <button type="button" class="button1" ng-click="request_save()">Save</button>
-        </div>
-        <div id="sidebar-right">
-            aside
-        </div>
-    </div>
-<footer>
-    <label>Please enter an equation:</label>
-    <input type="text" id="myEquation" ng-keypress="displayEqnKey($event)">
-    <button ng-click="display_equation()">Enter</button>
-</footer>
-</div>
-<script> var scratchpad_id = <%= scratchpad_id %> </script>
+<h1> Welcome to algebreezy! </h1>
+<% if user_signed_in? %>
+    Logged in as <strong><%= current_user.email %></strong>.
+    <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+    <form action="/create_scratchpad" method='POST'>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <label>Create a new scratchpad: <input type="submit" value="Create!"></label>
+    </form>
+<% else %>
+    <div>You are not signed in!</div>
+    <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+    <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+<% end %>

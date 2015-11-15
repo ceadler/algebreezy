@@ -180,13 +180,14 @@ function($scope){
         //turn equations into JSON
         //display "data is being saved"
         //send JSON to server
+        console.log("This is the value:",$('#scratchpad-public').is(":checked"))
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
             data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
                    id: scratchpad_id,
-                   title: scratchpad_title,
-                   isPublic: false,
+                   title: $('#scratchpad-title').val(),//scratchpad_title,
+                   isPublic: $('#scratchpad-public').is(":checked"),
                    shared_users: ""}
                    ,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},

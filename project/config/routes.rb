@@ -19,6 +19,8 @@ Rails.application.routes.draw do
 
   get '/contact', to: 'welcome#contact'
 
+  get '/scratchpad/:scratchpad_id', to: 'welcome#scratchpad'
+
   get '/usertest1', to: 'welcome#usertest1'
   
   get '/usertest2', to: 'useronly#usertest2'
@@ -28,6 +30,8 @@ Rails.application.routes.draw do
   post '/samplemodel', to: 'welcome#samplepost'
   
   post '/save_scratchpad_data', to: 'welcome#save_scratchpad_data'
+  
+  post '/create_scratchpad', to: 'welcome#create_scratchpad'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
