@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
 
-=======
   devise_for :users, 
               controllers:{sessions: 'users/sessions', 
                            registrations: 'users/registrations', 
@@ -15,22 +13,23 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+  root 'welcome#index'
 
-  get '/help', to: 'welcome#help'
 
   get '/about', to: 'welcome#about'
 
   get '/contact', to: 'welcome#contact'
+  
+  get '/help', to: 'welcome#help'
 
   get '/login', to: 'welcome#login'
   
   get '/logout', to: 'welcome#logout'
-  
-  get '/register', to: 'welcome#register'
-  
+
   get '/profile', to: 'welcome#profile'
   
+  get '/register', to: 'welcome#register'
+    
   get '/team', to: 'welcome#team'
   
   get '/tutorial', to: 'welcome#tutorial'
