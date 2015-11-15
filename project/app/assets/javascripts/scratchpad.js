@@ -201,7 +201,7 @@ function($scope){
                    shared_users: ""}
                    ,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-            success: function(data){console.log(data);}
+            success: function(data){window.alert(data);}
         })
         //display "save successful" or "save unsuccessful!"
     }
