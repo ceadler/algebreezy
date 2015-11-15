@@ -78,6 +78,16 @@ $(document).ready(function(){
         }
     });
     $("svg").css('cursor', '-webkit-grab');
+    
+    
+    
+    var split_eqns = initial_eqns_str.split(';')
+    for (var eqn in split_eqns){
+        equations[eqn] = parser.parse(split_eqns[eqn]);
+        $("#equation_view").append('<div class="equation_line"> \\( '+equations[eqn].toLatex()+" \\) </div>");
+    }
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
+    drawTree();
 });
 
 function drawTree(){
