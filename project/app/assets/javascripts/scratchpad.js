@@ -184,6 +184,7 @@ function($scope){
             url: "/save_scratchpad_data",
             type: 'post',
             data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
+                   id: scratchpad_id,
                    title: scratchpad_title,
                    isPublic: false,
                    shared_users: ""}

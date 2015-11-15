@@ -1,7 +1,19 @@
 class WelcomeController < ApplicationController
     #skip_before_filter :verify_authenticity_token
     def index
-        render layout: 'general_layout'
+        scratchpad = Scratchpad.find_by(id: 1)
+        if scratchpad != nil
+            render layout: 'general_layout', locals: {scratchpad_id:  scratchpad.id, 
+                                                      title:          scratchpad.title,
+                                                      owner:          scratchpad.owner,
+                                                      isPublic:       scratchpad.public,
+                                                      scratch_data:   scratchpad.data,
+                                                      shared_users:   scratchpad.shared_to,
+                                                      creation_date:  scratchpad.created_at
+                                                      }
+        else
+            render layout: 'general_layout', locals: {scratchpad_id:  1}
+        end
     end
 
     def usertest1
@@ -21,13 +33,23 @@ class WelcomeController < ApplicationController
     end
 
     def save_scratchpad_data
-        title = params[:title]
-        owner = current_user
-        isPublic = params[:isPublic]
-        scratch_data = params[:equations]
-        shared_users = params[:shared_users]
-        date = DateTime.current
-        render :text => "Got data!" + title + isPublic + scratch_data + shared_users, :layout => false
+        if user_signed_in?
+            scratchpad_id = params[:scratchpad_id]
+            title = params[:title]
+            owner = current_user.id
+            isPublic = params[:isPublic]
+            scratch_data = params[:equations]
+            shared_users = params[:shared_users]
+            date = DateTime.current
+        
+        
+            scratchpad = Scratchpad.find_by(id: scratchpad_id)
+            
+            
+            render :text => "Got data!" + title + isPublic + scratch_data + shared_users, :layout => false
+        else
+            render :nothing => true
+        end
     end
 
     def sampleget
