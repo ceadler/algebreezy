@@ -4,53 +4,37 @@
         <title>Barebones GUI</title>
         <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
         <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
         <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
         <%= csrf_meta_tags %>
     </head>
-    <body><nav class="navbar">
-            		
-				<%-# first way of creating a clickable image (commented out) -%>
-				<% if false %>
-				<a href="http://localhost:3000" class="svg">
-  				<object data="/assets/Algebreezy_draft.svg" type="image/svg+xml" class="mailicon">
-  				</object>
-				</a>
-				<% end %>
+    <body>
+        <nav class="navbar">
 
-		<div>
-		<ul>
-  			<li>
-   			 <a href ="" class = "button">More</a>
-    		<ul>
-      		<li><%= link_to "Home", root_path %></li>
-      		<li><%= link_to "About", about_path %></li>
-      		<li><%= link_to "Contact", contact_path %></li>
-      		<li><%= link_to "Help", help_path %></li>
-      
-   		    </ul>
-  			</li>
-  		</ul>
-  		<%-# second way of creating a clickable image -%>
-		<a href="http://localhost:3000" class="svg">
-  		<img src="/assets/Algebreezy_draft.svg" style="width:650px;height:40px;vertical-align:middle">
-  		</a>
-  		<%-#place holders for login and logout button -%>
-  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	<a href ="" class = "button">Login</a>
-        <a href ="" class = "button" >Logout</a>
+            <div>
+            <ul>
+                <li>
+                 <a href ="" class = "button">More</a>
+                <ul>
+                <li><%= link_to "Home", root_path %></li>
+                <li><%= link_to "About", about_path %></li>
+                <li><%= link_to "Contact", contact_path %></li>
+                <li><%= link_to "Help", help_path %></li>
+          
+                </ul>
+                </li>
+            </ul>
+            <div id="title-image-container">
+                <a href="/">
+                    <%= image_tag "Algebreezy_draft.svg" , class: 'algebreezy-svg'%>
+                </a>
+            </div>
+            <a href ="" class = "button">Login</a>
+            <a href ="" class = "button" >Logout</a>
 
-	  </div>
-
-		<% if false %>
-		third way of creating a clickable image, link_to_image is initialized in application_helper.rb
-		(commented out)
-		<%= link_to_image("Algebreezy_draft.svg", "http://localhost:3000") %> 
-		<% end %>
-
-    	
-            </nav>
+          </div>
+    </nav>
         <% flash.each do |key, value| %>
 
             <%= content_tag(:div, value, class: "alert alert-#{key}") %>
