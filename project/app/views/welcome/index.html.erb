@@ -1,27 +1,27 @@
-<!DOCTYPE html>
-<!--
-	This is the Barebones GUI for Algebreezy.
-	How to use it:
-		1. Enter text into the second textbox.
-		2. Click enter.
-		3. Clone the text into the first textbox.
-	
-	Notes:
-		- The first text box scrolls infinitely as more text is entered.
-		  This is a barebones emulation of the infinite piece of paper end-goal.
--->
-<html>
-<head>
-	<title>Barebones GUI</title>
-    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
-</head>
-<body>
-    <div id="scratchpad"></div><br>
+<div ng-app="Algebreezy" ng-controller="MainCtrl">
+    <header>header</header>
+    <div id='scratchpad_flex'>
+        <div id='scratchpad_view'>
+            <div id='equation_view'>
+            </div>
+            <div id='tree_view'>
+                <svg id="svgelem" style='height:100%; width:100%;'
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                </svg>
+            </div>
+        </div>
+        <div id="sidebar-left">
+            <label><input type="checkbox" id="cbox1">Make public?</label>
+            <input type="text" id="scratchpad-title" placeholder="title">
+            <button type="button" class="button1" ng-click="request_save()">Save</button>
+        </div>
+        <div id="sidebar-right">
+            aside
+        </div>
+    </div>
+<footer>
     <label>Please enter an equation:</label>
-	<input type="text" id="myEquation">
-	<button onclick="display_equation()">Enter</button>
-</body>
-</html>
+    <input type="text" id="myEquation" ng-keypress="displayEqnKey($event)">
+    <button ng-click="display_equation()">Enter</button>
+</footer>
+</div>

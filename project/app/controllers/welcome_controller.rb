@@ -1,35 +1,65 @@
 class WelcomeController < ApplicationController
-  def index
-  end
+    #skip_before_filter :verify_authenticity_token
+    def index
+        render layout: 'general_layout'
+    end
 
-  def home
-  end
 
-  def help
-  end
+    def home
+            render layout: 'general_layout'
 
-  def about
-  end
+    end
+
+    def help
+            render layout: 'general_layout'
+
+    end
 
   def contact
+          render layout: 'general_layout'
+
   end
   
   def login
+          render layout: 'general_layout'
+
   end
   
   def logout
+          render layout: 'general_layout'
+
   end
   
   def register
+          render layout: 'general_layout'
+
   end
   
   def profile
+          render layout: 'general_layout'
+
   end
   
   def team
+          render layout: 'general_layout'
+
   end
   
   def tutorial
+          render layout: 'general_layout'
+
   end
   
+   def about
+           render layout: 'general_layout'
+
+    end
+
+    def contact
+            render layout: 'general_layout'
+
+    end
+    
 end
+   
+

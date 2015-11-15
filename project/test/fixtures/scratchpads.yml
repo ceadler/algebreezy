@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  owner: 
+  public: false
+  data: MyString
+  sharedto_id: 
+  creationtime: 2015-11-10 11:16:19
+
+two:
+  title: MyString
+  owner: 
+  public: false
+  data: MyString
+  sharedto_id: 
+  creationtime: 2015-11-10 11:16:19

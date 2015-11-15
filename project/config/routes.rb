@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+<<<<<<< HEAD
+
+=======
+  devise_for :users, 
+              controllers:{sessions: 'users/sessions', 
+                           registrations: 'users/registrations', 
+                           confirmations: 'users/confirmations', 
+                           passwords: 'users/passwords', 
+                           unlocks: 'users/unlocks'}
 
   get 'welcome/index'
 
