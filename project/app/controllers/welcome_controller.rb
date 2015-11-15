@@ -42,15 +42,19 @@ class WelcomeController < ApplicationController
     end
 
     def home
+        render layout: 'general_layout'
     end
 
     def help
+        render layout: 'general_layout'
     end
 
     def about
+        render layout: 'general_layout'
     end
 
     def contact
+        render layout: 'general_layout'
     end
 
     def save_scratchpad_data
