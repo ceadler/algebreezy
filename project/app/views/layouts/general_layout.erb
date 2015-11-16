@@ -16,10 +16,14 @@
                 <div id="dropdown_menu">
                     <a href ="" class = "button" >More</a>
                     <div id="dropdown_submenu">
-                        <%= link_to "Home", root_path %>
-                        <%= link_to "About", about_path %>
-                        <%= link_to "Contact", contact_path %>
-                        <%= link_to "Help", help_path %>
+                        <li><%= link_to "Home", root_path %></li>
+      					<li><%= link_to "About", about_path %></li>
+      					<li><%= link_to "Contact", contact_path %></li>
+        				<li><%= link_to "Help", help_path %></li>  
+      					<li><%= link_to "Profile", profile_path %></li>    					
+      					<li><%= link_to "Register", new_user_registration_path %></li>
+      					<li><%= link_to "Team", team_path %></li>
+      					<li><%= link_to "Tutorial", tutorial_path %></li>
                     </div>
                 </div>
                 <% if user_signed_in? %>

@@ -26,14 +26,8 @@ Rails.application.routes.draw do
   
   get '/help', to: 'welcome#help'
 
-  get '/login', to: 'welcome#login'
-  
-  get '/logout', to: 'welcome#logout'
-
   get '/profile', to: 'welcome#profile'
-  
-  get '/register', to: 'welcome#register'
-    
+      
   get '/team', to: 'welcome#team'
   
   get '/tutorial', to: 'welcome#tutorial'

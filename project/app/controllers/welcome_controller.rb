@@ -29,6 +29,9 @@ class WelcomeController < ApplicationController
     end
 
     def contact
+        render layout: 'general_layout'
+    end
+    
     def create_scratchpad
         if user_signed_in?
             new_scratchpad = Scratchpad.create(title: "",
@@ -64,7 +67,8 @@ class WelcomeController < ApplicationController
   
     def profile
         render layout: 'general_layout'
-
+	end
+	
     def save_scratchpad_data
         if user_signed_in?
             #title = 
@@ -102,7 +106,4 @@ class WelcomeController < ApplicationController
     def tutorial
         render layout: 'general_layout'
     end
-
 end
-   
-
