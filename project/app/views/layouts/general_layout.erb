@@ -1,44 +1,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Barebones GUI</title>
+        <title>Algebreezy</title>
         <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
         <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
         <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
         <%= csrf_meta_tags %>
     </head>
-    <body><nav class="navbar">
+    <body>
+        <nav class="navbar">
 
-		<div>
-		<ul>
-  			<li>
-   			 <a href ="" class = "button">More</a>
-    		<ul>
-      		<li><%= link_to "Home", root_path %></li>
-      		<li><%= link_to "About", about_path %></li>
-      		<li><%= link_to "Contact", contact_path %></li>
-      		<li><%= link_to "Help", help_path %></li>
-      		<li><%= link_to "Profile", profile_path %></li>
-      		<li><%= link_to "Register", register_path %></li>
-      		<li><%= link_to "Team", team_path %></li>
-      		<li><%= link_to "Tutorial", tutorial_path %></li>
-      
-   		    </ul>
-  			</li>
-  		</ul>
-		<a href="http://localhost:3000" class="svg">
-  		<img src="/assets/Algebreezy_draft.svg" style="width:650px;height:40px;vertical-align:middle">
-  		</a>
-  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	<a href ="http://localhost:3000/login" class = "button">Login</a>
-        <a href ="http://localhost:3000/logout" class = "button" >Logout</a>
+            <div>
+                <div id="dropdown_menu">
+                    <a href ="" class = "button" >More</a>
+                    <div id="dropdown_submenu">
+                        <%= link_to "Home", root_path %>
+                        <%= link_to "About", about_path %>
+                        <%= link_to "Contact", contact_path %>
+                        <%= link_to "Help", help_path %>
+                    </div>
+                </div>
+                <% if user_signed_in? %>
+                    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'button', :id => 'logout_button'  %>
+                <% else %>
+                    <%= link_to "Login", new_user_session_path, :class => 'button', :id => 'login_button'  %>
+                <% end %>
+                
+                <div id="title-image-container" onclick="location.href='/'">
+                        <%= image_tag "Algebreezy_draft.svg" , class: 'algebreezy-svg'%>
+                </div>
 
-	  </div>
-
-    	
-            </nav>
+            </div>
+    </nav>
+    <div class="flash_message">
         <% flash.each do |key, value| %>
 
             <%= content_tag(:div, value, class: "alert alert-#{key}") %>
@@ -50,10 +46,10 @@
         <% if alert %>
             <p class="alert alert-danger"><%= alert %></p>
         <% end %>
-        
-        <div class="body_content">
+    </div>
+    <div class="body_content">
         <%= yield %>
-        </div>
+    </div>
     </body>
 
     </div>

@@ -78,6 +78,16 @@ $(document).ready(function(){
         }
     });
     $("svg").css('cursor', '-webkit-grab');
+    
+    
+    
+    var split_eqns = initial_eqns_str.split(';')
+    for (var eqn in split_eqns){
+        equations[eqn] = parser.parse(split_eqns[eqn]);
+        $("#equation_view").append('<div class="equation_line"> \\( '+equations[eqn].toLatex()+" \\) </div>");
+    }
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
+    drawTree();
 });
 
 function drawTree(){
@@ -180,12 +190,14 @@ function($scope){
         //turn equations into JSON
         //display "data is being saved"
         //send JSON to server
+        console.log("This is the value:",$('#scratchpad-public').is(":checked"))
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
             data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
-                   title: scratchpad_title,
-                   isPublic: false,
+                   id: scratchpad_id,
+                   title: $('#scratchpad-title').val(),//scratchpad_title,
+                   isPublic: $('#scratchpad-public').is(":checked"),
                    shared_users: ""}
                    ,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
