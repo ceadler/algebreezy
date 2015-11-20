@@ -1,16 +1,10 @@
-<!-- <p>Useronly#usertest1. Find me in app/views/welcome/usertest1.html.erb</p>
-<h1>
-    <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-    <% else %>
-        You are not logged in!
-        <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-        <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-    <% end %>
-</h1>
-<p>You should not be able to access this page <a href="/usertest2">Link to usertest2</a> if you are not logged in, but it should be no problem if you are. If you are not, it will redirect you to the log-in of the site.</p> -->
-
-
 <h1>Dashboard</h1>
+	<% records = Scratchpad.where(owner_id: current_user.id) %>
+	<% records.each do |record| %>
+		Title: <%= record.title %>
+		<%= link_to 'View scratchpad', '/scratchpad/'+record.id.to_s %> <br>
+		<form action="/view_scratchpad" method='POST'>
+        	<%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        	<label>View scratchpad: <input type="submit" value="view"></label>
+    	</form>
+	<% end %>

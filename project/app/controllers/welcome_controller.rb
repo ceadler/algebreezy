@@ -37,6 +37,10 @@ class WelcomeController < ApplicationController
         end
     end
 
+    def view_scratchpad
+        redirect_to '/scratchpad/5'
+    end
+
     def usertest1
         render layout: 'general_layout'
     end
