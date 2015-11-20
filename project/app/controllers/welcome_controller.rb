@@ -57,6 +57,10 @@ class WelcomeController < ApplicationController
         render layout: 'general_layout'
     end
 
+    def dashboard
+        render layout: 'general_layout'
+    end
+
     def save_scratchpad_data
         if user_signed_in?
             #title = 

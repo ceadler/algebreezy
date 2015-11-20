@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   get '/usertest2', to: 'useronly#usertest2'
   
   get '/samplemodel', to: 'welcome#sampleget'
+
+  get '/dashboard', to: 'welcome#dashboard'
   
   post '/samplemodel', to: 'welcome#samplepost'
   
