@@ -156,16 +156,25 @@ function drawNode(node, svggroup, linegroup){
     group.appendChild(circ);
     group.appendChild(text);
     
-    $(group).mousedown(genNodeClick(text));
+    $(group).mousedown(genNodeClick(text, node));
 }
 
-function genNodeClick(text){
+function genNodeClick(text, node){
     return function(event){
-        console.log(String(text.textContent) + [' left', ' middle', ' right'][event.which-1]); 
+        //console.log(String(text.textContent) + [' left', ' middle', ' right'][event.which-1]); 
         event.preventDefault();
         event.stopPropagation();
         event.cancelBubble = true;
+        displayManipulationOptions(node)
         return false;
+    }
+}
+
+function displayManipulationOptions(node){
+    $("#sidebar-right").empty();
+    var manipulations = generateManipulations(node);
+    for (var manip in manipulations){
+        $("#sidebar-right").append(manipulations[manip].html);
     }
 }
 
