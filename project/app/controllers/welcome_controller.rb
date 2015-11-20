@@ -37,8 +37,8 @@ class WelcomeController < ApplicationController
         end
     end
 
-    def view_scratchpad
-        redirect_to '/scratchpad/5'
+    def get_scratchpads
+        @records = Scratchpad.where(owner_id: current_user.id)
     end
 
     def usertest1
