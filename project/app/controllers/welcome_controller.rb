@@ -103,7 +103,4 @@ class WelcomeController < ApplicationController
         render layout: 'general_layout'
     end
   
-    def tutorial
-        render layout: 'general_layout'
-    end
 end

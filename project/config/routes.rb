@@ -30,8 +30,6 @@ Rails.application.routes.draw do
       
   get '/team', to: 'welcome#team'
   
-  get '/tutorial', to: 'welcome#tutorial'
-
   post '/save_scratchpad_data', to: 'welcome#save_scratchpad_data'
   
   post '/create_scratchpad', to: 'welcome#create_scratchpad'
