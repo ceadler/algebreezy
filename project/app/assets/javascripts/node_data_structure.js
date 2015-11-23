@@ -72,9 +72,12 @@ function EquationNodeProto(left, right) {
     }
     this.initTree = function(){
         this.setDepth();
-        //this.setParent(null);
+        this.setParent(null);
         this.calculateLeafIndex();
         this.setPosition();
+    }
+    this.generateManipulations = function(){
+        return [];
     }
 };
 
@@ -118,6 +121,16 @@ function OpNodeProto(op, left, right) {
     this.children = function(){
         return [this.left, this.right];
     }
+    this.generateManipulations = function(){
+        var availableManipulations = [];
+        
+        if(canApplyOperation(this)){
+            availableManipulations.push(makeButton("reduce number", applyOperation(this)));
+        }
+        
+        //console.log("These are the manipulations available:", availableManipulations);
+        return availableManipulations;
+    }
 };
 
 function ParensNodeProto(child) {
@@ -141,6 +154,9 @@ function ParensNodeProto(child) {
     this.children = function(){
         return [this.child];
     }
+    this.generateManipulations = function(){
+        return [];
+    }
 }
 
 function FunctionNodeProto(name, params) {
@@ -163,6 +179,9 @@ function FunctionNodeProto(name, params) {
     }
     this.children = function(){
         return this.params;
+    }
+    this.generateManipulations = function(){
+        return [];
     }
 }
 
@@ -191,6 +210,9 @@ function VarNodeProto(name){
     this.children = function(){
         return [];
     }
+    this.generateManipulations = function(){
+        return [];
+    }
 }
 
 function NumberNodeProto(value) {
@@ -216,6 +238,9 @@ function NumberNodeProto(value) {
         return this.leafIndex;
     }
     this.children = function(){
+        return [];
+    }
+    this.generateManipulations = function(){
         return [];
     }
 }
@@ -277,6 +302,45 @@ function MathNodeProto(){
         }
         var posY = this.depth()*60;
         this.position = {x:posX, y:posY};
+    }
+    this.root = function(){
+        var parent = this;
+        while(parent.parent != null){
+            parent = parent.parent;
+        }
+        return parent;
+    }
+    this.replaceWith = function(node){
+        var par = this.parent
+        //console.log("Before:", this.parent.children(), this.root());
+        switch(par.type){
+            case null: break; //If we're on an equation node. Not sure what to do here yet, if anything
+            case "Equation": 
+                if(par.left === this){ par.left  = node}
+                if(par.right === this){par.right = node}
+                break;
+            case "Op":
+                if(par.left === this){ par.left  = node}
+                if(par.right === this){par.right = node}
+                break;
+            case "Function":
+                for (var c in par.params){
+                    if (this === par.params[c]){par.params[c] = node}
+                }
+                break;
+            case "Parens": break;
+                if(par.child === this){ par.child  = node}
+                break;
+            case "Variable": break; //This can never happen
+            case "Number": break; //This can never happen
+            default: break;
+        }
+        //console.log("After:", this.parent.children(), this.root());
+        equations.push(this.root());
+        $("#equation_view").append('<div class="equation_line"> \\( '+this.root().toLatex()+" \\) </div>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
+        $("#sidebar-right").empty();
+        drawTree();
     }
 }
 //IDEA: Write a children() function to return an array of all children, then we can reduce the amount of code to write!

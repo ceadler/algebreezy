@@ -81,7 +81,7 @@ $(document).ready(function(){
     
     
     
-    var split_eqns = initial_eqns_str.split(';')
+    var split_eqns = (initial_eqns_str != "" ? initial_eqns_str.split(';') : [])
     for (var eqn in split_eqns){
         equations[eqn] = parser.parse(split_eqns[eqn]);
         $("#equation_view").append('<div class="equation_line"> \\( '+equations[eqn].toLatex()+" \\) </div>");
@@ -91,18 +91,20 @@ $(document).ready(function(){
 });
 
 function drawTree(){
-    var equation = equations[equations.length -1]
-    var svggroup = document.getElementById('svggroup'); //Get svg element
-    while (svggroup.lastChild) {
-        svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
+        if(equations.length > 0){
+        var equation = equations[equations.length -1]
+        var svggroup = document.getElementById('svggroup'); //Get svg element
+        while (svggroup.lastChild) {
+            svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
+        }
+        equation.initTree();//Initialize all of the data we need to draw the tree
+        var linegroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+        //line group is a group containing all of the lines between nodes, specifically
+        //put into the svg element first so that all of the lines are behind all
+        //of the circles and text. Otherwise, you see the lines on top.
+        svggroup.appendChild(linegroup);
+        drawNode(equation, svggroup, linegroup);
     }
-    equation.initTree();//Initialize all of the data we need to draw the tree
-    var linegroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
-    //line group is a group containing all of the lines between nodes, specifically
-    //put into the svg element first so that all of the lines are behind all
-    //of the circles and text. Otherwise, you see the lines on top.
-    svggroup.appendChild(linegroup);
-    drawNode(equation, svggroup, linegroup);
 }
 
 function drawNode(node, svggroup, linegroup){
@@ -165,7 +167,15 @@ function genNodeClick(text, node){
         event.preventDefault();
         event.stopPropagation();
         event.cancelBubble = true;
+<<<<<<< HEAD
         displayManipulationOptions(node)
+=======
+        $("#sidebar-right").empty();
+        var manipulations = node.generateManipulations()
+        for (var m in manipulations){
+            $("#sidebar-right").append(manipulations[m]);
+        }
+>>>>>>> 3d38b4743cd29e4d766ce513d7c70defa777af86
         return false;
     }
 }
