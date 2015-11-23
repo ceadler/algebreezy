@@ -167,7 +167,7 @@ function genNodeClick(text, node){
         event.preventDefault();
         event.stopPropagation();
         event.cancelBubble = true;
-        displayManipulationOptions(node)
+
         $("#sidebar-right").empty();
         var manipulations = node.generateManipulations()
         for (var m in manipulations){
@@ -193,13 +193,6 @@ request_save = function() {
         })
         //display "save successful" or "save unsuccessful!"
         //alert("Save successful");
-}
-function displayManipulationOptions(node){
-    $("#sidebar-right").empty();
-    var manipulations = generateManipulations(node);
-    for (var manip in manipulations){
-        $("#sidebar-right").append(manipulations[manip].html);
-    }
 }
 
 
