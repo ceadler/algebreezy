@@ -214,6 +214,7 @@ function($scope){
     $scope.display_comment = function() {
         console.log("fart");
         $("#equation_view").append("<div class='comment_line'>" + document.getElementById("myComment").value + "</div>");
+        $scope.request_save();
     }
 
     $scope.request_save = function() {
