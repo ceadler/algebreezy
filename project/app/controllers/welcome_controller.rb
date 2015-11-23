@@ -37,8 +37,8 @@ class WelcomeController < ApplicationController
         end
     end
 
-    def get_scratchpads
-        @get_scratchpads = Scratchpad.where(owner_id: current_user.id)
+    def dashboard
+        render layout: 'general_layout', locals: {records: Scratchpad.where(owner_id: current_user.id)}
     end
 
     def usertest1
@@ -58,10 +58,6 @@ class WelcomeController < ApplicationController
     end
 
     def contact
-        render layout: 'general_layout'
-    end
-
-    def dashboard
         render layout: 'general_layout'
     end
 
