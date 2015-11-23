@@ -184,7 +184,7 @@ request_save = function() {
             success: function(data){window.alert(data);}
         })
         //display "save successful" or "save unsuccessful!"
-        alert("Save successful");
+        //alert("Save successful");
 }
 
 $(document).bind('keydown', function(event) {
@@ -208,11 +208,13 @@ function($scope){
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
         console.log("testing2", $("#equation_view").text());
         drawTree();
+        $scope.request_save();
     }
 
     $scope.display_comment = function() {
         console.log("fart");
         $("#equation_view").append("<div class='comment_line'>" + document.getElementById("myComment").value + "</div>");
+        $scope.request_save();
     }
 
     $scope.request_save = function() {

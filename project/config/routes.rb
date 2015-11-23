@@ -42,9 +42,6 @@ Rails.application.routes.draw do
   
   post '/create_scratchpad', to: 'welcome#create_scratchpad'
 
-  post '/get_scratchpads', to: 'welcome#get_scratchpads'
-
-
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
