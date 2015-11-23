@@ -84,6 +84,7 @@ function EquationNodeProto(left, right) {
     }
     this.isHash = function(){
         var s = this.left.toPlainText() + this.right.toPlainText();
+        s = s.toString();
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 };
@@ -129,7 +130,8 @@ function OpNodeProto(op, left, right) {
         return [this.left, this.right];
     }
     this.isHash = function(){
-        var s = this.left.toPlainText() + this.right.toPlainText();
+        var s = this.left.toPlainText() + this.op + this.right.toPlainText();
+        s = s.toString();
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 };
@@ -157,6 +159,7 @@ function ParensNodeProto(child) {
     }
     this.isHash = function(){
         var s = '(' + this.child.toPlainText() + ')';
+        s = s.toString();
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 }
@@ -184,6 +187,7 @@ function FunctionNodeProto(name, params) {
     }
     this.isHash = function(){
         var s = this.name + "(" + this.params.map(function(node){return node.toPlainText()}).join(',') + ")";
+        s = s.toString();
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 }
@@ -215,6 +219,7 @@ function VarNodeProto(name){
     }
     this.isHash = function(){
         var s = this.name;
+        s = s.toString();
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 }
@@ -246,6 +251,7 @@ function NumberNodeProto(value) {
     }
     this.isHash = function(){
         var s = " " + this.value.toString() + " ";
+        s = s.toString();
         return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 }
