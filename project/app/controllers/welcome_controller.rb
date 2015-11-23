@@ -38,7 +38,7 @@ class WelcomeController < ApplicationController
     end
 
     def get_scratchpads
-        @records = Scratchpad.where(owner_id: current_user.id)
+        @get_scratchpads = Scratchpad.where(owner_id: current_user.id)
     end
 
     def usertest1
