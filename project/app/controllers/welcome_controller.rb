@@ -45,6 +45,10 @@ class WelcomeController < ApplicationController
         end
     end
 
+    def get_scratchpads
+        @get_scratchpads = Scratchpad.where(owner_id: current_user.id)
+    end
+
     def usertest1
         render layout: 'general_layout'
     end
@@ -57,18 +61,15 @@ class WelcomeController < ApplicationController
         render layout: 'general_layout'
     end
   
-    def login
-        render layout: 'general_layout'
-    end
-  
-    def logout
-        render layout: 'general_layout'
-    end
-  
     def profile
         render layout: 'general_layout'
 	end
 	
+
+    def dashboard
+        render layout: 'general_layout'
+    end
+
     def save_scratchpad_data
         if user_signed_in?
             #title = 

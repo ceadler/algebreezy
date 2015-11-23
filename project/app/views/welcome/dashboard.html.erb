@@ -1,0 +1,21 @@
+<div class="dashboard">
+	<% records = Scratchpad.where(owner_id: current_user.id) %>
+	<table style="width:100%">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Date Created</th>
+				<th></th>
+			</tr>
+		</thead>
+		<% records.each do |record| %>
+		<tbody>
+			<tr>
+				<td><%= record.title %></td>
+				<td><%= record.created_at.strftime("%b %d, %Y") %></td>
+				<td><%= link_to 'View Scratchpad', '/scratchpad/'+record.id.to_s %> <br></td>
+			</tr>
+		</tbody>
+		<% end %>
+	</table>
+</div>

@@ -29,10 +29,22 @@ Rails.application.routes.draw do
   get '/profile', to: 'welcome#profile'
       
   get '/team', to: 'welcome#team'
+
+  get '/usertest2', to: 'useronly#usertest2'
+  
+  get '/samplemodel', to: 'welcome#sampleget'
+
+  get '/dashboard', to: 'welcome#dashboard'
+  
+  post '/samplemodel', to: 'welcome#samplepost'
   
   post '/save_scratchpad_data', to: 'welcome#save_scratchpad_data'
   
   post '/create_scratchpad', to: 'welcome#create_scratchpad'
+
+  post '/get_scratchpads', to: 'welcome#get_scratchpads'
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

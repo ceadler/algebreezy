@@ -12,6 +12,28 @@ body {
     margin-left: 25px;
 }
 
+.dashboard {
+    font: normal 12px/150% Arial; 
+    background: white; 
+    overflow: hidden; 
+}
+
+td, th {
+   padding: 3px 10px; 
+}
+
+th {
+    background-color: #006699; 
+    color: white; 
+    font-size: 15px; 
+    font-weight: bold; 
+} 
+
+tbody { 
+    background: #E1EEf4; 
+    color: #00557F; 
+}
+
 .flash_message {
     margin-top: 30px;
     background-color: rgba(200, 200, 200, 0.9);
@@ -19,8 +41,12 @@ body {
     * {
         margin: 0;
         }
+    }
+.comment_line {
+    margin-left: 25px;
+    font-size: 80%;
+    line-height: 120%;
 }
-
 .navbar {
 text-align:center;
 
