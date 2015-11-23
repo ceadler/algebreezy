@@ -17,4 +17,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require helpers
+//= require manipulations
 //= require_tree .
