@@ -169,7 +169,31 @@ function genNodeClick(text){
     }
 }
 
+request_save = function() {
+    console.log("This is the value:",$('#scratchpad-public').is(":checked"))
+        $.ajax({
+            url: "/save_scratchpad_data",
+            type: 'post',
+            data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
+                   id: scratchpad_id,
+                   title: $('#scratchpad-title').val(),//scratchpad_title,
+                   isPublic: $('#scratchpad-public').is(":checked"),
+                   shared_users: ""}
+                   ,
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            success: function(data){window.alert(data);}
+        })
+        //display "save successful" or "save unsuccessful!"
+        alert("Save successful");
+}
 
+$(document).bind('keydown', function(event) {
+  if(event.ctrlKey && (event.which == 83)) {
+    event.preventDefault();
+    request_save();
+    return false;
+  }
+});
 
 angular.module('Algebreezy', [])
 .controller('MainCtrl', [
@@ -215,6 +239,7 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("poop");
             $scope.display_equation();
+            $scope.request_save();
         }
         else {
             angular.noop;
@@ -225,6 +250,7 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("pee");
             $scope.display_comment();
+            $scope.request_save();
         }
         else {
             angular.noop;
