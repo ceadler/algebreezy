@@ -214,6 +214,7 @@ function($scope){
     $scope.display_comment = function() {
         console.log("fart");
         $("#equation_view").append("<div class='comment_line'>" + document.getElementById("myComment").value + "</div>");
+        $scope.request_save();
     }
 
     $scope.request_save = function() {
@@ -240,7 +241,6 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("poop");
             $scope.display_equation();
-            $scope.request_save();
         }
         else {
             angular.noop;
@@ -251,7 +251,6 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("pee");
             $scope.display_comment();
-            $scope.request_save();
         }
         else {
             angular.noop;
