@@ -5,6 +5,7 @@ function EquationNode(left, right) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.ismorphHash = null;
 };
 
 function OpNode(op, left, right) {
@@ -14,6 +15,7 @@ function OpNode(op, left, right) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.ismorphHash = null;
 };
 
 function ParensNode(child) {
@@ -21,6 +23,7 @@ function ParensNode(child) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.ismorphHash = null;
 }
 
 function FunctionNode(name, params) {
@@ -29,6 +32,7 @@ function FunctionNode(name, params) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.ismorphHash = null;
 }
 
 function VarNode(name){
@@ -37,6 +41,7 @@ function VarNode(name){
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.ismorphHash = null;
 }
 
 function NumberNode(value) {
@@ -45,6 +50,7 @@ function NumberNode(value) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.ismorphHash = null;
 }
 
 
@@ -75,6 +81,9 @@ function EquationNodeProto(left, right) {
         //this.setParent(null);
         this.calculateLeafIndex();
         this.setPosition();
+    }
+    this.isHash = function(){
+
     }
 };
 
@@ -118,6 +127,9 @@ function OpNodeProto(op, left, right) {
     this.children = function(){
         return [this.left, this.right];
     }
+    this.isHash = function(){
+        
+    }
 };
 
 function ParensNodeProto(child) {
@@ -141,6 +153,9 @@ function ParensNodeProto(child) {
     this.children = function(){
         return [this.child];
     }
+    this.isHash = function(){
+        
+    }
 }
 
 function FunctionNodeProto(name, params) {
@@ -163,6 +178,9 @@ function FunctionNodeProto(name, params) {
     }
     this.children = function(){
         return this.params;
+    }
+    this.isHash = function(){
+        
     }
 }
 
@@ -191,6 +209,9 @@ function VarNodeProto(name){
     this.children = function(){
         return [];
     }
+    this.isHash = function(){
+        
+    }
 }
 
 function NumberNodeProto(value) {
@@ -217,6 +238,9 @@ function NumberNodeProto(value) {
     }
     this.children = function(){
         return [];
+    }
+    this.isHash = function(){
+        
     }
 }
 
