@@ -52,6 +52,13 @@ function NumberNode(value) {
 //PROTOTYPES
 function EquationNodeProto(left, right) {
 	this.type = "Equation";
+    this.deepCopy = function(){
+        var newNode = new EquationNode(this.left.deepCopy(), this.right.ceepCopy());
+        newNode.nodeDepth = this.nodeDepth;
+        newNode.parent = this.parent;
+        newNode.position = this.position;
+        return newNode;
+    }
 	this.toLatex = function() {
 		return this.left.toLatex() + " = " + this.right.toLatex();
 	}
@@ -83,6 +90,13 @@ function EquationNodeProto(left, right) {
 
 function OpNodeProto(op, left, right) {
 	this.type = "Op";
+    this.deepCopy = function(){
+        var newNode = new OpNode(this.op, this.left.deepCopy(), this.right.deepCopy());
+        newNode.nodeDepth = this.nodeDepth;
+        newNode.parent = this.parent;
+        newNode.position = this.position;
+        return newNode;
+    }
 	this.toLatex = function() {
 		switch (this.op) {
 			case '+':
@@ -128,6 +142,11 @@ function OpNodeProto(op, left, right) {
             availableManipulations.push(makeButton("reduce number", applyOperation(this)));
         }
         
+        if(canCommute(this)){
+            generateCommutativityOptions(this.left, this.right, availableManipulations);
+            generateCommutativityOptions(this.right, this.left, availableManipulations);
+        }
+        
         //console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
     }
@@ -135,6 +154,13 @@ function OpNodeProto(op, left, right) {
 
 function ParensNodeProto(child) {
 	this.type = "Parens";
+    this.deepCopy = function(){
+        var newNode = new ParensNode(this.child.deepCopy());
+        newNode.nodeDepth = this.nodeDepth;
+        newNode.parent = this.parent;
+        newNode.position = this.position;
+        return newNode;
+    }
 	this.toLatex = function() {
 		return "(" + this.child.toLatex() + ")";
 		//console.log(".");
@@ -161,6 +187,13 @@ function ParensNodeProto(child) {
 
 function FunctionNodeProto(name, params) {
 	this.type = "Function";
+    this.deepCopy = function(){
+        var newNode = new FunctionNode(this.name, this.params.map(function(param){return param.deepCopy()}));
+        newNode.nodeDepth = this.nodeDepth;
+        newNode.parent = this.parent;
+        newNode.position = this.position;
+        return newNode;
+    }
 	this.toLatex = function() {
 		return " " + this.name + "(" + this.params.map(function(node){return node.toLatex()}).join(', ') + ") ";
 		//console.log(".");
@@ -187,6 +220,14 @@ function FunctionNodeProto(name, params) {
 
 function VarNodeProto(name){
 	this.type = "Variable";
+    this.deepCopy = function(){
+        var newNode = new VarNode(this.name);
+        newNode.leafIndex = this.leafIndex;
+        newNode.nodeDepth = this.nodeDepth;
+        newNode.parent = this.parent;
+        newNode.position = this.position;
+        return newNode;
+    }
 	this.toLatex = function() {
 		return " " + this.name + " ";
 		//console.log(".");
@@ -217,6 +258,14 @@ function VarNodeProto(name){
 
 function NumberNodeProto(value) {
 	this.type = "Number";
+    this.deepCopy = function(){
+        var newNode = new NumberNode(this.value);
+        newNode.leafIndex = this.leafIndex;
+        newNode.nodeDepth = this.nodeDepth;
+        newNode.parent = this.parent;
+        newNode.position = this.position;
+        return newNode;
+    }
 	this.toLatex = function() {
 		return " " + this.value.toString() + " ";
 		//console.log(".");
@@ -336,11 +385,14 @@ function MathNodeProto(){
             default: break;
         }
         //console.log("After:", this.parent.children(), this.root());
-        equations.push(this.root());
-        $("#equation_view").append('<div class="equation_line"> \\( '+this.root().toLatex()+" \\) </div>");
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
-        $("#sidebar-right").empty();
-        drawTree();
+    }
+    this.swapWith = function(node){
+        var tmp1 = this.deepCopy();
+        var tmp2 = node.deepCopy();
+        console.log(tmp1, tmp2, this, node);
+        node.replaceWith(tmp1);
+        this.replaceWith(tmp2);
+        console.log(tmp1, tmp2, this, node);
     }
 }
 //IDEA: Write a children() function to return an array of all children, then we can reduce the amount of code to write!

@@ -177,6 +177,14 @@ function genNodeClick(text, node){
     }
 }
 
+function newEquationLine(root){
+    equations.push(root);
+    $("#equation_view").append('<div class="equation_line"> \\( '+root.toLatex()+" \\) </div>");
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
+    $("#sidebar-right").empty();
+    drawTree();
+}
+
 request_save = function() {
     console.log("This is the value:",$('#scratchpad-public').is(":checked"))
         $.ajax({
@@ -212,11 +220,7 @@ function($scope){
     $scope.display_equation = function() {
         console.log("testing1");
         thisEqn = parser.parse($("#myEquation").val())
-        equations.push(thisEqn);
-        $("#equation_view").append('<div class="equation_line"> \\( '+thisEqn.toLatex()+" \\) </div>");
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
-        console.log("testing2", $("#equation_view").text());
-        drawTree();
+        newEquationLine(thisEqn);
         $scope.request_save();
     }
 
@@ -241,7 +245,7 @@ function($scope){
                    shared_users: ""}
                    ,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-            success: function(data){window.alert(data);}
+            //success: function(data){window.alert(data);}
         })
         //display "save successful" or "save unsuccessful!"
     }
