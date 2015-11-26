@@ -85,7 +85,7 @@ $(document).ready(function(){
         var split_eqns = (initial_eqns_str != "" ? initial_eqns_str.split(';') : [])
         for (var eqn in split_eqns){
             equations[eqn] = parser.parse(split_eqns[eqn]);
-            $("#equation_view").append('<div class="equation_line"> \\( '+equations[eqn].toLatex()+" \\) </div>");
+            newEquationLine(equations[eqn]);
         }
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
         drawTree();
@@ -169,31 +169,32 @@ function genNodeClick(text, node){
         event.preventDefault();
         event.stopPropagation();
         event.cancelBubble = true;
-
-        $("#sidebar-right").empty();
+        
+        var right_sidebar = $("#sidebar-right");
+        right_sidebar.empty();
         var manipulations = node.generateManipulations()
         for (var m in manipulations){
-            $("#sidebar-right").append(manipulations[m]);
+            right_sidebar.append(manipulations[m]);
         }
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,right_sidebar[0]]);
         return false;
     }
 }
-
 function newEquationLine(root){
     $("#sidebar-right").empty();
     equations.push(root);
     var eqn_view = $("#equation_view");
-    var new_line = $("<div>", {class: "equation_line", html: root.toLatex()});
+    var new_line = $("<div>", {class: "equation_line", html: '\\('+root.toLatex()+" \\)"});
     new_line.click(displayLatexAndPlaintext(root));
     eqn_view.append(new_line);
     //eqn_view.append('<div class="equation_line"> \\( '+root.toLatex()+" \\) </div>");
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('equation_view')]);
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,eqn_view[0]]);
     eqn_view[0].scrollTop = eqn_view[0].scrollHeight;
     drawTree();
 }
 function displayLatexAndPlaintext(node){
     return function(){
-        $("#textOutputContainer").html(node.toPlainText()+"<br>"+node.toLatex());
+        $("#textOutputContainer").html("Plaintext: "+node.toPlainText()+"<br> LaTeX code: "+node.toLatex());
     }
 }
 

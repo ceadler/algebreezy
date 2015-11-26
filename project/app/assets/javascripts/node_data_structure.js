@@ -179,12 +179,17 @@ function OpNodeProto(op, left, right) {
         var availableManipulations = [];
         
         if(canApplyOperation(this)){
-            availableManipulations.push(makeButton("reduce number", applyOperation(this)));
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', applyOperation(this)));
         }
         
         if(canCommute(this)){
             generateCommutativityOptions(this.left, this.right, availableManipulations);
             generateCommutativityOptions(this.right, this.left, availableManipulations);
+        }
+        
+        if(canApplyHyperOperator(this)){
+            console.log(numIsomorphicChildren(this.left, this.right)+1);
+            console.log(numIsomorphicChildren(this.right, this.left)+1);
         }
         
         //console.log("These are the manipulations available:", availableManipulations);

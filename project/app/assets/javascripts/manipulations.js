@@ -56,14 +56,25 @@ function generateCommutativityOptions(staticNode, recursiveNode, options){
         generateCommutativityOptions(staticNode, recursiveNode.left, options);
         generateCommutativityOptions(staticNode, recursiveNode.right, options);
     }
-    options.push(makeButton("Commute "+staticNode.toPlainText()+" with "+recursiveNode.toPlainText()+".", commute(staticNode, recursiveNode)));
+    options.push(makeButton("Commute \\( ["+staticNode.toLatex()+"] \\) with \\( ["+recursiveNode.toLatex()+"]\\) .", commute(staticNode, recursiveNode)));
 }
     
 function canCommute(node){
     return (node.type == 'Op' && (node.op == '*' || node.op == '+'))
 }
 
+function numIsomorphicChildren(staticNode, recursiveNode){
+    var numChildren = (staticNode.isIsomorphicTo(recursiveNode)?1:0);
+    if(recursiveNode.type == "Op" && recursiveNode.op == staticNode.parent.op){
+        numChildren += numIsomorphicChildren(staticNode, recursiveNode.left);
+        numChildren += numIsomorphicChildren(staticNode, recursiveNode.right);
+    }
+    //console.log("Is isomorphic?"+, staticNode.isIsomorphicTo(recursiveNode), staticNode, recursiveNode, numChildren);
+    return numChildren;
+}
 function canApplyHyperOperator(node){
     return ((node.type == 'Op' && (node.op == '+' || node.op == '*')) &&
-             node.left.isDeepEqual(node.rght))//Intentional typo so that I come back to this spot
+            (node.left.isIsomorphicTo(node.right) ||
+             numIsomorphicChildren(node.left, node.right) > 0 ||
+             numIsomorphicChildren(node.right, node.left) > 0))
 }
