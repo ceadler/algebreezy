@@ -62,3 +62,8 @@ function generateCommutativityOptions(staticNode, recursiveNode, options){
 function canCommute(node){
     return (node.type == 'Op' && (node.op == '*' || node.op == '+'))
 }
+
+function canApplyHyperOperator(node){
+    return ((node.type == 'Op' && (node.op == '+' || node.op == '*')) &&
+             node.left.isDeepEqual(node.rght))//Intentional typo so that I come back to this spot
+}

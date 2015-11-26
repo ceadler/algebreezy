@@ -30,64 +30,66 @@ function getNegativeOffset(mouseevent){
 
 $(document).ready(function(){
     
-    var svg = document.getElementsByTagName('svg')[0]; //Get svg element
-    var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle'); //Create a path in SVG's namespace
-    newElement.setAttribute("id", "testest"); //Set path's data
-    newElement.setAttribute("cx", 200); //Set path's data
-    newElement.setAttribute("cy", 100); //Set path's data
-    newElement.setAttribute("r", 50); //Set path's data
-    newElement.style.stroke = "#000"; //Set stroke colour
-    newElement.style.strokeWidth = "5px"; //Set stroke width
-    //svg.appendChild(newElement);
-    $("#testest").click(function() {
-        alert($(this).attr("id"));        
-    });
-    
-    
-    svggroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
-    svggroup.setAttribute('id', 'svggroup');
-    svg.oncontextmenu = function (e) { //Prevents right-click context menu from popping up
-        e.preventDefault();
-        //console.log(e);
-    };
-    
-    
-    transformSVG(svggroup, svgscale, svgtranslate);
-    svg.appendChild(svggroup);
-    svggroup.appendChild(newElement);
-    $(svg).on('mousewheel DOMMouseScroll', function(evt){
-        var amount = evt.originalEvent.wheelDelta;
-        evt.preventDefault();
-        transformSVG(svggroup, 1, getOffsetPoint(evt));
-        transformSVG(element=svggroup, scale=(amount >0 ? 6/5 : 5/6));
-        transformSVG(svggroup, 1, getNegativeOffset(evt));
-    });
-    $(svg).on('mousedown', function(evt){
-        lastMouseEvtPoint = getOffsetPoint(evt);
-        draggingSVG = true;
-        $("svg").css('cursor', '-webkit-grabbing');
-    });
-    $(window).on('mouseup', function(evt){
-        draggingSVG = false;
-        $("svg").css('cursor', '-webkit-grab');
-    });
-    $(svg).on('mousemove', function(evt){
-        if(draggingSVG){
-            transformSVG(svggroup, 1, positionDelta(getOffsetPoint(evt), lastMouseEvtPoint));
+    var svg = document.getElementById('svgelem'); //Get svg element
+    if(svg){
+        var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'circle'); //Create a path in SVG's namespace
+        newElement.setAttribute("id", "testest"); //Set path's data
+        newElement.setAttribute("cx", 200); //Set path's data
+        newElement.setAttribute("cy", 100); //Set path's data
+        newElement.setAttribute("r", 50); //Set path's data
+        newElement.style.stroke = "#000"; //Set stroke colour
+        newElement.style.strokeWidth = "5px"; //Set stroke width
+        //svg.appendChild(newElement);
+        $("#testest").click(function() {
+            alert($(this).attr("id"));        
+        });
+        
+        
+        svggroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+        svggroup.setAttribute('id', 'svggroup');
+        svg.oncontextmenu = function (e) { //Prevents right-click context menu from popping up
+            e.preventDefault();
+            //console.log(e);
+        };
+        
+        
+        transformSVG(svggroup, svgscale, svgtranslate);
+        svg.appendChild(svggroup);
+        svggroup.appendChild(newElement);
+        $(svg).on('mousewheel DOMMouseScroll', function(evt){
+            var amount = evt.originalEvent.wheelDelta;
+            evt.preventDefault();
+            transformSVG(svggroup, 1, getOffsetPoint(evt));
+            transformSVG(element=svggroup, scale=(amount >0 ? 6/5 : 5/6));
+            transformSVG(svggroup, 1, getNegativeOffset(evt));
+        });
+        $(svg).on('mousedown', function(evt){
             lastMouseEvtPoint = getOffsetPoint(evt);
+            draggingSVG = true;
+            $("svg").css('cursor', '-webkit-grabbing');
+        });
+        $(window).on('mouseup', function(evt){
+            draggingSVG = false;
+            $("svg").css('cursor', '-webkit-grab');
+        });
+        $(svg).on('mousemove', function(evt){
+            if(draggingSVG){
+                transformSVG(svggroup, 1, positionDelta(getOffsetPoint(evt), lastMouseEvtPoint));
+                lastMouseEvtPoint = getOffsetPoint(evt);
+            }
+        });
+        $("svg").css('cursor', '-webkit-grab');
+        
+        
+        
+        var split_eqns = (initial_eqns_str != "" ? initial_eqns_str.split(';') : [])
+        for (var eqn in split_eqns){
+            equations[eqn] = parser.parse(split_eqns[eqn]);
+            $("#equation_view").append('<div class="equation_line"> \\( '+equations[eqn].toLatex()+" \\) </div>");
         }
-    });
-    $("svg").css('cursor', '-webkit-grab');
-    
-    
-    
-    var split_eqns = (initial_eqns_str != "" ? initial_eqns_str.split(';') : [])
-    for (var eqn in split_eqns){
-        equations[eqn] = parser.parse(split_eqns[eqn]);
-        $("#equation_view").append('<div class="equation_line"> \\( '+equations[eqn].toLatex()+" \\) </div>");
+        MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
+        drawTree();
     }
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
-    drawTree();
 });
 
 function drawTree(){
@@ -178,11 +180,21 @@ function genNodeClick(text, node){
 }
 
 function newEquationLine(root){
-    equations.push(root);
-    $("#equation_view").append('<div class="equation_line"> \\( '+root.toLatex()+" \\) </div>");
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
     $("#sidebar-right").empty();
+    equations.push(root);
+    var eqn_view = $("#equation_view");
+    var new_line = $("<div>", {class: "equation_line", html: root.toLatex()});
+    new_line.click(displayLatexAndPlaintext(root));
+    eqn_view.append(new_line);
+    //eqn_view.append('<div class="equation_line"> \\( '+root.toLatex()+" \\) </div>");
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, document.getElementById('equation_view')]);
+    eqn_view[0].scrollTop = eqn_view[0].scrollHeight;
     drawTree();
+}
+function displayLatexAndPlaintext(node){
+    return function(){
+        $("#textOutputContainer").html(node.toPlainText()+"<br>"+node.toLatex());
+    }
 }
 
 request_save = function() {

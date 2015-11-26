@@ -59,6 +59,12 @@ function EquationNodeProto(left, right) {
         newNode.position = this.position;
         return newNode;
     }
+    this.isDeepEqual = function(node){
+        return (this.isIsomorphicTo(node) &&
+                this.nodeDepth == node.nodeDepth &&
+                this.parent == node.parent &&
+                this.position == node.position)
+    }
 	this.toLatex = function() {
 		return this.left.toLatex() + " = " + this.right.toLatex();
 	}
@@ -67,9 +73,12 @@ function EquationNodeProto(left, right) {
 	this.toPlainText = function() {
         return this.left.toPlainText() + "=" + this.right.toPlainText();
 	}
-	this.isEqual = function() {
+	this.isEqualTo = function() {
 	}
-	this.isIsomorphic = function() {
+	this.isIsomorphicTo = function() {
+        return(this.type == node.type &&
+             ((this.left.isIsomorphicTo(node.left) && this.right.isIsomorphicTo(node.right)) || 
+              (this.left.isIsomorphicTo(node.right) && this.right.isIsomorphicTo(node.left))));
 	}
     this.width = function(){
         return this.left.width() + this.right.width();        
@@ -96,6 +105,12 @@ function OpNodeProto(op, left, right) {
         newNode.parent = this.parent;
         newNode.position = this.position;
         return newNode;
+    }
+    this.isDeepEqual = function(node){
+        return (this.isIsomorphicTo(node) &&
+                this.nodeDepth == node.nodeDepth &&
+                this.parent == node.parent &&
+                this.position == node.position)
     }
 	this.toLatex = function() {
 		switch (this.op) {
@@ -125,9 +140,34 @@ function OpNodeProto(op, left, right) {
 	this.toPlainText = function() {
         return this.left.toPlainText() + this.op + this.right.toPlainText();
 	}
-	this.isEqual = function() {
+	this.isEqualTo = function() {
 	}
-	this.isIsomorphic = function() {
+	this.isIsomorphicTo = function(node) {
+        if (this.type == node.type && this.op == node.op){
+            switch(this.op){
+                case '+':
+                    return((this.left.isIsomorphicTo(node.left) && this.right.isIsomorphicTo(node.right)) || 
+                           (this.left.isIsomorphicTo(node.right) && this.right.isIsomorphicTo(node.left)));
+                    break;
+                case '-':
+                    return((this.left.isIsomorphicTo(node.left) && this.right.isIsomorphicTo(node.right)));
+                    break;
+                case '*':
+                    return((this.left.isIsomorphicTo(node.left) && this.right.isIsomorphicTo(node.right)) || 
+                           (this.left.isIsomorphicTo(node.right) && this.right.isIsomorphicTo(node.left)));
+                    break;
+                case '/':
+                    return((this.left.isIsomorphicTo(node.left) && this.right.isIsomorphicTo(node.right)));
+                    break;
+                case '^':
+                    return((this.left.isIsomorphicTo(node.left) && this.right.isIsomorphicTo(node.right)));
+                    break;
+                default: console.log("Error in calculating isomorphic-ness");
+            }
+        }
+        else{
+            return false;
+        }
 	}
     this.width = function(){
         return this.left.width() + this.right.width();        
@@ -161,6 +201,12 @@ function ParensNodeProto(child) {
         newNode.position = this.position;
         return newNode;
     }
+    this.isDeepEqual = function(node){
+        return (this.isIsomorphicTo(node) &&
+                this.nodeDepth == node.nodeDepth &&
+                this.parent == node.parent &&
+                this.position == node.position)
+    }
 	this.toLatex = function() {
 		return "(" + this.child.toLatex() + ")";
 		//console.log(".");
@@ -170,9 +216,10 @@ function ParensNodeProto(child) {
 	this.toPlainText = function() {
         return '(' + this.child.toPlainText() + ')';
 	}
-	this.isEqual = function() {
+	this.isEqualTo = function() {
 	}
-	this.isIsomorphic = function() {
+	this.isIsomorphicTo = function() {
+        return this.child.isIsomorphicTo(node.child);
 	}
     this.width = function(){
         return this.child.width();        
@@ -194,6 +241,12 @@ function FunctionNodeProto(name, params) {
         newNode.position = this.position;
         return newNode;
     }
+    this.isDeepEqual = function(node){
+        return (this.isIsomorphicTo(node) &&
+                this.nodeDepth == node.nodeDepth &&
+                this.parent == node.parent &&
+                this.position == node.position)
+    }
 	this.toLatex = function() {
 		return " " + this.name + "(" + this.params.map(function(node){return node.toLatex()}).join(', ') + ") ";
 		//console.log(".");
@@ -203,9 +256,17 @@ function FunctionNodeProto(name, params) {
 	this.toPlainText = function() {
 		return this.name + "(" + this.params.map(function(node){return node.toPlainText()}).join(',') + ")";
 	}
-	this.isEqual = function() {
+	this.isEqualTo = function() {
 	}
-	this.isIsomorphic = function() {
+	this.isIsomorphicTo = function(node) {
+        var paramsAreIsomorphic = true;
+        for(var p in this.params){
+            paramsAreIsomorphic = (paramsAreIsomorphic && 
+                                 this.params[p].isIsomorphicTo(node.params[p]));
+        }
+        return (paramsAreIsomorphic &&
+                this.type == node.type &&
+                this.name == node.name)
 	}
     this.width = function(){
         return this.params.map(function(node){return node.width();}).reduce(function(prev, curr){return prev+curr;},0);        
@@ -228,6 +289,13 @@ function VarNodeProto(name){
         newNode.position = this.position;
         return newNode;
     }
+    this.isDeepEqual = function(node){
+        return (this.isIsomorphicTo(node) &&
+                this.leafIndex == node.leafIndex &&
+                this.nodeDepth == node.nodeDepth &&
+                this.parent == node.parent &&
+                this.position == node.position)
+    }
 	this.toLatex = function() {
 		return " " + this.name + " ";
 		//console.log(".");
@@ -237,9 +305,11 @@ function VarNodeProto(name){
 	this.toPlainText = function() {
 		return this.name;
 	}
-	this.isEqual = function() {
+	this.isEqualTo = function() {
 	}
-	this.isIsomorphic = function() {
+	this.isIsomorphicTo = function(node) {
+        return (this.type == node.type &&
+                this.name == node.name)
 	}
     this.width = function(){
         return 1;
@@ -266,6 +336,13 @@ function NumberNodeProto(value) {
         newNode.position = this.position;
         return newNode;
     }
+    this.isDeepEqual = function(node){
+        return (this.isIsomorphicTo(node) &&
+                this.leafIndex == node.leafIndex &&
+                this.nodeDepth == node.nodeDepth &&
+                this.parent == node.parent &&
+                this.position == node.position)
+    }
 	this.toLatex = function() {
 		return " " + this.value.toString() + " ";
 		//console.log(".");
@@ -275,9 +352,11 @@ function NumberNodeProto(value) {
 	this.toPlainText = function() {
 		return this.value.toString();
 	}
-	this.isEqual = function() {
+	this.isEqualTo = function() {
 	}
-	this.isIsomorphic = function() {
+	this.isIsomorphicTo = function(node) {
+        return (this.type == node.type &&
+                this.value == node.value)
 	}
     this.width = function() {
         return 1;
@@ -389,10 +468,8 @@ function MathNodeProto(){
     this.swapWith = function(node){
         var tmp1 = this.deepCopy();
         var tmp2 = node.deepCopy();
-        console.log(tmp1, tmp2, this, node);
         node.replaceWith(tmp1);
         this.replaceWith(tmp2);
-        console.log(tmp1, tmp2, this, node);
     }
 }
 //IDEA: Write a children() function to return an array of all children, then we can reduce the amount of code to write!

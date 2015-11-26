@@ -14,6 +14,7 @@
             <label><input type="checkbox" id="scratchpad-public" <% if isPublic%> checked="checked" <%end%>>Make public?</label>
             <input type="text" id="scratchpad-title" placeholder="Title" value="<%=title%>">
             <button ng-click="request_save()">Save</button>
+            <div id="textOutputContainer"></div>
         </div>
         <div id="sidebar-right">
             aside
