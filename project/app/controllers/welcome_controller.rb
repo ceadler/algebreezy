@@ -4,7 +4,7 @@ class WelcomeController < ApplicationController
         scratchpad = Scratchpad.find_by(id: params[:scratchpad_id])
         if user_signed_in?
             if scratchpad != nil
-                render layout: 'general_layout', locals: {scratchpad_id:  scratchpad.id, 
+                render layout: 'scratchpad_layout', locals: {scratchpad_id:  scratchpad.id, 
                                                           title:          scratchpad.title,
                                                           owner:          scratchpad.owner_id,
                                                           isPublic:       scratchpad.public,
