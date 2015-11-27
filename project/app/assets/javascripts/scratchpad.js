@@ -241,7 +241,6 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("poop");
             $scope.display_equation();
-            $scope.request_save();
         }
         else {
             angular.noop;
@@ -252,7 +251,6 @@ function($scope){
         if ($event.keyCode === 13) {
           console.log("pee");
             $scope.display_comment();
-            $scope.request_save();
         }
         else {
             angular.noop;

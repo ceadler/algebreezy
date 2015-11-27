@@ -5,6 +5,7 @@ function EquationNode(left, right) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.isomorphHash = null;
 };
 
 function OpNode(op, left, right) {
@@ -14,6 +15,7 @@ function OpNode(op, left, right) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.isomorphHash = null;
 };
 
 function ParensNode(child) {
@@ -21,6 +23,7 @@ function ParensNode(child) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.isomorphHash = null;
 }
 
 function FunctionNode(name, params) {
@@ -29,6 +32,7 @@ function FunctionNode(name, params) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.isomorphHash = null;
 }
 
 function VarNode(name){
@@ -37,6 +41,7 @@ function VarNode(name){
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.isomorphHash = null;
 }
 
 function NumberNode(value) {
@@ -45,6 +50,7 @@ function NumberNode(value) {
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
+    this.isomorphHash = null;
 }
 
 
@@ -75,6 +81,11 @@ function EquationNodeProto(left, right) {
         //this.setParent(null);
         this.calculateLeafIndex();
         this.setPosition();
+    }
+    this.isHash = function(){
+        var s = this.left.toPlainText() + this.right.toPlainText();
+        s = s.toString();
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 };
 
@@ -118,6 +129,11 @@ function OpNodeProto(op, left, right) {
     this.children = function(){
         return [this.left, this.right];
     }
+    this.isHash = function(){
+        var s = this.left.toPlainText() + this.op + this.right.toPlainText();
+        s = s.toString();
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+    }
 };
 
 function ParensNodeProto(child) {
@@ -141,6 +157,11 @@ function ParensNodeProto(child) {
     this.children = function(){
         return [this.child];
     }
+    this.isHash = function(){
+        var s = '(' + this.child.toPlainText() + ')';
+        s = s.toString();
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+    }
 }
 
 function FunctionNodeProto(name, params) {
@@ -163,6 +184,11 @@ function FunctionNodeProto(name, params) {
     }
     this.children = function(){
         return this.params;
+    }
+    this.isHash = function(){
+        var s = this.name + "(" + this.params.map(function(node){return node.toPlainText()}).join(',') + ")";
+        s = s.toString();
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 }
 
@@ -191,6 +217,11 @@ function VarNodeProto(name){
     this.children = function(){
         return [];
     }
+    this.isHash = function(){
+        var s = this.name;
+        s = s.toString();
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
+    }
 }
 
 function NumberNodeProto(value) {
@@ -217,6 +248,11 @@ function NumberNodeProto(value) {
     }
     this.children = function(){
         return [];
+    }
+    this.isHash = function(){
+        var s = " " + this.value.toString() + " ";
+        s = s.toString();
+        return s.split("").reduce(function(a,b){a=((a<<5)-a)+b.charCodeAt(0);return a&a},0);
     }
 }
 
