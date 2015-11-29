@@ -244,6 +244,12 @@ function OpNodeProto(op, left, right) {
             console.log(numIsomorphicChildren(this.right, this.left)+1);
             availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.right.toLatex()+'\\)', applyHyperOperatorRight(this)));
         }
+		if(this.type == 'Op' && this.op == '-') { 
+			availableManipulations.push(makeButton("Change to addition", changeSigns(this)));
+		}	
+		if(this.type == 'Op' && this.op == '+') { 
+			availableManipulations.push(makeButton("Change to subtraction", changeSigns(this)));
+		}	
         
         //console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
@@ -291,7 +297,15 @@ function ParensNodeProto(child) {
         return [this.child];
     }
     this.generateManipulations = function(){
-        return [];
+		var availableManipulations = [];
+		
+		if(isUselessParens(this)) {
+			availableManipulations.push(makeButton("Delete Parens ", deleteParens(this)));
+		}
+        
+		console.log("These are the manipulations available:", availableManipulations);
+        return availableManipulations;
+    }
     }
     this.isHash = function(){
         var s = '(' + this.child.toPlainText() + ')';

@@ -66,6 +66,77 @@ function canCommute(node){
     return (node.type == 'Op' && (node.op == '*' || node.op == '+'))
 }
 
+function changeSigns(node) {
+	return function() {
+		switch(node.op) {
+			case '-': {
+				node.right.value = 0 - node.right.value;
+				node.op = '+';
+				node.replaceWith(new OpNode(node.op, node.left, node.right)); 
+				newEquationLine(node.root());
+				break;
+			}
+			case '+': {
+				node.right.value = 0 - node.right.value;
+				node.op = '-';
+				node.replaceWith(new OpNode(node.op, node.left, node.right)); 
+				newEquationLine(node.root());
+				break;
+			}
+			
+		}
+	}
+}
+
+function isUselessParens(node) {
+	if ((node.child.op == '-' || node.child.op == '+') && (node.parent.op == '*' || node.parent.op == '/' || node.parent.op == '^')){
+		console.log("not useless");
+		return false;
+	} else if ((node.child.op == '*' || node.child.op == '/') && (node.parent.op == '^')) {
+		console.log("not useless");
+		return false;
+	}	else {
+		return true;
+	}
+}
+
+function deleteParens(node) {
+	if (isUselessParens(node)) {
+		return function() {
+		
+			switch (node.child.type) {
+				case "Op": {
+					node.replaceWith(new OpNode(node.child.op, node.child.left, node.child.right)); 
+					newEquationLine(node.root());
+					break;
+				}
+				case "Number": {
+					node.replaceWith(new NumberNode(node.child.value)); 
+					newEquationLine(node.root());
+					break;
+				}
+				case "Parens": {
+					node.replaceWith(new ParensNode(node.child.child)); 
+					newEquationLine(node.root());
+					break;
+				}
+				case "Function": {
+					//console.log("done");
+					node.replaceWith(new FunctionNode(node.child, node.child.params)); 
+					newEquationLine(node.root());
+					break;
+				}
+				case "Variable": {
+					node.replaceWith(new VarNode(node.child.name)); 
+					newEquationLine(node.root());
+					break;
+				}
+			}
+		}
+	}
+}
+
+
 function numIsomorphicChildren(staticNode, recursiveNode){
     var numChildren = (staticNode.isIsomorphicTo(recursiveNode)?1:0);
     if(recursiveNode.type == "Op" && recursiveNode.op == staticNode.parent.op){
