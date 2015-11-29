@@ -50,8 +50,6 @@ factor : factor '*' term
             {$$ = new OpNode($2, $1, $3);}
        | factor '/' term
             {$$ = new OpNode($2, $1, $3);}
-       |'-' factor
-            {$$ = new OpNode($2, NumberNode(1), $3);}
        | term
             {$$ = $1;}
        ;
@@ -70,6 +68,8 @@ value : parens
             {$$ = $1;}
       | NUMBER
             {$$ = new NumberNode(Number(yytext));}
+      | '-' NUMBER
+            {$$ = new NumberNode(-1*Number(yytext));}
       | function
             {$$ = $1;}
       | variable
