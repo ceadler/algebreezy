@@ -13,10 +13,11 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require parser
-//= require scratchpad
 //= require node_data_structure
 //= require jquery_ujs
 //= require turbolinks
 //= require helpers
+//= require function_table
 //= require manipulations
+//= require scratchpad
 //= require_tree .

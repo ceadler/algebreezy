@@ -11,27 +11,27 @@ function applyOperation(node){
             switch (node.op){
                 case '+': {
                     node.replaceWith(new NumberNode(node.left.value + node.right.value)); 
-                    newEquationLine(node.root());
+                    newEquationLine(node.root().deepCopy());
                     break;
                 }
                 case '-': {
                     node.replaceWith(new NumberNode(node.left.value - node.right.value)); 
-                    newEquationLine(node.root());
+                    newEquationLine(node.root().deepCopy());
                     break;
                 }
                 case '*':  {
                     node.replaceWith(new NumberNode(node.left.value * node.right.value)); 
-                    newEquationLine(node.root());
+                    newEquationLine(node.root().deepCopy());
                     break;
                 }
                 case '/':  {
                     node.replaceWith(new NumberNode(node.left.value / node.right.value)); 
-                    newEquationLine(node.root());
+                    newEquationLine(node.root().deepCopy());
                     break;
                 }
                 case '^':  {
                     node.replaceWith(new NumberNode(Math.pow(node.left.value, node.right.value))); 
-                    newEquationLine(node.root());
+                    newEquationLine(node.root().deepCopy());
                     break;
                 }
                 default: console.log("operation not found:", node, node.op); break;
@@ -48,7 +48,7 @@ function canApplyOperation(node){
 function commute(nodeA, nodeB){
     return function(){
         nodeA.swapWith(nodeB);
-        newEquationLine(nodeA.root());
+        newEquationLine(nodeA.root().deepCopy());
     }
 }
 function generateCommutativityOptions(staticNode, recursiveNode, options){
@@ -77,4 +77,17 @@ function canApplyHyperOperator(node){
             (node.left.isIsomorphicTo(node.right) ||
              numIsomorphicChildren(node.left, node.right) > 0 ||
              numIsomorphicChildren(node.right, node.left) > 0))
+}
+
+function canSubstituteFunction(node){
+    return (node.type == 'Function' && functionTable.contains(node.name))
+}
+
+function substituteFunction(node){
+    return function(){
+        if(canSubstituteFunction(node)){
+            functionTable.substitute(node);
+            newEquationLine(node.root().deepCopy());
+        }
+    }
 }

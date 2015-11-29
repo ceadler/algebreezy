@@ -5,6 +5,7 @@ var svgtranslate = {x:0, y:0}
 var lastMouseEvtPoint = {x:0, y:0}
 var scratchpad_title = "";
 var isPublic = false;
+var functionTable = new FunctionTableObject();
 
 function transformSVG(element, scale, translate){
     //console.log('transformsvg', scale, translate)
@@ -199,7 +200,6 @@ function displayLatexAndPlaintext(node){
 }
 
 request_save = function() {
-    console.log("This is the value:",$('#scratchpad-public').is(":checked"))
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
@@ -231,7 +231,6 @@ angular.module('Algebreezy', [])
 function($scope){
 
     $scope.display_equation = function() {
-        console.log("testing1");
         thisEqn = parser.parse($("#myEquation").val())
         newEquationLine(thisEqn);
         $scope.request_save();
@@ -247,7 +246,6 @@ function($scope){
         //turn equations into JSON
         //display "data is being saved"
         //send JSON to server
-        console.log("This is the value:",$('#scratchpad-public').is(":checked"))
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
@@ -265,7 +263,6 @@ function($scope){
 
     $scope.displayEqnKey = function($event) {
         if ($event.keyCode === 13) {
-          console.log("poop");
             $scope.display_equation();
             $scope.request_save();
         }
@@ -276,7 +273,6 @@ function($scope){
 
     $scope.displayCommentKey = function($event) {
         if ($event.keyCode === 13) {
-          console.log("pee");
             $scope.display_comment();
             $scope.request_save();
         }

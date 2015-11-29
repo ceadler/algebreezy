@@ -23,9 +23,10 @@ function ParensNode(child) {
     this.position = null;
 }
 
-function FunctionNode(name, params) {
+function FunctionNode(name, params, isDeclaration) {
     this.name = name;
 	this.params = params;
+    this.isDeclaration = isDeclaration;
     this.nodeDepth = null;
     this.parent = null;
     this.position = null;
@@ -53,7 +54,7 @@ function NumberNode(value) {
 function EquationNodeProto(left, right) {
 	this.type = "Equation";
     this.deepCopy = function(){
-        var newNode = new EquationNode(this.left.deepCopy(), this.right.ceepCopy());
+        var newNode = new EquationNode(this.left.deepCopy(), this.right.deepCopy());
         newNode.nodeDepth = this.nodeDepth;
         newNode.parent = this.parent;
         newNode.position = this.position;
@@ -253,13 +254,21 @@ function FunctionNodeProto(name, params) {
                 this.position == node.position)
     }
 	this.toLatex = function() {
-		return " " + this.name + "(" + this.params.map(function(node){return node.toLatex()}).join(', ') + ") ";
+		return " "+ this.declarationTag()+" "
+               +    this.name 
+               + "(" + this.params.map(function(node){return node.toLatex()}).join(', ') + ") ";
 		//console.log(".");
 	}
 	this.toEval = function() {
 	}
+    this.declarationTag = function(){
+        if(this.isDeclaration){return "@";}
+        else{ return "";}
+    }
 	this.toPlainText = function() {
-		return this.name + "(" + this.params.map(function(node){return node.toPlainText()}).join(',') + ")";
+		return this.declarationTag()
+               +this.name 
+               + "(" + this.params.map(function(node){return node.toPlainText()}).join(',') + ")";
 	}
 	this.isEqualTo = function() {
 	}
@@ -280,7 +289,13 @@ function FunctionNodeProto(name, params) {
         return this.params;
     }
     this.generateManipulations = function(){
-        return [];
+        var availableManipulations = [];
+        
+        if(canSubstituteFunction(this)){
+            availableManipulations.push(makeButton("Replace "+this.name+" by definition", substituteFunction(this)));
+        }
+        
+        return availableManipulations;
     }
 }
 
@@ -445,30 +460,40 @@ function MathNodeProto(){
     }
     this.replaceWith = function(node){
         var par = this.parent
+        function t(text){console.log("From trace", text)};
         //console.log("Before:", this.parent.children(), this.root());
         switch(par.type){
             case null: break; //If we're on an equation node. Not sure what to do here yet, if anything
             case "Equation": 
-                if(par.left === this){ par.left  = node}
-                if(par.right === this){par.right = node}
+                console.log("replaceWith trace: Eq", par.left, par.right, this, node);
+                if(par.left === this){ t("1");par.left  = node;}
+                if(par.right === this){ t("2");par.right = node}
                 break;
             case "Op":
-                if(par.left === this){ par.left  = node}
-                if(par.right === this){par.right = node}
+                console.log("replaceWith trace: op",
+                "\n left", par.left, 
+                //"\n right", par.right,
+                "\n this", this, 
+                "\n node", node,
+                "\n Does left = this?", par.left === this);
+                if(par.left === this){  t("3");par.left  = node}
+                if(par.right === this){ t("4");par.right = node}
                 break;
             case "Function":
+                console.log("replaceWith trace: func");
                 for (var c in par.params){
                     if (this === par.params[c]){par.params[c] = node}
                 }
                 break;
             case "Parens": break;
+                console.log("replaceWith trace: parens");
                 if(par.child === this){ par.child  = node}
                 break;
-            case "Variable": break; //This can never happen
-            case "Number": break; //This can never happen
-            default: break;
+            case "Variable": console.log("replaceWith trace: var");break; //This can never happen
+            case "Number": console.log("replaceWith trace: num");break; //This can never happen
+            default: console.log("replaceWith trace: default");break;
         }
-        //console.log("After:", this.parent.children(), this.root());
+        this.root().setParent(null); //reset the parent structure
     }
     this.swapWith = function(node){
         var tmp1 = this.deepCopy();
@@ -477,7 +502,6 @@ function MathNodeProto(){
         this.replaceWith(tmp2);
     }
 }
-//IDEA: Write a children() function to return an array of all children, then we can reduce the amount of code to write!
 
   
 EquationNodeProto.prototype = Object.create(new MathNodeProto());

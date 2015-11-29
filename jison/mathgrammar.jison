@@ -6,19 +6,21 @@
 %%
 
 \s+                   /* skip whitespace */
-[0-9]+("."[0-9]+)?\b  return 'NUMBER'
-"*"                   return '*'
-"/"                   return '/'
-"-"                   return '-'
-"+"                   return '+'
-","                   return ','
-"^"                   return '^'
-"("                   return '('
-")"                   return ')'
-"="                   return '='
-[a-zA-Z]+             return 'WORD'
-<<EOF>>               return 'EOF'
-.                     return 'INVALID'
+[0-9]+("."[0-9]+)?\b    return 'NUMBER'
+"*"                     return '*'
+"/"                     return '/'
+"-"                     return '-'
+"+"                     return '+'
+","                     return ','
+"^"                     return '^'
+"("                     return '('
+")"                     return ')'
+"="                     return '='
+":"                     return ':'
+"@"                     return '@'
+[a-zA-Z]+               return 'WORD'
+<<EOF>>                 return 'EOF'
+.                       return 'INVALID'
 
 /lex
 
@@ -36,9 +38,24 @@
 equation
     : expression '=' expression EOF
         { return new EquationNode($1, $3); }
+    | function_dec '=' expression EOF
+        { console.log($1, $2, $3, $4);
+          functionTable.registerFunction($1, $3);
+          return new EquationNode($1, $3);
+        }
     ;
 
-expression: expression '+' factor
+function_dec : '@' WORD '(' var_list ')'
+                  {$$ = new FunctionNode($WORD, $4, true);}
+            ;
+            
+var_list : var_list ',' variable
+             {$1.push($3); $$=$1;}
+         | variable
+             {$$ = [$1];}
+         ;
+        
+expression : expression '+' factor
                 {$$ = new OpNode($2, $1, $3);}
           | expression '-' factor
                 {$$ = new OpNode($2, $1, $3);}
@@ -81,7 +98,7 @@ parens : '(' expression ')'
        ;
 
 function : WORD '(' params ')'
-                {$$ = new FunctionNode($WORD, $3);}
+                {$$ = new FunctionNode($WORD, $3, false);}
          ;
 
 params : params ',' expression
