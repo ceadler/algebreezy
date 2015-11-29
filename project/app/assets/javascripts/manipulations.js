@@ -75,14 +75,116 @@ function numIsomorphicChildren(staticNode, recursiveNode){
     //console.log("Is isomorphic?"+, staticNode.isIsomorphicTo(recursiveNode), staticNode, recursiveNode, numChildren);
     return numChildren;
 }
-function canApplyHyperOperator(node){
+
+function canApplyHyperOperatorLeft(node){
     return ((node.type == 'Op' && (node.op == '+' || node.op == '*')) &&
-            (node.left.isIsomorphicTo(node.right) ||
-             numIsomorphicChildren(node.left, node.right) > 0 ||
-             numIsomorphicChildren(node.right, node.left) > 0))
+            (numIsomorphicChildren(node.left, node.right)>0) &&
+            !canApplyHyperOperatorSimple(node))
+}
+
+function canApplyHyperOperatorRight(node){
+    return ((node.type == 'Op' && (node.op == '+' || node.op == '*')) &&
+            (numIsomorphicChildren(node.right, node.left)>0) &&
+            !canApplyHyperOperatorSimple(node))
+}
+
+function canApplyHyperOperatorSimple(node){
+    return ((node.type == 'Op' && (node.op == '+' || node.op == '*')) &&
+             node.right.isIsomorphicTo(node.left))
 }
 
 function replaceIsomorphicChildren(staticNode, recursiveNode){
+    var numChildrenReplaced = 0;
+    if(recursiveNode.type == "Op" && recursiveNode.op == staticNode.parent.op){
+        numChildrenReplaced += replaceIsomorphicChildren(staticNode, recursiveNode.left);
+        numChildrenReplaced += replaceIsomorphicChildren(staticNode, recursiveNode.right);
+        if(recursiveNode.left.isIsomorphicTo(staticNode)){
+            console.log('Replacing', recursiveNode, 'with', recursiveNode.right);
+            recursiveNode.replaceWith(recursiveNode.right);
+            console.log('Replaced', recursiveNode, 'with', recursiveNode.right);
+            return numChildrenReplaced+1;
+        }
+        else if(recursiveNode.right.isIsomorphicTo(staticNode)){
+            console.log('Replacing', recursiveNode, 'with', recursiveNode.left);
+            recursiveNode.replaceWith(recursiveNode.left);
+            console.log('Replaced', recursiveNode, 'with', recursiveNode.left);
+            return numChildrenReplaced+1;
+        }
+    }
+    return 0;
+}
+
+function applyHyperOperatorSimple(node){
+    return function(){
+        if(canApplyHyperOperatorSimple(node)){
+            if(node.op == '+'){
+                node.replaceWith(new OpNode('*', new NumberNode(2), node.left));
+                newEquationLine(node.root());
+            }
+            else if(node.op == '*'){
+                node.replaceWith(new OpNode('^', node.left, new NumberNode(2)));
+                newEquationLine(node.root());
+            }
+        }
+    }
+}
+
+function applyHyperOperatorLeft(node){
+    return function(){
+        console.log("left hyperoperator apply");
+        if(canApplyHyperOperatorLeft(node)){
+            var nodeOp = node.op;
+            var staticNode = node.left.deepCopy()
+            var numChildrenReplaced = replaceIsomorphicChildren(staticNode, node);
+            if(nodeOp == '+'){
+                var replacement = new OpNode('+', new OpNode('*', new NumberNode(numChildrenReplaced), staticNode), node.deepCopy())
+                replacement.setParent(node.parent)
+                node.replaceWith(replacement)
+                newEquationLine(replacement.root());
+            }
+            if(nodeOp == '*'){
+                node.replaceWith(new OpNode('*', 
+                                   new OpNode('^',
+                                     staticNode,
+                                     new NumberNode(numChildrenReplaced)),
+                                   node.deepCopy())
+                                )
+                newEquationLine(node.root());
+            }
+        }
+    }
+}
+
+function applyHyperOperatorRight(node){
+    return function(){
+        console.log("right hyperoperator apply", node);
+        if(canApplyHyperOperatorRight(node)){
+            var nodeOp = node.op;
+            var staticNode = node.right.deepCopy()
+            console.log("Static node is:", staticNode)
+            var numChildrenReplaced = replaceIsomorphicChildren(staticNode, node);
+            if(nodeOp == '+'){
+                console.log("node", node);
+                var replacement = new OpNode('+', new OpNode('*', new NumberNode(numChildrenReplaced), staticNode), node)
+                replacement.setParent(node.parent)
+                console.log("1Replacement:", replacement)
+                console.log("1Node:", node)
+                node.replaceWith(replacement)
+                console.log("2Replacement:", replacement)
+                console.log("2Node:", node)
+                newEquationLine(replacement.root());
+            }
+            if(nodeOp == '*'){
+                node.replaceWith(new OpNode('*', 
+                                   new OpNode('^',
+                                     staticNode,
+                                     new NumberNode(numChildrenReplaced)),
+                                   node.deepCopy())
+                                )
+                newEquationLine(node.root());
+            }
+        }
+    }
 }
 
 function canSubstituteFunction(node){

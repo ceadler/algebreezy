@@ -216,9 +216,22 @@ function OpNodeProto(op, left, right) {
             generateCommutativityOptions(this.right, this.left, availableManipulations);
         }
         
-        if(canApplyHyperOperator(this)){
+        if(canApplyHyperOperatorSimple(this)){
             console.log(numIsomorphicChildren(this.left, this.right)+1);
             console.log(numIsomorphicChildren(this.right, this.left)+1);
+            availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.left.toLatex()+'\\)', applyHyperOperatorSimple(this)));
+        }
+        
+        if(canApplyHyperOperatorLeft(this)){
+            console.log(numIsomorphicChildren(this.left, this.right)+1);
+            console.log(numIsomorphicChildren(this.right, this.left)+1);
+            availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.left.toLatex()+'\\)', applyHyperOperatorLeft(this)));
+        }
+        
+        if(canApplyHyperOperatorRight(this)){
+            console.log(numIsomorphicChildren(this.left, this.right)+1);
+            console.log(numIsomorphicChildren(this.right, this.left)+1);
+            availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.right.toLatex()+'\\)', applyHyperOperatorRight(this)));
         }
         
         //console.log("These are the manipulations available:", availableManipulations);
@@ -403,6 +416,7 @@ function NumberNodeProto(value) {
 	this.isEqualTo = function() {
 	}
 	this.isIsomorphicTo = function(node) {
+        console.log('checking isomorphisms in Number', this, node);
         return (this.type == node.type &&
                 this.value == node.value)
 	}
@@ -510,6 +524,7 @@ function MathNodeProto(){
             case "Number": console.log("Error: replaceWith trace: num", this, node);break; //This can never happen
             default: console.log("Error: replaceWith trace: default", this, node);break;
         }
+        //console.log("setParent in replace", this, this.root());
         this.root().setParent(null); //reset the parent structure
     }
     this.swapWith = function(node){
