@@ -12,7 +12,7 @@
         </div>
         <div id="sidebar-left">
             <label><input type="checkbox" id="scratchpad-public" <% if isPublic%> checked="checked" <%end%>>Make public?</label>
-            <input type="text" id="scratchpad-title" placeholder="Title" value="<%=title%>">
+            <input type="text" id="scratchpad-title" placeholder="Title" value="<%=title%>" ng-keypress="displayEqnKey($event)">
             <button ng-click="request_save()">Save</button>
             <div id="textOutputContainer"></div>
         </div>

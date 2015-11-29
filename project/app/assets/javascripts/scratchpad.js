@@ -127,6 +127,7 @@ function drawNode(node, svggroup, linegroup){
     //g is a group containing circle and text. 
     //Putting them in a group helps deal with which one should overlap the other.
     var circ = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+    circ.colorFlag = true;
     var text = document.createElementNS("http://www.w3.org/2000/svg", 'text');
     
     for (var child_index in node.children()){
@@ -173,8 +174,38 @@ function drawNode(node, svggroup, linegroup){
     group.appendChild(circ);
     group.appendChild(text);
     
-    $(group).mousedown(genNodeClick(text, node));
+    $(group).mousedown(genNodeClick(text, node, circ));
+/*    circ.addEventListener('click', changeNodeColor(circ));
+    text.addEventListener('click', changeNodeColor(circ));*/
+    circ.addEventListener('click', function() {
+        if (circ.colorFlag) {
+            circ.style.fill="#a05050";
+            circ.colorFlag = !circ.colorFlag;
+        }else {
+            circ.style.fill="#5050a0";
+            circ.colorFlag = !circ.colorFlag;
+        }
+    });
+    text.addEventListener('click', function() {
+        if (circ.colorFlag) {
+            circ.style.fill="#a05050";
+            circ.colorFlag = !circ.colorFlag;
+        }else {
+            circ.style.fill="#5050a0";
+            circ.colorFlag = !circ.colorFlag;
+        }
+    });
 }
+
+/*function changeNodeColor(circ) {
+    if (circ.colorFlag) {
+        circ.style.fill="#a05050";
+        circ.colorFlag = !circ.colorFlag;
+    }else {
+        circ.style.fill="#5050a0";
+        circ.colorFlag = !circ.colorFlag;
+    }
+}*/
 
 function genNodeClick(text, node){
     return function(event){
@@ -288,7 +319,6 @@ function($scope){
     $scope.displayEqnKey = function($event) {
         if ($event.keyCode === 13) {
             $scope.display_equation();
-            $scope.request_save();
         }
         else {
             angular.noop;
@@ -298,7 +328,6 @@ function($scope){
     $scope.displayCommentKey = function($event) {
         if ($event.keyCode === 13) {
             $scope.display_comment();
-            $scope.request_save();
         }
         else {
             angular.noop;
