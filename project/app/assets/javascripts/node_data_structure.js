@@ -249,8 +249,27 @@ function OpNodeProto(op, left, right) {
 		}	
 		if(this.type == 'Op' && this.op == '+') { 
 			availableManipulations.push(makeButton("Change to subtraction", changeSigns(this)));
-		}	
+		}
         
+        if(canDistributeLeft(this)){
+        	availableManipulations.push(makeButton("distribute number", distributeOperation(this)));
+        }
+        
+        if(canDistributeRight(this)){
+        	availableManipulations.push(makeButton("distribute number", distributeOperation(this)));
+        }
+        
+        if(canReduceExponent(this)){
+        	availableManipulations.push(makeButton("reduce exponent", reduceExponent(this)));
+        }
+        
+        if(canInvertOperator(this)){
+        	availableManipulations.push(makeButton("invert operator", invertOperator(this)));
+        }
+        
+        if(canFactorNegNum(this)){
+        	availableManipulations.push(makeButton("factor out negative number", factorNegNum(this)));
+        }
         //console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
     }
