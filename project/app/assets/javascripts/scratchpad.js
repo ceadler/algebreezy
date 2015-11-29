@@ -277,6 +277,13 @@ $(document).bind('keydown', function(event) {
   }
 });
 
+$(document).bind('keydown', function(event) {
+  if(event.ctrlKey && (event.which == 90)) {
+
+    drawTree();
+  }
+});
+
 angular.module('Algebreezy', [])
 .controller('MainCtrl', [
 '$scope',
