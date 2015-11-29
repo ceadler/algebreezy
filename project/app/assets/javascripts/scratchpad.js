@@ -1,3 +1,4 @@
+var save_data = [];
 var equations = [];
 var svgscale = 1;
 var draggingSVG = false;
@@ -83,10 +84,21 @@ $(document).ready(function(){
         
         
         
-        var split_eqns = (initial_eqns_str != "" ? initial_eqns_str.split(';') : [])
-        for (var eqn in split_eqns){
-            equations[eqn] = parser.parse(split_eqns[eqn]);
-            newEquationLine(equations[eqn]);
+        save_data = (initial_data_str != "" ? initial_data_str.split(';') : [])
+        console.log('save data:', save_data);
+        for (var d in save_data){
+            console.log('t',save_data[d]);
+            var datum = save_data[d].split(':');
+            var dataType = datum[0];
+            var data = datum[1];
+            console.log(datum,": type:", dataType,"data:",data)
+            if(dataType == "Comment"){
+                newCommentLine(data)
+            }
+            else if(dataType == "Equation"){
+                equations[equations.length-1] = parser.parse(data);
+                newEquationLine(equations[equations.length-1]);
+            }
         }
         MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
         drawTree();
@@ -193,6 +205,12 @@ function newEquationLine(root){
     eqn_view[0].scrollTop = eqn_view[0].scrollHeight;
     drawTree();
 }
+
+function newCommentLine(comment){
+    var eqn_view = $("#equation_view");
+    eqn_view.append("<div class='comment_line'>" + comment + "</div>");
+    eqn_view[0].scrollTop = eqn_view[0].scrollHeight;
+}
 function displayLatexAndPlaintext(node){
     return function(){
         $("#textOutputContainer").html("Plaintext: "+node.toPlainText()+"<br> LaTeX code: "+node.toLatex());
@@ -200,21 +218,24 @@ function displayLatexAndPlaintext(node){
 }
 
 request_save = function() {
+        //turn equations into JSON
+        //display "data is being saved"
+        //send JSON to server
+        console.log("Saving data...",save_data.join(';'));
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
-            data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
+            data: {equations: save_data.join(';'),
                    id: scratchpad_id,
                    title: $('#scratchpad-title').val(),//scratchpad_title,
                    isPublic: $('#scratchpad-public').is(":checked"),
                    shared_users: ""}
                    ,
             headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
-            success: function(data){window.alert(data);}
+            //success: function(data){window.alert(data);}
         })
         //display "save successful" or "save unsuccessful!"
-        //alert("Save successful");
-}
+    }
 
 
 $(document).bind('keydown', function(event) {
@@ -232,13 +253,15 @@ function($scope){
 
     $scope.display_equation = function() {
         thisEqn = parser.parse($("#myEquation").val())
+        save_data.push("Equation:"+thisEqn.toPlainText())
+        console.log(save_data.join(';'));
         newEquationLine(thisEqn);
         $scope.request_save();
     }
 
     $scope.display_comment = function() {
-        console.log("fart");
-        $("#equation_view").append("<div class='comment_line'>" + document.getElementById("myComment").value + "</div>");
+        save_data.push("Comment:"+document.getElementById("myComment").value)
+        newCommentLine(document.getElementById("myComment").value);
         $scope.request_save();
     }
 
@@ -246,10 +269,11 @@ function($scope){
         //turn equations into JSON
         //display "data is being saved"
         //send JSON to server
+        console.log("Saving data...",save_data.join(';'));
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
-            data: {equations: equations.map(function(eqn){return eqn.toPlainText();}).join(';'),
+            data: {equations: save_data.join(';'),
                    id: scratchpad_id,
                    title: $('#scratchpad-title').val(),//scratchpad_title,
                    isPublic: $('#scratchpad-public').is(":checked"),

@@ -11,27 +11,27 @@ function applyOperation(node){
             switch (node.op){
                 case '+': {
                     node.replaceWith(new NumberNode(node.left.value + node.right.value)); 
-                    newEquationLine(node.root().deepCopy());
+                    newEquationLine(node.root());
                     break;
                 }
                 case '-': {
                     node.replaceWith(new NumberNode(node.left.value - node.right.value)); 
-                    newEquationLine(node.root().deepCopy());
+                    newEquationLine(node.root());
                     break;
                 }
                 case '*':  {
                     node.replaceWith(new NumberNode(node.left.value * node.right.value)); 
-                    newEquationLine(node.root().deepCopy());
+                    newEquationLine(node.root());
                     break;
                 }
                 case '/':  {
                     node.replaceWith(new NumberNode(node.left.value / node.right.value)); 
-                    newEquationLine(node.root().deepCopy());
+                    newEquationLine(node.root());
                     break;
                 }
                 case '^':  {
                     node.replaceWith(new NumberNode(Math.pow(node.left.value, node.right.value))); 
-                    newEquationLine(node.root().deepCopy());
+                    newEquationLine(node.root());
                     break;
                 }
                 default: console.log("operation not found:", node, node.op); break;

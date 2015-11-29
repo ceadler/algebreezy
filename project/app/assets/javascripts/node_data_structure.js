@@ -460,38 +460,27 @@ function MathNodeProto(){
     }
     this.replaceWith = function(node){
         var par = this.parent
-        function t(text){console.log("From trace", text)};
-        //console.log("Before:", this.parent.children(), this.root());
         switch(par.type){
-            case null: break; //If we're on an equation node. Not sure what to do here yet, if anything
+            case null: console.log("Error: replaceWith trace: null", this, node);break; //If we're on an equation node. Not sure what to do here yet, if anything
             case "Equation": 
-                console.log("replaceWith trace: Eq", par.left, par.right, this, node);
-                if(par.left === this){ t("1");par.left  = node;}
-                if(par.right === this){ t("2");par.right = node}
+                if(par.left === this){ par.left  = node;}
+                if(par.right === this){par.right = node;}
                 break;
             case "Op":
-                console.log("replaceWith trace: op",
-                "\n left", par.left, 
-                //"\n right", par.right,
-                "\n this", this, 
-                "\n node", node,
-                "\n Does left = this?", par.left === this);
-                if(par.left === this){  t("3");par.left  = node}
-                if(par.right === this){ t("4");par.right = node}
+                if(par.left === this){ par.left  = node;}
+                if(par.right === this){par.right = node;}
                 break;
             case "Function":
-                console.log("replaceWith trace: func");
                 for (var c in par.params){
-                    if (this === par.params[c]){par.params[c] = node}
+                    if (this === par.params[c]){par.params[c] = node;}
                 }
                 break;
             case "Parens": break;
-                console.log("replaceWith trace: parens");
-                if(par.child === this){ par.child  = node}
+                if(par.child === this){ par.child  = node;}
                 break;
-            case "Variable": console.log("replaceWith trace: var");break; //This can never happen
-            case "Number": console.log("replaceWith trace: num");break; //This can never happen
-            default: console.log("replaceWith trace: default");break;
+            case "Variable": console.log("Error: replaceWith trace: var", this, node);break; //This can never happen
+            case "Number": console.log("Error: replaceWith trace: num", this, node);break; //This can never happen
+            default: console.log("Error: replaceWith trace: default", this, node);break;
         }
         this.root().setParent(null); //reset the parent structure
     }
