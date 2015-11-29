@@ -183,6 +183,34 @@ function OpNodeProto(op, left, right) {
             availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', applyOperation(this)));
         }
         
+        if(canMultiplyByZero(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', multiplyByZero(this)));
+        }
+        
+        if(canCancelDivision(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', cancelDivision(this)));
+        }
+        
+        if(canCancelSubtraction(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', cancelSubtraction(this)));
+        }
+        
+        if(canAddZero(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', addZero(this)));
+        }
+        
+        if(canMultiplyByOne(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', multiplyByOne(this)));
+        }
+        
+        if(canDivideByOne(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', divideByOne(this)));
+        }
+        
+        if(canRaiseToZero(this)){
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', raiseToZero(this)));
+        }
+        
         if(canCommute(this)){
             generateCommutativityOptions(this.left, this.right, availableManipulations);
             generateCommutativityOptions(this.right, this.left, availableManipulations);

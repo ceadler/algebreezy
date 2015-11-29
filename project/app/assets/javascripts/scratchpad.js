@@ -85,13 +85,13 @@ $(document).ready(function(){
         
         
         save_data = (initial_data_str != "" ? initial_data_str.split(';') : [])
-        console.log('save data:', save_data);
+        //console.log('save data:', save_data);
         for (var d in save_data){
-            console.log('t',save_data[d]);
+            //console.log('t',save_data[d]);
             var datum = save_data[d].split(':');
             var dataType = datum[0];
             var data = datum[1];
-            console.log(datum,": type:", dataType,"data:",data)
+            //console.log(datum,": type:", dataType,"data:",data)
             if(dataType == "Comment"){
                 newCommentLine(data)
             }
@@ -221,7 +221,7 @@ request_save = function() {
         //turn equations into JSON
         //display "data is being saved"
         //send JSON to server
-        console.log("Saving data...",save_data.join(';'));
+        //console.log("Saving data...",save_data.join(';'));
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
@@ -254,7 +254,7 @@ function($scope){
     $scope.display_equation = function() {
         thisEqn = parser.parse($("#myEquation").val())
         save_data.push("Equation:"+thisEqn.toPlainText())
-        console.log(save_data.join(';'));
+        //console.log(save_data.join(';'));
         newEquationLine(thisEqn);
         $scope.request_save();
     }
@@ -269,7 +269,7 @@ function($scope){
         //turn equations into JSON
         //display "data is being saved"
         //send JSON to server
-        console.log("Saving data...",save_data.join(';'));
+        //console.log("Saving data...",save_data.join(';'));
         $.ajax({
             url: "/save_scratchpad_data",
             type: 'post',
