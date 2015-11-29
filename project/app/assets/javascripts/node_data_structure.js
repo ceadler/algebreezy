@@ -125,9 +125,24 @@ function OpNodeProto(op, left, right) {
         var availableManipulations = [];
         
         if(canApplyOperation(this)){
-            availableManipulations.push(makeButton("reduce number", applyOperation(this)));
+            availableManipulations.push(makeButton("Reduce \\( "+this.left.toLatex()+this.op+this.right.toLatex()+' \\)', applyOperation(this)));
         }
         
+        /*if(canDistributeOperation(this)){
+        	availableManipulations.push(makeButton("distribute number", distributeOperation(this)));
+        }
+        
+        if(canReduceExponent(this)){
+        	availableManipulations.push(makeButton("reduce exponent", reduceExponent(this)));
+        }
+        
+        if(canInvertOperator(this)){
+        	availableManipulations.push(makeButton("invert operator", invertOperator(this)));
+        }
+        
+        if(canFactorNegNum(this)){
+        	availableManipulations.push(makeButton("factor out negative number", factorNegNum(this)));
+        }*/
         //console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
     }
