@@ -335,7 +335,7 @@ function($scope){
     $scope.displayEqnKey = function($event) {
         if ($event.keyCode === 13) {
             $scope.display_equation();
-            $("#myEquation").value("");
+            $('#myEquation').val('');
         }
         else {
             angular.noop;
@@ -345,6 +345,7 @@ function($scope){
     $scope.displayCommentKey = function($event) {
         if ($event.keyCode === 13) {
             $scope.display_comment();
+            $('#myComment').val('');
         }
         else {
             angular.noop;
