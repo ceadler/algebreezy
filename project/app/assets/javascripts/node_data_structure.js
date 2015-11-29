@@ -306,7 +306,6 @@ function ParensNodeProto(child) {
 		console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
     }
-    }
     this.isHash = function(){
         var s = '(' + this.child.toPlainText() + ')';
         s = s.toString();
