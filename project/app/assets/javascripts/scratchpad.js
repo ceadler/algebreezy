@@ -85,25 +85,31 @@ $(document).ready(function(){
         
         
         save_data = (initial_data_str != "" ? initial_data_str.split(';') : [])
-        //console.log('save data:', save_data);
-        for (var d in save_data){
-            //console.log('t',save_data[d]);
-            var datum = save_data[d].split(':');
-            var dataType = datum[0];
-            var data = datum[1];
-            //console.log(datum,": type:", dataType,"data:",data)
-            if(dataType == "Comment"){
-                newCommentLine(data)
-            }
-            else if(dataType == "Equation"){
-                equations[equations.length-1] = parser.parse(data);
-                newEquationLine(equations[equations.length-1]);
-            }
-        }
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
-        drawTree();
+        loadSaveArray();
     }
 });
+
+function loadSaveArray(){
+    var equation_view = $("#equation_view");
+        equation_view.empty();
+    equations = [];
+    for (var d in save_data){
+        //console.log('t',save_data[d]);
+        var datum = save_data[d].split(':');
+        var dataType = datum[0];
+        var data = datum[1];
+        //console.log(datum,": type:", dataType,"data:",data)
+        if(dataType == "Comment"){
+            newCommentLine(data)
+        }
+        else if(dataType == "Equation"){
+            equations[equations.length-1] = parser.parse(data);
+            newEquationLine(equations[equations.length-1]);
+        }
+    }
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('equation_view')]);
+    drawTree();
+}
 
 function drawTree(){
         if(equations.length > 0){
@@ -279,7 +285,10 @@ $(document).bind('keydown', function(event) {
 
 $(document).bind('keydown', function(event) {
   if(event.ctrlKey && (event.which == 90)) {
-
+    if (save_data[0] !== undefined) {
+        save_data.pop();
+        loadSaveArray();
+    }
     drawTree();
   }
 });
@@ -326,6 +335,7 @@ function($scope){
     $scope.displayEqnKey = function($event) {
         if ($event.keyCode === 13) {
             $scope.display_equation();
+            $("#myEquation").value("");
         }
         else {
             angular.noop;
