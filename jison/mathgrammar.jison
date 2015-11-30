@@ -71,15 +71,11 @@ factor : factor '*' term
             {$$ = $1;}
        ;
        
-term : exponent
-            {$$ = $1;}
+term : term '^' value
+            {$$ = new OpNode($2, $1, $3);}
      | value
             {$$ = $1;}
      ;
-     
-exponent: value '^' value
-                {$$ = new OpNode($2, $1, $3);}
-        ;
 
 value : parens
             {$$ = $1;}

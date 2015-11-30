@@ -113,13 +113,13 @@ function loadSaveArray(){
 }
 
 function drawTree(){
-        if(equations.length > 0){
+    var svggroup = document.getElementById('svggroup'); //Get svg element
+    while (svggroup.lastChild) {
+        svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
+    }
+    if(equations.length > 0){
         var equation = equations[equations.length -1]
-        var svggroup = document.getElementById('svggroup'); //Get svg element
         circs = [];
-        while (svggroup.lastChild) {
-            svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
-        }
         equation.initTree();//Initialize all of the data we need to draw the tree
         var linegroup = document.createElementNS("http://www.w3.org/2000/svg", 'g');
         //line group is a group containing all of the lines between nodes, specifically

@@ -1,7 +1,17 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@font-face {
+    font-family: 'Open_sanssemibold';
+    src: font-url('OpenSans-Semibold-webfont.eot');
+    src: font-url('OpenSans-Semibold-webfont.ttf') format('truetype'),
+         font-url('OpenSans-Semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('OpenSans-Semibold-webfont.woff') format('woff'),
+         font-url('OpenSans-Semibold-webfont.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
+}
 
 body {
     padding: 25px; 
@@ -48,16 +58,19 @@ tbody {
     line-height: 120%;
 }
 .navbar {
-text-align:center;
-
+    text-align:center;
+    z-index: 1000;
     display: block;
     width: 100%;
     position: fixed;
     top: 0px;
     left: 0px;
-    background-color: rgba(128, 128, 128, 0.9);
+    background-color: rgba(50, 50, 50, 1);
+    box-shadow: 0px 4px 3px 0px rgba(40, 40, 40, 0.4), 0px 1px 1px 1px #323232;
     padding: 4px;
     text-align:center;
+    height: 27px;
+    
     
 
     #dropdown_menu {
@@ -71,8 +84,8 @@ text-align:center;
         padding: 2px;
         cursor: pointer;
         .algebreezy-svg{
-            width:200px;
-            height:40px;
+            width:150px;
+            height:25px;
             vertical-align:middle
         }
     }
@@ -132,7 +145,7 @@ text-align:center;
 
     .button{
         width: 75px;
-        color: rgba(0, 0, 0, 0.55);
+        color: rgba(20, 20, 20, 0.9);
         text-align: center;
 
     }
@@ -177,7 +190,9 @@ text-align:center;
            flex: 1 6 20%;
     -webkit-order: 1;
            order: 1;
-    flex: 0 0 150px;
+    flex: 0 0 200px;
+    overflow: auto;
+    height: 500px;
 
     .button1 {
     display: inline-block;
@@ -198,7 +213,9 @@ text-align:center;
            flex: 1 6 20%;
    -webkit-order: 3;
            order: 3;
-    flex: 0 0 150px;
+    flex: 0 0 200px;
+    overflow: auto;
+    height: 500px;
 }
 
 #equation_view {
@@ -219,7 +236,7 @@ text-align:center;
   border-radius: 5px;
   padding: 5px;
   resize: none;
-  height: 490px;
+  height: 488px;
   width: 50%;
   overflow: auto;
 
@@ -265,8 +282,12 @@ body {
 .body_content {
     background-color: rgba(200, 200, 200, 0.9);
     padding: 5px;
-    dislay: block;
+    display: block;
     border-radius: 5px;
+    font-family: 'Open_sanssemibold';
+    color: white;
+    text-shadow: -1px 1px 4px rgba(50, 50, 50, 0.6);
+    text-align:center;
 }
 
 .button1 {
@@ -320,6 +341,10 @@ body {
     }
 }
 
+.operation_button {
+    margin: 3px;
+}
+
 /* Too narrow to support three columns */
 @media all and (max-width: 1300px) {
   
@@ -337,5 +362,6 @@ body {
    #sidebar-left, #sidebar-right, header, footer {
     min-height: 50px;
     flex: 0 0 auto;
+    height: auto;
    }
 }

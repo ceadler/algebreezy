@@ -37,7 +37,7 @@ class WelcomeController < ApplicationController
             new_scratchpad = Scratchpad.create(title: "",
                                                owner_id: current_user.id,
                                                public: false,
-                                               data: "",
+                                               data: "Comment:Welcome to Algebreezy! Type an equation in the box below and press Enter. A tree-representation of your equation will appear to the right. Click on the circles to manipulate the items in the tree. A sample equation is left for you below. Press ctrl+z to remove the last item on the scratch pad.;Equation:x^2+y^2=z^2",
                                                created_at: DateTime.current)
             redirect_to '/scratchpad/'+new_scratchpad.id.to_s
         else

@@ -2,7 +2,7 @@ var Zero = new NumberNode(0);
 var One = new NumberNode(1);
     
 function makeButton(text, click_function){
-    var new_elem = $("<button>", {html: text});
+    var new_elem = $("<button>", {html: text, class:"operation_button"});
     new_elem.click(click_function);
     return new_elem;
 }
@@ -90,10 +90,10 @@ function changeSigns(node) {
 
 function isUselessParens(node) {
 	if ((node.child.op == '-' || node.child.op == '+') && (node.parent.op == '*' || node.parent.op == '/' || node.parent.op == '^')){
-		console.log("not useless");
+		//console.log("not useless");
 		return false;
 	} else if ((node.child.op == '*' || node.child.op == '/') && (node.parent.op == '^')) {
-		console.log("not useless");
+		//console.log("not useless");
 		return false;
 	}	else {
 		return true;
@@ -103,8 +103,9 @@ function isUselessParens(node) {
 function deleteParens(node) {
 	if (isUselessParens(node)) {
 		return function() {
-		
-			switch (node.child.type) {
+            node.replaceWith(node.child.deepCopy());
+            newEquationline(node.root());
+			/*switch (node.child.type) {
 				case "Op": {
 					node.replaceWith(new OpNode(node.child.op, node.child.left, node.child.right)); 
 					newEquationLine(node.root());
@@ -131,27 +132,27 @@ function deleteParens(node) {
 					newEquationLine(node.root());
 					break;
 				}
-			}
+			}*/
         }
     }
 }
 function distributeOperation(node){
-	if(canDistributeLeft(node)){
+	if(canDistributeRight(node)){
 		return function(){
-			parenNode= node.left;
-			grandNode= parenNode.child;
+			var parenNode= node.left;
+			var grandNode= parenNode.child;
 			var replacement=new OpNode(parenNode.child.op, new OpNode('*', grandNode.left.deepCopy(), node.right.deepCopy()), new OpNode('*', grandNode.right.deepCopy(), node.right.deepCopy()));
 			node.replaceWith(replacement);
-			console.log(node, replacement);
+			//console.log(node, replacement);
 			replacement.setParent(node.parent);
 			newEquationLine(node.root());
 			
 		}
-	}else if(canDistributeRight(node)){
+	}else if(canDistributeLeft(node)){
 		return function(){
-			parenNode= node.right;
-			grandChildNode= parenNode.child;
-			var replacement = new OpNode(parenNode.child.op, new OpNode('*', grandNode.left.deepCopy(), node.left.deepCopy()), new OpNode('*', grandNode.right.deepCopy(), node.left.deepCopy()));
+			var parenNode= node.right;
+			var grandNode= parenNode.child;
+			var replacement = new OpNode(parenNode.child.op, new OpNode('*', node.left.deepCopy(), grandNode.left.deepCopy()), new OpNode('*', node.left.deepCopy(), grandNode.right.deepCopy()));
 			node.replaceWith(replacement);
 			node.root().setParent(null);
 			newEquationLine(node.root());
@@ -160,11 +161,11 @@ function distributeOperation(node){
 }
 
 
-function canDistributeLeft(node){
+function canDistributeRight(node){
 	return (node.type== "Op" && node.op=='*' && node.left.type=="Parens" && node.left.child.type=="Op" && (node.left.child.op=='+' || node.left.child.op=='-'));
 }
 
-function canDistributeRight(node){
+function canDistributeLeft(node){
 	return (node.type== "Op" && node.op=='*' && node.right.type=="Parens" && node.right.child.type=="Op" && (node.right.child.op=='+' || node.right.child.op=='-'));
 }
 
@@ -201,15 +202,15 @@ function replaceIsomorphicChildren(staticNode, recursiveNode){
         numChildrenReplaced += replaceIsomorphicChildren(staticNode, recursiveNode.left);
         numChildrenReplaced += replaceIsomorphicChildren(staticNode, recursiveNode.right);
         if(recursiveNode.left.isIsomorphicTo(staticNode)){
-            console.log('Replacing', recursiveNode, 'with', recursiveNode.right);
+            //console.log('Replacing', recursiveNode, 'with', recursiveNode.right);
             recursiveNode.replaceWith(recursiveNode.right);
-            console.log('Replaced', recursiveNode, 'with', recursiveNode.right);
+            //console.log('Replaced', recursiveNode, 'with', recursiveNode.right);
             return numChildrenReplaced+1;
         }
         else if(recursiveNode.right.isIsomorphicTo(staticNode)){
-            console.log('Replacing', recursiveNode, 'with', recursiveNode.left);
+            //console.log('Replacing', recursiveNode, 'with', recursiveNode.left);
             recursiveNode.replaceWith(recursiveNode.left);
-            console.log('Replaced', recursiveNode, 'with', recursiveNode.left);
+            //console.log('Replaced', recursiveNode, 'with', recursiveNode.left);
             return numChildrenReplaced+1;
         }
     }
@@ -233,7 +234,7 @@ function applyHyperOperatorSimple(node){
 
 function applyHyperOperatorLeft(node){
     return function(){
-        console.log("left hyperoperator apply");
+        //console.log("left hyperoperator apply");
         if(canApplyHyperOperatorLeft(node)){
             var nodeOp = node.op;
             var staticNode = node.left.deepCopy()
@@ -259,21 +260,21 @@ function applyHyperOperatorLeft(node){
 
 function applyHyperOperatorRight(node){
     return function(){
-        console.log("right hyperoperator apply", node);
+        //console.log("right hyperoperator apply", node);
         if(canApplyHyperOperatorRight(node)){
             var nodeOp = node.op;
             var staticNode = node.right.deepCopy()
-            console.log("Static node is:", staticNode)
+            //console.log("Static node is:", staticNode)
             var numChildrenReplaced = replaceIsomorphicChildren(staticNode, node);
             if(nodeOp == '+'){
-                console.log("node", node);
+                //console.log("node", node);
                 var replacement = new OpNode('+', new OpNode('*', new NumberNode(numChildrenReplaced), staticNode), node)
                 replacement.setParent(node.parent)
-                console.log("1Replacement:", replacement)
-                console.log("1Node:", node)
+                //console.log("1Replacement:", replacement)
+                //console.log("1Node:", node)
                 node.replaceWith(replacement)
-                console.log("2Replacement:", replacement)
-                console.log("2Node:", node)
+                //console.log("2Replacement:", replacement)
+                //console.log("2Node:", node)
                 newEquationLine(replacement.root());
             }
             if(nodeOp == '*'){
@@ -303,7 +304,6 @@ function substituteFunction(node){
 }
 
 function canMultiplyByZero(node){
- 	console.log("Trace can multiply by 0");
     return(node.type == 'Op' && node.op == '*'
            &&(node.right.isIsomorphicTo(Zero)
             ||node.left.isIsomorphicTo(Zero)))
@@ -319,8 +319,6 @@ function multiplyByZero(node){
 }
 
 function canRaiseToZero(node){
- 	console.log("Trace can multiply by 0");
-
     return(node.type == 'Op' && node.op == '^'
         && node.right.isIsomorphicTo(Zero)
         && (!node.left.isIsomorphicTo(Zero)))
@@ -336,7 +334,7 @@ function raiseToZero(node){
 }
 
 function canCancelDivision(node){
- 	console.log("Trace can multiply by 0");
+ 	//console.log("Trace  cancelSub ");
 
     return(node.type == 'Op' && node.op == '/'
         && node.right.isIsomorphicTo(node.left))
@@ -351,7 +349,7 @@ function cancelDivision(node){
 }
 
 function canCancelSubtraction(node){
- 	console.log("Trace can multiply by 0");
+ 	//console.log("Trace can cancelSub");
 
     return(node.type == 'Op' && node.op == '-'
         && node.right.isIsomorphicTo(node.left))
@@ -366,14 +364,14 @@ function cancelSubtraction(node){
 }
 
 function canAddZero(node){
- 	console.log("Trace can multiply by 0");
+ 	//console.log("Trace can add by 0");
 
     return(node.type == 'Op' && (node.op == '-' || node.op == '+')
         && (node.right.isIsomorphicTo(Zero)
           || node.left.isIsomorphicTo(Zero)))
 }
 function addZero(node){
- 	console.log("Trace can multiply by 0");
+ 	//console.log("Trace can add by 0");
 
     return function(){
         if(canAddZero(node)){
@@ -394,15 +392,11 @@ function addZero(node){
 }
 
 function canMultiplyByOne(node){
- 	console.log("Trace can multiply by 0");
-
     return(node.type == 'Op' && (node.op == '*')
         && (node.right.isIsomorphicTo(One)
           || node.left.isIsomorphicTo(One)))
 }
 function multiplyByOne(node){
- 	console.log("Trace can multiply by 0");
-
     return function(){
         if(canMultiplyByOne(node)){
             if(node.right.isIsomorphicTo(One)){
@@ -417,9 +411,6 @@ function multiplyByOne(node){
 }
 
 function canDivideByOne(node){
- 	console.log("Trace can multiply by 0");
-
-    testingNode=node;console.log("Calling 'can divide by 1'",node)
     return(node.type == 'Op' && (node.op == '/')
         && node.right.isIsomorphicTo(One))
 }
@@ -434,7 +425,7 @@ function divideByOne(node){
 
 
 
-function reduceExponent(node){
+/*function reduceExponent(node){
 	if(canReduceExponent(node)){
 		return function(){
 			if(node.left.type == "Parens"){
@@ -448,32 +439,44 @@ function reduceExponent(node){
 			}
 		}
 	}
+}*/
+
+function reduceExponent(node){
+    return function(){
+        if(canReduceExponent(node)){
+            var replacement = new OpNode('^', node.left.left.deepCopy(), new OpNode('*', node.left.right.deepCopy(), node.right.deepCopy()))
+            node.replaceWith(replacement);
+            newEquationLine(node.root());
+        }
+    }
 }
 
 function canReduceExponent(node){
-	return((node.left.type=="Parens" && node.right.type=="Number" && node.left.child.op =='^')||(node.left.op =='^' && node.right.op=='^'));
+	return(node.type=="Op" && node.op=="^" && node.left.type =='Op' && node.left.op=='^');
 }
 
-function invertOperator(node){
-	if(canInvertOperator(node)){
+function invertDivision(node){
+	if(canInvertDivision(node)){
 		return function(){
-			node.replaceWith(new OpNode('*', new NumberNode(node.left.value), new OpNode('^', new NumberNode(node.right.value), new NumberNode(-1))));
+            var replacement = new OpNode('*', node.left.deepCopy(), new OpNode('^', node.right.deepCopy(), new NumberNode(-1)));
+            node.replaceWith(replacement);
+			//node.replaceWith(new OpNode('*', new NumberNode(node.left.value), new OpNode('^', new NumberNode(node.right.value), new NumberNode(-1))));
+            newEquationLine(node.root());
 		}
 	}
 }
 
-function canInvertOperator(node){
-	return (node.op== '/' && node.left.type== "Number" && node.right.type == "Number");
+function canInvertDivision(node){
+	return (node.type=='Op' && node.op== '/');
 }
 
 function factorNegNum(node){
 	if(canFactorNegNum(node)){
 		return function(){
-			if(node.left.type =="Number"){
-				node.replaceWith( new OpNode('*', new NumberNode(node.left.value.abs), new NumberNode(-1)));
-			}else if (node.right.type =="Number"){
-				node.replaceWith( new OpNode('*', new NumberNode(node.right.value.abs), new NumberNode(-1)));
-			}
+            var replacement = new OpNode('*', new NumberNode(-1), new NumberNode(Math.abs(node.value)));
+            node.replaceWith(replacement);
+            newEquationLine(node.root());
+            
 		}
 	}
 }

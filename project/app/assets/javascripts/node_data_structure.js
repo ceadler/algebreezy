@@ -139,7 +139,7 @@ function OpNodeProto(op, left, right) {
 				return "\\frac{" + this.left.toLatex() + "}{" + this.right.toLatex() + "}";
 				break;
 			case '^':
-				return this.left.toLatex() + "^{" + this.right.toLatex() + "}";
+				return '{'+this.left.toLatex() + "^{" + this.right.toLatex() + "}}";
 				break;
 			default:
 				return undefined;
@@ -228,20 +228,20 @@ function OpNodeProto(op, left, right) {
         }
         
         if(canApplyHyperOperatorSimple(this)){
-            console.log(numIsomorphicChildren(this.left, this.right)+1);
-            console.log(numIsomorphicChildren(this.right, this.left)+1);
+            //console.log(numIsomorphicChildren(this.left, this.right)+1);
+            //console.log(numIsomorphicChildren(this.right, this.left)+1);
             availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.left.toLatex()+'\\)', applyHyperOperatorSimple(this)));
         }
         
         if(canApplyHyperOperatorLeft(this)){
-            console.log(numIsomorphicChildren(this.left, this.right)+1);
-            console.log(numIsomorphicChildren(this.right, this.left)+1);
+            //console.log(numIsomorphicChildren(this.left, this.right)+1);
+            //console.log(numIsomorphicChildren(this.right, this.left)+1);
             availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.left.toLatex()+'\\)', applyHyperOperatorLeft(this)));
         }
         
         if(canApplyHyperOperatorRight(this)){
-            console.log(numIsomorphicChildren(this.left, this.right)+1);
-            console.log(numIsomorphicChildren(this.right, this.left)+1);
+            //console.log(numIsomorphicChildren(this.left, this.right)+1);
+            //console.log(numIsomorphicChildren(this.right, this.left)+1);
             availableManipulations.push(makeButton("Apply hyperoperator to \\( "+this.right.toLatex()+'\\)', applyHyperOperatorRight(this)));
         }
 		if(this.type == 'Op' && this.op == '-') { 
@@ -252,23 +252,19 @@ function OpNodeProto(op, left, right) {
 		}
         
         if(canDistributeLeft(this)){
-        	availableManipulations.push(makeButton("distribute left number", distributeOperation(this)));
+        	availableManipulations.push(makeButton("Distribute \\( "+this.left.toLatex()+" \\) to \\( "+this.right.toLatex()+"\\)", distributeOperation(this)));
         }
         
         if(canDistributeRight(this)){
-        	availableManipulations.push(makeButton("distribute right number", distributeOperation(this)));
+        	availableManipulations.push(makeButton("Distribute \\("+this.right.toLatex()+"\\) to \\( "+this.left.toLatex()+"\\)", distributeOperation(this)));
         }
         
         if(canReduceExponent(this)){
-        	availableManipulations.push(makeButton("reduce exponent", reduceExponent(this)));
+        	availableManipulations.push(makeButton("Reduce exponent", reduceExponent(this)));
         }
         
-        if(canInvertOperator(this)){
-        	availableManipulations.push(makeButton("invert operator", invertOperator(this)));
-        }
-        
-        if(canFactorNegNum(this)){
-        	availableManipulations.push(makeButton("factor out negative number", factorNegNum(this)));
+        if(canInvertDivision(this)){
+        	availableManipulations.push(makeButton("Invert division", invertDivision(this)));
         }
         //console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
@@ -322,7 +318,7 @@ function ParensNodeProto(child) {
 			availableManipulations.push(makeButton("Delete Parens ", deleteParens(this)));
 		}
         
-		console.log("These are the manipulations available:", availableManipulations);
+		//console.log("These are the manipulations available:", availableManipulations);
         return availableManipulations;
     }
     this.isHash = function(){
@@ -479,7 +475,6 @@ function NumberNodeProto(value) {
 	this.isEqualTo = function() {
 	}
 	this.isIsomorphicTo = function(node) {
-        console.log('checking isomorphisms in Number', this, node);
         return (this.type == node.type &&
                 this.value == node.value)
 	}
@@ -494,7 +489,13 @@ function NumberNodeProto(value) {
         return [];
     }
     this.generateManipulations = function(){
-        return [];
+        var availableManipulations = [];
+        
+        if(canFactorNegNum(this)){
+        	availableManipulations.push(makeButton("factor out negative number", factorNegNum(this)));
+        }
+        
+        return availableManipulations;
     }
     this.isHash = function(){
         var s = " " + this.value.toString() + " ";
