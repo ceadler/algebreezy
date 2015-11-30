@@ -140,20 +140,32 @@ function distributeOperation(node){
 		return function(){
 			parenNode= node.left;
 			grandNode= parenNode.child;
-			var replacement=new OpNode(parenNode.child.op, new OpNode('*', grandNode.left, node.right), new OpNode('*', grandNode.right, node.right));
+			var replacement=new OpNode(parenNode.child.op, new OpNode('*', grandNode.left.deepCopy(), node.right.deepCopy()), new OpNode('*', grandNode.right.deepCopy(), node.right.deepCopy()));
 			node.replaceWith(replacement);
-			replacement.root().setParent(null);
+			console.log(node, replacement);
+			replacement.setParent(node.parent);
+			newEquationLine(node.root());
 			
 		}
 	}else if(canDistributeRight(node)){
 		return function(){
 			parenNode= node.right;
 			grandChildNode= parenNode.child;
-			var replacement = new OpNode(parenNode.child.op, new OpNode('*', grandNode.left, node.left), new OpNode('*', grandNode.right, node.left));
+			var replacement = new OpNode(parenNode.child.op, new OpNode('*', grandNode.left.deepCopy(), node.left.deepCopy()), new OpNode('*', grandNode.right.deepCopy(), node.left.deepCopy()));
 			node.replaceWith(replacement);
-			replacement.root().setParent(null);
+			node.root().setParent(null);
+			newEquationLine(node.root());
 		}
 	}
+}
+
+
+function canDistributeLeft(node){
+	return (node.type== "Op" && node.op=='*' && node.left.type=="Parens" && node.left.child.type=="Op" && (node.left.child.op=='+' || node.left.child.op=='-'));
+}
+
+function canDistributeRight(node){
+	return (node.type== "Op" && node.op=='*' && node.right.type=="Parens" && node.right.child.type=="Op" && (node.right.child.op=='+' || node.right.child.op=='-'));
 }
 
 function numIsomorphicChildren(staticNode, recursiveNode){
@@ -291,9 +303,11 @@ function substituteFunction(node){
 }
 
 function canMultiplyByZero(node){
+ 	console.log("Trace can multiply by 0");
     return(node.type == 'Op' && node.op == '*'
            &&(node.right.isIsomorphicTo(Zero)
             ||node.left.isIsomorphicTo(Zero)))
+            
 }
 function multiplyByZero(node){
     return function(){
@@ -305,10 +319,13 @@ function multiplyByZero(node){
 }
 
 function canRaiseToZero(node){
+ 	console.log("Trace can multiply by 0");
+
     return(node.type == 'Op' && node.op == '^'
         && node.right.isIsomorphicTo(Zero)
         && (!node.left.isIsomorphicTo(Zero)))
 }
+
 function raiseToZero(node){
     return function(){
         if(canRaiseToZero(node)){
@@ -319,6 +336,8 @@ function raiseToZero(node){
 }
 
 function canCancelDivision(node){
+ 	console.log("Trace can multiply by 0");
+
     return(node.type == 'Op' && node.op == '/'
         && node.right.isIsomorphicTo(node.left))
 }
@@ -332,6 +351,8 @@ function cancelDivision(node){
 }
 
 function canCancelSubtraction(node){
+ 	console.log("Trace can multiply by 0");
+
     return(node.type == 'Op' && node.op == '-'
         && node.right.isIsomorphicTo(node.left))
 }
@@ -345,11 +366,15 @@ function cancelSubtraction(node){
 }
 
 function canAddZero(node){
+ 	console.log("Trace can multiply by 0");
+
     return(node.type == 'Op' && (node.op == '-' || node.op == '+')
         && (node.right.isIsomorphicTo(Zero)
           || node.left.isIsomorphicTo(Zero)))
 }
 function addZero(node){
+ 	console.log("Trace can multiply by 0");
+
     return function(){
         if(canAddZero(node)){
             if(node.right.isIsomorphicTo(Zero)){
@@ -369,11 +394,15 @@ function addZero(node){
 }
 
 function canMultiplyByOne(node){
+ 	console.log("Trace can multiply by 0");
+
     return(node.type == 'Op' && (node.op == '*')
         && (node.right.isIsomorphicTo(One)
           || node.left.isIsomorphicTo(One)))
 }
 function multiplyByOne(node){
+ 	console.log("Trace can multiply by 0");
+
     return function(){
         if(canMultiplyByOne(node)){
             if(node.right.isIsomorphicTo(One)){
@@ -388,6 +417,8 @@ function multiplyByOne(node){
 }
 
 function canDivideByOne(node){
+ 	console.log("Trace can multiply by 0");
+
     testingNode=node;console.log("Calling 'can divide by 1'",node)
     return(node.type == 'Op' && (node.op == '/')
         && node.right.isIsomorphicTo(One))
@@ -402,13 +433,6 @@ function divideByOne(node){
 }
 
 
-function canDistributeLeft(node){
-	return (node.type== "Op" && node.op=='*' && node.left.type=="Parens" && node.left.child.type=="Op" && (node.left.child.op=='+' || node.left.child.op=='-'));
-}
-
-function canDistributeRight(node){
-	return (node.type== "Op" && node.op=='*' && node.right.type=="Parens" && node.right.child.type=="Op" && (node.right.child.op=='+' || node.right.child.op=='-'));
-}
 
 function reduceExponent(node){
 	if(canReduceExponent(node)){
