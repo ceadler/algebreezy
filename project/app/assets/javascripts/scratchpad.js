@@ -1,5 +1,6 @@
 var save_data = [];
 var equations = [];
+var circs = [];
 var svgscale = 1;
 var draggingSVG = false;
 var svgtranslate = {x:0, y:0}
@@ -109,6 +110,7 @@ function drawTree(){
         if(equations.length > 0){
         var equation = equations[equations.length -1]
         var svggroup = document.getElementById('svggroup'); //Get svg element
+        circs = [];
         while (svggroup.lastChild) {
             svggroup.removeChild(svggroup.lastChild);//Remove all of the elements in the svg element, if there are any
         }
@@ -127,7 +129,7 @@ function drawNode(node, svggroup, linegroup){
     //g is a group containing circle and text. 
     //Putting them in a group helps deal with which one should overlap the other.
     var circ = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
-    circ.colorFlag = true;
+    circs.push(circ); //Add the circle to the array of all circles
     var text = document.createElementNS("http://www.w3.org/2000/svg", 'text');
     
     for (var child_index in node.children()){
@@ -175,37 +177,19 @@ function drawNode(node, svggroup, linegroup){
     group.appendChild(text);
     
     $(group).mousedown(genNodeClick(text, node, circ));
-/*    circ.addEventListener('click', changeNodeColor(circ));
-    text.addEventListener('click', changeNodeColor(circ));*/
-    circ.addEventListener('click', function() {
-        if (circ.colorFlag) {
-            circ.style.fill="#a05050";
-            circ.colorFlag = !circ.colorFlag;
-        }else {
-            circ.style.fill="#5050a0";
-            circ.colorFlag = !circ.colorFlag;
-        }
-    });
-    text.addEventListener('click', function() {
-        if (circ.colorFlag) {
-            circ.style.fill="#a05050";
-            circ.colorFlag = !circ.colorFlag;
-        }else {
-            circ.style.fill="#5050a0";
-            circ.colorFlag = !circ.colorFlag;
-        }
-    });
+
+    circ.addEventListener('click', changeNodeColor(circs, circ));
+    text.addEventListener('click', changeNodeColor(circs, circ));
 }
 
-/*function changeNodeColor(circ) {
-    if (circ.colorFlag) {
-        circ.style.fill="#a05050";
-        circ.colorFlag = !circ.colorFlag;
-    }else {
-        circ.style.fill="#5050a0";
-        circ.colorFlag = !circ.colorFlag;
+function changeNodeColor(circs, circ) {
+    return function() {
+        for (var index = 0; index < circs.length; index++) {   //First reset each color of each node to blue
+            circs[index].style.fill="#5050a0";
+        }
+        circ.style.fill="#a05050";  //Change color of the clicked node to red
     }
-}*/
+}
 
 function genNodeClick(text, node){
     return function(event){
