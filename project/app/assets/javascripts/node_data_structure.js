@@ -252,11 +252,11 @@ function OpNodeProto(op, left, right) {
 		}
         
         if(canDistributeLeft(this)){
-        	availableManipulations.push(makeButton("distribute number", distributeOperation(this)));
+        	availableManipulations.push(makeButton("distribute left number", distributeOperation(this)));
         }
         
         if(canDistributeRight(this)){
-        	availableManipulations.push(makeButton("distribute number", distributeOperation(this)));
+        	availableManipulations.push(makeButton("distribute right number", distributeOperation(this)));
         }
         
         if(canReduceExponent(this)){
@@ -306,8 +306,8 @@ function ParensNodeProto(child) {
 	}
 	this.isEqualTo = function() {
 	}
-	this.isIsomorphicTo = function() {
-        return this.child.isIsomorphicTo(node.child);
+	this.isIsomorphicTo = function(node) {
+        return (this.type==node.type) && this.child.isIsomorphicTo(node.child);
 	}
     this.width = function(){
         return this.child.width();        
