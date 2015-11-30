@@ -2,9 +2,9 @@
 	<table style="width:100%">
 		<thead>
 			<tr>
-				<th>Title</th>
-				<th>Date Created</th>
-				<th></th>
+				<th class="th_short">Title</th>
+				<th class="th_long">Date Created</th>
+				<th class="th_short"></th>
 			</tr>
 		</thead>
 		<% records.each do |record| %>
@@ -18,3 +18,7 @@
 		<% end %>
 	</table>
 </div>
+<form action="/create_scratchpad" method='POST'>
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <label>Create a new scratchpad: <input type="submit" value="Create!"></label>
+</form>
