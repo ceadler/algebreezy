@@ -1,27 +1,47 @@
 Rails.application.routes.draw do
+
   devise_for :users, 
               controllers:{sessions: 'users/sessions', 
                            registrations: 'users/registrations', 
                            confirmations: 'users/confirmations', 
                            passwords: 'users/passwords', 
                            unlocks: 'users/unlocks'}
+
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'welcome#index'
+  root 'welcome#index'
 
-  get '/help', to: 'welcome#help'
 
   get '/about', to: 'welcome#about'
 
   get '/contact', to: 'welcome#contact'
 
+  get '/scratchpad/:scratchpad_id', to: 'welcome#scratchpad'
+
   get '/usertest1', to: 'welcome#usertest1'
   
+  get '/help', to: 'welcome#help'
+
+  get '/profile', to: 'welcome#profile'
+      
+  get '/team', to: 'welcome#team'
+
   get '/usertest2', to: 'useronly#usertest2'
+  
+  get '/samplemodel', to: 'welcome#sampleget'
+
+  get '/dashboard', to: 'welcome#dashboard'
+  
+  post '/samplemodel', to: 'welcome#samplepost'
+  
+  post '/save_scratchpad_data', to: 'welcome#save_scratchpad_data'
+  
+  post '/create_scratchpad', to: 'welcome#create_scratchpad'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

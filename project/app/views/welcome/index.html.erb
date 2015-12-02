@@ -1,28 +1,15 @@
-<!--
-	This is the Barebones GUI for Algebreezy.
-	How to use it:
-		1. Enter text into the second textbox.
-		2. Click enter.
-		3. Clone the text into the first textbox.
-	
-	Notes:
-		- The first text box scrolls infinitely as more text is entered.
-		  This is a barebones emulation of the infinite piece of paper end-goal.
--->
-<div>
+<h1> Welcome to Algebreezy! </h1>
 <% if user_signed_in? %>
-    Logged in as <strong><%= current_user.email %></strong>.
+    <span>Logged in as <strong><%= current_user.email %></strong><span>.<br>
+    <span>Go to your <%= link_to 'dashboard', dashboard_path, :class => 'navbar-link' %>.</span><br>
     <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
     <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+    <form action="/create_scratchpad" method='POST'>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <label>Create a new scratchpad: <input type="submit" value="Create!"></label>
+    </form>
 <% else %>
+    <div>Start out by making an account through the link below. After signing up, you'll be directed to your dashboard where you can create a new scratch pad.</div>
     <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
     <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
 <% end %>
-</div>
-<p>You shouldn't have to be signed in to view this <a href="/usertest1">Link to usertest1</a> page, but if you are, it will note it!</p>
-<br>
-<div id="scratchpad"></div><br>
-<label>Please enter an equation:</label>
-<input type="text" id="myEquation">
-<button onclick="display_equation()">Enter</button>
-

@@ -11,8 +11,38 @@
 
         <div class="container">
             <nav class="navbar">
-                <%= link_to "Home", root_path %>
-                <%= link_to "Help", help_path %>
+            		
+				
+
+		<div>
+		<ul>
+  			<li>
+   			 <a href ="" class = "button">More</a>
+    		<ul>
+      		<li><%= link_to "Home", root_path %></li>
+      		<li><%= link_to "Tutorial", tutorial_path %></li>
+      		<li><%= link_to "About", about_path %></li>
+      		<li><%= link_to "Contact", contact_path %></li>
+      		<li><%= link_to "Profile", profile_path %></li>
+      		<li><%= link_to "Register", register_path %></li>
+      		<li><%= link_to "Team", team_path %></li>
+      		<li><%= link_to "Register", register_path %></li>
+        	<li><%= link_to "Help", help_path %></li>
+    
+   		    </ul>
+  			</li>
+  		</ul>
+  		<%-# second way of creating a clickable image -%>
+		<a href="http://localhost:3000" class="svg">
+  		<img src="/assets/Algebreezy_draft.svg" style="width:650px;height:40px;vertical-align:middle">
+  		</a>
+  		
+  		<%-#place holders for login and logout button -%>
+  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	<a href ="http://localhost:3000/login" class = "button">Login</a>
+        <a href ="http://localhost:3000/logout" class = "button" >Logout</a>
+
+	  </div>
             </nav>
         </div>
       </div>
@@ -28,12 +58,6 @@
 
       <%= yield %>
 
-        <footer>
-            <nav>
-                <%= link_to "About",   about_path %>
-                <%= link_to "Contact", contact_path %>
-            </nav>  
-        </footer>
 
     </div>
 </html>

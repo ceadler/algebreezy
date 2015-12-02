@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Algebreezy</title>
+        <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+        <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+        <%= javascript_include_tag 'scratchpad_scripts', 'data-turbolinks-track' => true %>
+        <%= csrf_meta_tags %>
+    </head>
+    <body>
+        <nav class="navbar">
+
+            <div>
+                <div id="dropdown_menu">
+                    <a href ="" class = "button" >More</a>
+                    <div id="dropdown_submenu">
+                        <li><%= link_to "Home", root_path %></li>
+                        <li><%= link_to "About", about_path %></li>
+                        <li><%= link_to "Contact", contact_path %></li>
+                        <li><%= link_to "Help", help_path %></li>
+                        <li><%= link_to "Profile", profile_path %></li>                     
+                        <li><%= link_to "Register", new_user_registration_path %></li>
+                        <li><%= link_to "Team", team_path %></li>
+                        <% if user_signed_in? %>
+                            <li><%= link_to "Dashboard", dashboard_path %></li>
+                        <% end %>
+                    </div>
+                </div>
+                <% if user_signed_in? %>
+                    <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'button', :id => 'logout_button'  %>
+                <% else %>
+                    <%= link_to "Login", new_user_session_path, :class => 'button', :id => 'login_button'  %>
+                <% end %>
+                
+                <div id="title-image-container" onclick="location.href='/'">
+                        <%= image_tag "Algebreezy_draft_3.svg" , class: 'algebreezy-svg'%>
+                </div>
+
+            </div>
+    </nav>
+    <div class="flash_message">
+        <% flash.each do |key, value| %>
+
+            <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+
+        <% end %>
+        <% if notice %>
+            <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+            <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+    </div>
+    <div class="scratchpad_content">
+        <%= yield %>
+    </div>
+    </body>
+
+    </div>
+</html>

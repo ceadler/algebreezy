@@ -1,60 +1,409 @@
 // Place all the styles related to the welcome controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@font-face {
+    font-family: 'Open_sanssemibold';
+    src: font-url('OpenSans-Semibold-webfont.eot');
+    src: font-url('OpenSans-Semibold-webfont.ttf') format('truetype'),
+         font-url('OpenSans-Semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('OpenSans-Semibold-webfont.woff') format('woff'),
+         font-url('OpenSans-Semibold-webfont.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
 
+}
 
-body{ 
-    background-color: #eee; 
+@font-face {
+    font-family: 'Open_sansregular';
+    src: font-url('OpenSans-Regular-webfont.eot');
+    src: font-url('OpenSans-Regular-webfont.ttf') format('truetype'),
+         font-url('OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('OpenSans-Regular-webfont.woff') format('woff'),
+         font-url('OpenSans-Regular-webfont.svg#open_sanssemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
     padding: 25px; 
+    height: 100%;
 }
 
+.equation_line {
+    margin-left: 25px;
+}
+
+.dashboard {
+    font: normal 12px/150% Arial; 
+    background: white; 
+    overflow: hidden; 
+}
+
+td, th {
+   padding: 3px 10px; 
+}
+
+th {
+    background-color: #006699; 
+    color: white; 
+    font-size: 15px; 
+    font-weight: bold; 
+} 
+
+tbody { 
+    background: #E1EEf4; 
+    color: #00557F; 
+}
+
+.flash_message {
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: rgba(120, 120, 120, 0.9);
+    display: block;
+    * {
+        margin: 0;
+        color: white;
+        text-shadow: 1px -1px 2px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+    
+    }
+.comment_line {
+    margin-left: 25px;
+    font-size: 80%;
+    line-height: 120%;
+}
 .navbar {
-    background-color: rgba(128, 128, 128, 0.9);
+    text-align:center;
+    z-index: 1000;
+    display: block;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(50, 50, 50, 1);
+    box-shadow: 0px 4px 3px 0px rgba(40, 40, 40, 0.4), 0px 1px 1px 1px #323232;
     padding: 4px;
-    margin: 4px;
-    border-radius: 4px;
-    a{
-        box-sizing: content-box;
-        border: 1px solid #404040;
-        padding: 2px 4px;
-        border-radius: 3px;
-        background-color: #e0e0e0;
-        transition: box-shadow 0.3s, background-color;
-        box-shadow: -1px 1px 1px 0px rgba(80, 80, 80, 0.5), inset  -1px 1px 3px 3px rgba(255, 255, 255, 0.8), inset  1px -1px 3px 3px rgba(128, 128, 128, 0.5)
+    text-align:center;
+    height: 27px;
+    
+    
+
+    #dropdown_menu {
+        float: left;
     }
-    a:hover {
-        box-shadow:inset  -1px 1px 4px 2px rgba(255, 255, 255, 1), inset 1px -1px 2px 2px rgba(128, 128, 128, 0.3);
-        background-color: #f0f0d0;
+    
+    #title-image-container{
+        display: inline-block;
+        background-color: rgba(80, 160, 255, 1);
+        border-radius: 4px;
+        padding: 2px;
+        cursor: pointer;
+        .algebreezy-svg{
+            width:150px;
+            height:25px;
+            vertical-align:middle
+        }
+    }
+    
+    #login_button, #logout_button {
+        float: right;
+        margin-right: 20px;
+    }
+       
+	#dropdown_menu {
+  		display: inline;
+  		text-align: left;
+  		position: relative;
+	}	
+	#dropdown_menu a{
+  		display: inline-block;
+        height: 20px;
+	}	
+	#dropdown_menu:hover {
+  		background: #555;
+  		color: #fff;
+        list-style-type: none;
+        text-align:center;
+	}	
+	#dropdown_menu #dropdown_submenu {
+ 		padding: 0;
+  		position: absolute;
+  		top: 22px;
+  		left: -2px;
+        padding: 2px;
+  		width: 100px;
+  		visibility: hidden;
+        background-color: rgba(80, 80, 80, 0.3);
+        border-radius: 2px;
+        }	 
+	#dropdown_menu:hover #dropdown_submenu {
+  		visibility: visible;  
+	}	
+	#dropdown_menu #dropdown_submenu a { 
+  		display: block; 
+	}
+
+    a.svg {
+        margin-left:1em;
+        position: relative;
+        display: inline-block; 
+
+    }
+
+    a.svg:after {
+        content: ""; 
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left:0;
+    }
+
+
+    .button{
+        width: 75px;
+        color: rgba(20, 20, 20, 1);
+        text-align: center;
+
+    }
+
+    a.button {
+        text-decoration: none;
     }
 }
 
-#scratchpad {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid black;
+#scratchpad_flex {
+   min-height: 500px;
+   margin: 0px;
+   padding: 0px;
+   display: -webkit-flex;
+   display:         flex;
+   -webkit-flex-flow: row;
+           flex-flow: row;
+} 
+
+#scratchpad_view {
+   margin: 4px;
+   padding: 8px;
+   height: 500px;
+   border-radius: 7pt;
+   background: rgba(100,100,100,0.9); 
+   display: flex;
+   justify-content: space-between;
+   -webkit-flex: 3 1 60%;
+           flex: 3 1 60%;
+   -webkit-order: 2;
+           order: 2;
+}  
+
+#sidebar-left {
+    margin: 4px;
+    padding: 5px;
+    border-radius: 7pt;
+   background: rgba(250, 250, 250, 0.9);
+   box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.8);
+    word-wrap: break-word;
+    -webkit-flex: 1 6 20%;
+           flex: 1 6 20%;
+    -webkit-order: 1;
+           order: 1;
+    flex: 0 0 200px;
+    overflow: auto;
+    height: 500px;
+
+    .button1 {
     display: inline-block;
     min-width: 100px;
     text-align: center;
     background-color: #f0f0d0;
+    }
+}
+
+#sidebar-right {
+   margin: 4px;
+   padding: 5px;
+   border-radius: 7pt;
+   background: rgba(250, 250, 250, 0.9);
+   box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.8);
+   word-wrap: break-word;
+   -webkit-flex: 1 6 20%;
+           flex: 1 6 20%;
+   -webkit-order: 3;
+           order: 3;
+    flex: 0 0 200px;
+    overflow: auto;
+    height: 500px;
+}
+
+#equation_view {
+  /*background-color: yellow;
+  width: 50%;
+  height: 490px;
+  background: rgba(220,220,220,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-right: 4px;*/
+
+  background: rgba(250,250,250,0.9); 
+  border: 1px solid #EEEEEE;
+  box-shadow: 0px 0px 1px 0px rgba(250,250,250,0.9);
+  display: block;
+  font-size: 22px;
+  line-height: 50px;
+  border-radius: 5px;
+  padding: 5px;
+  resize: none;
+  height: 488px;
+  width: 50%;
+  overflow: auto;
+
+  // The horizontal lines
+  //background-image: -moz-linear-gradient(top , transparent, transparent 49px,#91D1D3 0px), -moz-radial-gradient(4% 50%, circle closest-corner, #f5f5f5, #f5f5f5 39%, transparent 0%), -moz-radial-gradient(3.9% 46% , circle closest-corner, #CCCCCC, #CCCCCC 43.5%, transparent 0%); 
+
+  // The holes
+  //background-image: -webkit-linear-gradient(top , transparent, transparent 49px,#91D1D3 0), -webkit-radial-gradient(4% 50%, circle closest-corner, rgba(100,100,100,0.9), rgba(100,100,100,0.9) 39%, transparent 0%), -webkit-radial-gradient(3.9% 46%, circle closest-corner, #cccccc, #cccccc 43.5%, transparent 0%);
+
+  //-webkit-background-size:  100% 50px;
+  //background-size: 100% 50px;
+
+}
+
+#tree_view {
+  box-shadow: 0px 0px 1px 0px rgba(250,250,250,0.9);
+  width: 50%;
+  height: 490px;
+  background: rgba(250,250,250,0.9); 
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 4px;
+}
+
+header, footer {
+   text-align: center;
+   display: block;
+   margin: 4px;
+   padding: 5px;
+   //min-height: 100px;
+   border-radius: 7pt;
+   background: rgba(250, 250, 250, 0.9);
+   box-shadow: 0px 0px 1px 1px rgba(40, 40, 40, 0.8);
+}
+#scratchpad-title {
+    width: 100px;
 }
 
 body {
    background: image-url("Dark-Blue-Abstract-Painting-14-Wallpaper-Background-Hd.jpg");
 }
 
-.main_content_wrapper {
-    background-color: rgba(200, 200, 200, 0.9);
-    padding: 5px;
-    dislay: inline-block;
-    border-radius: 5px;
-}
-
 .body_content {
+    background-color: rgba(160, 160, 160, 0.9);
+    padding: 5px;
+    display: block;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Open_sansregular';
+    text-shadow: -1px 1px 3px rgba(50, 50, 50, 0.3), 0px 0px 1px rgba(50, 50, 50, 0.7);
+    h1, h2, h3, h4, strong {
+        font-family: 'Open_sanssemibold';
+        text-shadow: -1px 1px 3px rgba(50, 50, 50, 0.4), -1px 1px 1px rgba(50, 50, 50, 0.8);
+    }
+    h5, h6, p, div, label, span{
+    }
+    a, td {
+        text-shadow: none;
+        text-decoration: none;
+    }
+    text-align:center;
+}
+.th_short{
+    width: 15%;
+}
+.th_long{
+    width: 70%;
+}
+.scratchpad_content {
     background-color: rgba(200, 200, 200, 0.9);
     padding: 5px;
-    dislay: inline-block;
+    display: block;
     border-radius: 5px;
+    text-align:center;
 }
 
-nav {
+.button1 {
+    font-size: 1.1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    margin-bottom: 20px;
+    color: #ccc;
+    background-color: #555;
+    background: -webkit-linear-gradient(#888, #555);
+    background: linear-gradient(#888, #555);
+    border: 0 none;
+    border-radius: 3px;
+    text-shadow: 0 -1px 0 #000;
+    box-shadow: 0 1px 0 #666, 0 5px 0 #444, 0 6px 6px rgba(0,0,0,0.6);
+    cursor: pointer;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+    overflow: hidden;
+
+    .button1:hover, button:focus
+    {
+        -webkit-animation: pulsate 1.2s linear infinite;
+        animation: pulsate 1.2s linear infinite;
+    }
+
+    @-webkit-keyframes pulsate
+    {
+        0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+        50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+        100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+    }
+            
+    @keyframes pulsate
+    {
+        0%   { color: #ddd; text-shadow: 0 -1px 0 #000; }
+        50%  { color: #fff; text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff; }
+        100% { color: #ddd; text-shadow: 0 -1px 0 #000; }
+    }
+
+    .button1:active
+    {
+        color: #fff;
+        text-shadow: 0 -1px 0 #444, 0 0 5px #ffd, 0 0 8px #fff;
+        box-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 2px 2px rgba(0,0,0,0.9);
+        -webkit-transform: translateY(3px);
+        transform: translateY(3px);
+        -webkit-animation: none;
+        animation: none;
+    }
+}
+
+.operation_button {
+    margin: 3px;
+}
+
+/* Too narrow to support three columns */
+@media all and (max-width: 1100px) {
+  
+   #scratchpad_flex, #page {
+    -webkit-flex-flow: column;
+            flex-direction: column;
+   }
+
+   #scratchpad_flex > #scratchpad_view, #sidebar-left, #sidebar-right {
+    /* Return them to document order */
+    -webkit-order: 0;
+            order: 0;
+   }
+  
+   #sidebar-left, #sidebar-right, header, footer {
+    min-height: 50px;
+    flex: 0 0 auto;
+    height: auto;
+   }
 }
